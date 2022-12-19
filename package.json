@@ -1,7 +1,7 @@
 {
-  "name": "portfolio-webpack",
+  "name": "parroquia-san-judas-tadeo",
   "version": "1.0.0",
-  "description": "This is my portfolio where I post my recently projects.",
+  "description": "This is an informative page of the activities of the ecclesiastic parish of San Judas Tadeo",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,17 +9,14 @@
     "start": "webpack serve --open",
     "build": "webpack"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/franclobo/Portfolio-webpack.git"
-  },
+  "repository": "git+https://github.com/franclobo/Parroquia-San-Judas-Tadeo",
   "keywords": [],
-  "author": "",
+  "author": "franclobo <fjbl2788@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/franclobo/Portfolio-webpack/issues"
+    "url": "https://github.com/franclobo/Parroquia-San-Judas-Tadeo/issues"
   },
-  "homepage": "https://github.com/franclobo/Portfolio-webpack#readme",
+  "homepage": "https://github.com/franclobo/Parroquia-San-Judas-Tadeo#readme",
   "dependencies": {
     "lodash": "^4.17.21",
     "webpack": "^5.75.0",
@@ -30,5 +27,6 @@
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
     "webpack-dev-server": "^4.11.1"
-  }
+  },
+  "main": "index.js"
 }
