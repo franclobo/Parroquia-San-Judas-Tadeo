@@ -3,9 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wbpack Exercise</title>
+    <link rel="stylesheet" href="./style.scss">
+    <title>San Judas Tadeo</title>
 <script defer src="runtime.bundle.js"></script><script defer src="index.bundle.js"></script></head>
 <body>
-    <h1>Hello webpack!</h1>
+    <header>
+        <div class="header">
+            <a href="#">
+                <div id="logo"></div>
+                <div class="title">
+                    <h1>Parroquia </br> San Judas Tadeo</h1>
+                    <p>La Roldós</p>
+                </div>
+            </a>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Dropdown button
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Action</a></li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                  </div>
+                <li><a href="#">Avisos parroquiles</a></li>
+                <li><a href="#">Servicios religiosos</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
 </body>
 </html>

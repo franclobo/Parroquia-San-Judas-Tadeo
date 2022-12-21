@@ -3,9 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wbpack Exercise</title>
+    <link rel="stylesheet" href="./style.scss">
+    <title>San Judas Tadeo</title>
 </head>
 <body>
-    <h1>Hello webpack!</h1>
+    <header>
+        <div class="header">
+            <a href="#">
+                <div id="logo"></div>
+                <div class="title">
+                    <h1>Parroquia </br> San Judas Tadeo</h1>
+                    <p>La Roldós</p>
+                </div>
+            </a>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Pastoral Social
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Cáritas</a></li>
+                          <li><a class="dropdown-item" href="#">Juan XXIII</a></li>
+                          <li><a class="dropdown-item" href="#">Catequesis</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="#">Avisos parroquiles</a></li>
+                <li><a href="#">Servicios religiosos</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active" id="carousel-item"></div>
+                  <div class="carousel-item active" id="carousel-item-one"></div>
+                  <div class="carousel-item active" id="carousel-item-two"></div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </section>
+    </main>
+
 </body>
 </html>
