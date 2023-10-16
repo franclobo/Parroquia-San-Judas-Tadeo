@@ -89,7 +89,7 @@
 
 - **ERD Schema**
 
-- <img src="./astets/images/schema.png" alt="schema" width="300"  height="auto" />
+ <img src="./astets/images/schema.png" alt="schema" />
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
