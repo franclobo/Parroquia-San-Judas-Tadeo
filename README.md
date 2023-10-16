@@ -68,28 +68,28 @@
 ## 🚀 Live Demo <a name="live-demo"></a>
 
 - **Home page**
-  
+
   ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/1735692c-1695-4fdd-8513-9f17397eb5e7)
 
 - **Baptism registration**
-  
+
   ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/fa4899be-c2f0-40d8-b666-d0f8720ac505)
 
 - **Confirmation registration**
-  
+
   ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/eb01aa3f-daaf-4224-9404-a27a267ea0cd)
 
 - **Marriage registration**
-  
+
   ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/bcd2b719-441e-4cb9-8c5c-f992379117c0)
 
 - **Searchings**
-  
+
   ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/214d8143-4dbb-4ee3-aee1-40646657ba40)
 
 - **ERD Schema**
 
-  
+- <img src="./astets/images/schema.png" alt="schema" width="300"  height="auto" />
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
