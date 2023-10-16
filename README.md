@@ -30,7 +30,7 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 [Parroquia San JUdas Tadeo] <a name="about-project"></a>
+# 📖 Parroquia San JUdas Tadeo <a name="about-project"></a>
 
 **Parroquia San Judas Tadeo** is a software to register people who have done any sacrament like baptism, confirmation, and marriage. It also allows to register the sacraments that have been done in the parish.
 
