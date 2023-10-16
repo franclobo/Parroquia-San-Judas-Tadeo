@@ -67,7 +67,11 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
--
+- **Home page**
+- **Baptism registration**
+- **Confirmation registration**
+- **Marriage registration**
+- **Searchings**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
