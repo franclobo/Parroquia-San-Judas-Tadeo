@@ -1,5 +1,13 @@
+require 'pg'
 require 'fox16'
 include Fox
+
+$conn = PG.connect(host: 'localhost', port: '5432', dbname: 'sacramentos', user: 'postgres', password: 'postgres')
+# Comprobar conexión con la base de datos
+if $conn.status != PG::CONNECTION_OK
+  puts "Error de conexión con la base de datos"
+  exit
+end
 
 class Home < FXMainWindow
   def initialize(app)

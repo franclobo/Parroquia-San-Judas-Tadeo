@@ -21,7 +21,7 @@ class Bautizo < FXMainWindow
     @inputnumber = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 350, :y => 100)
 
     #section datos
-    @lblbautismo = FXLabel.new(self, "Fecha de bautismo: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 150)
+    @lblbautismo = FXLabel.new(self, "Fecha de bautismo (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 150)
     @inputbautismo = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 150)
     @lbliglesia = FXLabel.new(self, "Iglesia parroquial: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 180)
     @inputglesia = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 180)
@@ -66,7 +66,7 @@ class Bautizo < FXMainWindow
     @inputpagrc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 350,:y => 510)
     @lblactarc = FXLabel.new(self, "Acta: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 410, :y => 510)
     @inputactarc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 470,:y => 510)
-    @lbldaterc = FXLabel.new(self, "Fecha: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 540)
+    @lbldaterc = FXLabel.new(self, "Fecha (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 540)
     @inputdaterc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170,:y => 540)
 
 

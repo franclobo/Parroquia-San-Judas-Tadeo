@@ -1,3 +1,4 @@
+require 'pg'
 require 'fox16'
 include Fox
 
