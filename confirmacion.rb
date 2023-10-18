@@ -86,6 +86,7 @@ class Confirmacion < FXMainWindow
         $conn.exec('INSERT INTO parroquias (nombre, sector, parroco) VALUES ($1, $2, $3)', [parroquia, sector, parroco])
         $conn.exec('INSERT INTO sacramentos (nombre, fecha, celebrante, certifica, padrino) VALUES ($1, $2, $3, $4, $5)', [sacramento, fecha, celebrante, certifica, padrino])
         FXMessageBox.information(self, MBOX_OK, "Información", "Datos guardados correctamente")
+        clear_input_fields
       rescue PG::Error => e
         FXMessageBox.error(self, MBOX_OK, "Error", "Error al guardar los datos")
       end
