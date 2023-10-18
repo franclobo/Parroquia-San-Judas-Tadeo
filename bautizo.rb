@@ -114,7 +114,7 @@ class Bautizo < FXMainWindow
         $conn.exec('INSERT INTO creyentes (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula])
         $conn.exec('INSERT INTO parroquias (nombre, sector, parroco) VALUES ($1, $2, $3)', [parroquia, sector, parroco])
         $conn.exec('INSERT INTO sacramentos (nombre, fecha, celebrante, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [sacramento, fecha, ministro, certifica, padrino, madrina, padre, madre])
-        $conn.exec('INSERT INTO registros_civiles (provincia, canton, parroquia, anio, tomo, pagina, acta, fecha) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc])
+        $conn.exec('INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc])
         FXMessageBox.information(self, MBOX_OK, "Información", "Datos guardados correctamente")
         clear_input_fields
       rescue PG::Error => e

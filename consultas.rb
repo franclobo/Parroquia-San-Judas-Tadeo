@@ -17,78 +17,86 @@ class Consulta < FXMainWindow
     @lbldate = FXLabel.new(self, "Fecha: #{@date}", :opts => LAYOUT_EXPLICIT | JUSTIFY_RIGHT, :width => 680, :height => 20, :x => 0, :y => 60)
 
     # seccioan consulta
-    @groupbox = FXGroupBox.new(self, "Elija una opción para su consulta", :opts => LAYOUT_EXPLICIT | FRAME_GROOVE | LAYOUT_FILL_X, :width => 200, :height => 120, :x => 10, :y => 100)
-    @dataTarget = FXDataTarget.new(4)
-    @dataTarget.connect(SEL_COMMAND) do
-      clear_input_fields
-      case @dataTarget.value
-      when 0
-        create_apellidos_fields
-      when 1
-        create_cedula_fields
-      when 2
-        create_fecha_fields
-      when 3
-        create_sacramento_fields
+    @lbl_consulta = FXLabel.new(self, "Consultar por: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 150)
+    @lbl_apellidos = FXLabel.new(self, "Apellidos: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 180)
+    @input_apellidos = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 180)
+    @lbl_nombres = FXLabel.new(self, "Nombres: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 180)
+    @input_nombres = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 510, :y => 180)
+    @lbl_cedula = FXLabel.new(self, "Cédula: ", :opts => LAYOUT_EXPLICIT, :width => 80, :height => 20, :x => 680, :y => 180)
+    @input_cedula = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 770, :y => 180)
+    @lbl_fecha_desde = FXLabel.new(self, "Fecha desde (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 210)
+    @input_fecha_desde = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 210)
+    @lbl_fecha_hasta = FXLabel.new(self, "Fecha hasta (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 240)
+    @input_fecha_hasta = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 240)
+    @lbl_sacramento = FXLabel.new(self, "Sacramento: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 270)
+    @input_sacramento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 270)
+
+    # create buttons
+    @btnsearch = FXButton.new(self, "Buscar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 790, :y => 400)
+    @btncancel = FXButton.new(self, "Cancelar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 900, :y => 400)
+
+    # connect buttons
+    @btnsearch.connect(SEL_COMMAND) do
+      apellidos = @input_apellidos.text
+      nombres = @input_nombres.text
+      cedula = @input_cedula.text
+      fecha_desde = @input_fecha_desde.text
+      fecha_hasta = @input_fecha_hasta.text
+      sacramento = @input_sacramento.text
+
+      if apellidos.empty? && nombres.empty? && cedula.empty? && fecha_desde.empty? && fecha_hasta.empty? && sacramento.empty?
+        FXMessageBox.warning(self, MBOX_OK, "Advertencia", "Debe ingresar al menos un criterio de búsqueda")
+      else
+        begin
+          # tables
+          # tabla libros (id, tomo, pagina, numero)
+          # tabla creyentes (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula)
+          # tabla parroquias (id, nombre, sector, parroco)
+          # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
+          # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
+          # Join tables
+          sql = "SELECT * FROM sacramentos INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN libros ON sacramentos.id = libros.id"
+          sql += " WHERE creyentes.apellidos LIKE '%#{apellidos}%'" unless apellidos.empty?
+          sql += " AND creyentes.nombres LIKE '%#{nombres}%'" unless nombres.empty?
+          sql += " AND creyentes.cedula = '#{cedula}'" unless cedula.empty?
+          sql += " AND sacramentos.fecha >= '#{fecha_desde}'" unless fecha_desde.empty?
+          sql += " AND sacramentos.fecha <= '#{fecha_hasta}'" unless fecha_hasta.empty?
+          sql += " AND sacramentos.nombre = '#{sacramento}'" unless sacramento.empty?
+          puts sql
+          $conn.exec(sql) do |result|
+            puts result.values
+            if result.values.empty?
+              FXMessageBox.information(self, MBOX_OK, "Información", "No se encontraron registros")
+            else
+              # mostrar resultados
+              require_relative 'resultados.rb'
+              vtnresultados = ResultadosConsulta.new(@app, result.values)
+              vtnresultados.create
+              vtnresultados.show(PLACEMENT_SCREEN)
+
+              FXMessageBox.information(self, MBOX_OK, "Información", "Se encontraron #{result.values.length} registros")
+
+
+            end
+          end
+        rescue PG::Error => e
+          puts e.message
+        end
       end
     end
 
-    @radio_apellidos = FXRadioButton.new(@groupbox, "Apellidos", @dataTarget, FXDataTarget::ID_OPTION + 0)
-    @radio_cedula = FXRadioButton.new(@groupbox, "Cédula", @dataTarget, FXDataTarget::ID_OPTION + 1)
-    @radio_fecha = FXRadioButton.new(@groupbox, "Fecha", @dataTarget, FXDataTarget::ID_OPTION + 2)
-    @radio_sacramento = FXRadioButton.new(@groupbox, "Sacramento", @dataTarget, FXDataTarget::ID_OPTION + 3)
-
-    # Inicialmente, no muestra ningún campo de entrada
-    clear_input_fields
-  end
-
-  def clear_input_fields
-    if defined? @lbl_apellidos
-      @lbl_apellidos.destroy
-      @input_apellidos.destroy
+    @btncancel.connect(SEL_COMMAND) do
+      clear_input_fields
     end
-    if defined? @lbl_nombres
-      @lbl_nombres.destroy
-      @input_nombres.destroy
-    end
-    if defined? @lbl_cedula
-      @lbl_cedula.destroy
-      @input_cedula.destroy
-    end
-    if defined? @lbl_fecha
-      @lbl_fecha.destroy
-      @input_fecha.destroy
-    end
-    if defined? @lbl_sacramento
-      @lbl_sacramento.destroy
-      @input_sacramento.destroy
-    end
-  end
 
-  def create_apellidos_fields
-    puts "create_apellidos_fields"
-    @lbl_apellidos = FXLabel.new(self, "Apellidos", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 340)
-    @input_apellidos = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 340)
-    @lbl_nombres = FXLabel.new(self, "Nombres", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 340)
-    @input_nombres = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 510, :y => 340)
-  end
-
-  def create_cedula_fields
-    puts "create_cedula_fields"
-    @lbl_cedula = FXLabel.new(self, "Cédula", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 340)
-    @input_cedula = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 340)
-  end
-
-  def create_fecha_fields
-    puts "create_fecha_fields"
-    @lbl_fecha = FXLabel.new(self, "Fecha", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 340)
-    @input_fecha = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 340)
-  end
-
-  def create_sacramento_fields
-    puts "create_sacramento_fields"
-    @lbl_sacramento = FXLabel.new(self, "Sacramento", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 340)
-    @input_sacramento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 340)
+    def clear_input_fields
+      @input_apellidos.text = ""
+      @input_nombres.text = ""
+      @input_cedula.text = ""
+      @input_fecha_desde.text = ""
+      @input_fecha_hasta.text = ""
+      @input_sacramento.text = ""
+    end
   end
 
   def create
