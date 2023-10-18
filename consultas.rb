@@ -5,6 +5,7 @@ include Fox
 class Consulta < FXMainWindow
   def initialize(app)
     super(app, "Parroquia San Judas Tadeo", :width => 700, :height => 500)
+    @app = app
 
     # seccion encabezado
     # create label
@@ -22,18 +23,18 @@ class Consulta < FXMainWindow
     @input_apellidos = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 180)
     @lbl_nombres = FXLabel.new(self, "Nombres: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 180)
     @input_nombres = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 510, :y => 180)
-    @lbl_cedula = FXLabel.new(self, "Cédula: ", :opts => LAYOUT_EXPLICIT, :width => 80, :height => 20, :x => 680, :y => 180)
-    @input_cedula = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 770, :y => 180)
-    @lbl_fecha_desde = FXLabel.new(self, "Fecha desde (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 210)
-    @input_fecha_desde = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 210)
-    @lbl_fecha_hasta = FXLabel.new(self, "Fecha hasta (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 240)
-    @input_fecha_hasta = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 240)
-    @lbl_sacramento = FXLabel.new(self, "Sacramento: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 270)
-    @input_sacramento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 270)
+    @lbl_cedula = FXLabel.new(self, "Cédula: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 210)
+    @input_cedula = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 210)
+    @lbl_fecha_desde = FXLabel.new(self, "Fecha desde (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 240)
+    @input_fecha_desde = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 240)
+    @lbl_fecha_hasta = FXLabel.new(self, "Fecha hasta (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 270)
+    @input_fecha_hasta = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 270)
+    @lbl_sacramento = FXLabel.new(self, "Sacramento: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 300)
+    @input_sacramento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 300)
 
     # create buttons
-    @btnsearch = FXButton.new(self, "Buscar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 790, :y => 400)
-    @btncancel = FXButton.new(self, "Cancelar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 900, :y => 400)
+    @btnsearch = FXButton.new(self, "Buscar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 450, :y => 330)
+    @btncancel = FXButton.new(self, "Cancelar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 560, :y => 330)
 
     # connect buttons
     @btnsearch.connect(SEL_COMMAND) do
@@ -55,7 +56,7 @@ class Consulta < FXMainWindow
           # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
           # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
           # Join tables
-          sql = "SELECT * FROM sacramentos INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN libros ON sacramentos.id = libros.id"
+          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id"
           sql += " WHERE creyentes.apellidos LIKE '%#{apellidos}%'" unless apellidos.empty?
           sql += " AND creyentes.nombres LIKE '%#{nombres}%'" unless nombres.empty?
           sql += " AND creyentes.cedula = '#{cedula}'" unless cedula.empty?
@@ -69,14 +70,11 @@ class Consulta < FXMainWindow
               FXMessageBox.information(self, MBOX_OK, "Información", "No se encontraron registros")
             else
               # mostrar resultados
+              FXMessageBox.information(self, MBOX_OK, "Información", "Se encontraron #{result.values.length} registros")
               require_relative 'resultados.rb'
               vtnresultados = ResultadosConsulta.new(@app, result.values)
               vtnresultados.create
               vtnresultados.show(PLACEMENT_SCREEN)
-
-              FXMessageBox.information(self, MBOX_OK, "Información", "Se encontraron #{result.values.length} registros")
-
-
             end
           end
         rescue PG::Error => e
