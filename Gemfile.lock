@@ -1,0 +1,26 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    fxruby (1.6.46-x64-mingw-ucrt)
+      mini_portile2 (~> 2.1)
+    mini_portile2 (2.8.4)
+    pdf-core (0.9.0)
+    pg (1.5.4-x64-mingw-ucrt)
+    prawn (2.4.0)
+      pdf-core (~> 0.9.0)
+      ttfunk (~> 1.7)
+    ttfunk (1.7.0)
+
+PLATFORMS
+  x64-mingw-ucrt
+
+DEPENDENCIES
+  fxruby (~> 1.6, >= 1.6.33)
+  pg
+  prawn
+
+RUBY VERSION
+   ruby 3.2.2p53
+
+BUNDLED WITH
+   2.4.20
