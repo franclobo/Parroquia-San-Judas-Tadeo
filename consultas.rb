@@ -62,7 +62,7 @@ class Consulta < FXMainWindow
           sql += " AND creyentes.cedula = '#{cedula}'" unless cedula.empty?
           sql += " AND sacramentos.fecha >= '#{fecha_desde}'" unless fecha_desde.empty?
           sql += " AND sacramentos.fecha <= '#{fecha_hasta}'" unless fecha_hasta.empty?
-          sql += " AND sacramentos.nombre = '#{sacramento}'" unless sacramento.empty?
+          sql += " AND sacramentos.sacramento = '#{sacramento}'" unless sacramento.empty?
           puts sql
           $conn.exec(sql) do |result|
             puts result.values

@@ -82,6 +82,37 @@ class ResultadosConsulta < FXMainWindow
       registros
     end
 
+    # Cambiar el formato de la fecga de YYYY-MM-DD a DD de nombre_mes de YYYY
+    def cambiar_formato_fecha(fecha)
+      # split "-" or "/"
+      fecha = fecha.split(/-|\//)
+      # si el formato de fecha es YYYY-MM-DD o YYYY/MM/DD, sino si es DD-MM-YYYY o DD/MM/YYYY
+      if fecha[0].length == 4
+        "#{fecha[2]} de #{nombre_mes(fecha[1])} de #{fecha[0]}"
+      else
+        "#{fecha[0]} de #{nombre_mes(fecha[1])} de #{fecha[2]}"
+      end
+    end
+
+    # Nombre del mes
+    def nombre_mes(mes)
+      meses = {
+        "01" => "enero",
+        "02" => "febrero",
+        "03" => "marzo",
+        "04" => "abril",
+        "05" => "mayo",
+        "06" => "junio",
+        "07" => "julio",
+        "08" => "agosto",
+        "09" => "septiembre",
+        "10" => "octubre",
+        "11" => "noviembre",
+        "12" => "diciembre"
+      }
+      meses[mes]
+    end
+
     # Nombre de las filas
     @result_data.each_with_index do |row, i|
       @tabla.setRowText(i, "Registro #{i+1}")
@@ -96,41 +127,169 @@ class ResultadosConsulta < FXMainWindow
     # connect buttons
     @btnprint.connect(SEL_COMMAND) do
       seleccionar_directorio
+      imprimir_pdf
     end
 
     def seleccionar_directorio
       dialog = FXDirDialog.new(self, "Seleccionar directorio para guardar PDF")
       if dialog.execute != 0
         directorio = dialog.getDirectory
-        generar_pdf(directorio)
+        #El nombre del directorio son los apellidos y nombres del creyente seguido del sacramento
+        @archivo_pdf = "#{directorio}/#{registros_seleccionados[0][19]} #{registros_seleccionados[0][20]} - #{registros_seleccionados[0][1]}.pdf"
       end
     end
 
-    def generar_pdf(directorio)
-      dialog = FXInputDialog.new(self, "Nombre del archivo PDF")
-      dialog.prompt = "Ingrese el nombre del archivo PDF:"
-      dialog.pattern = "*.pdf"
-      if dialog.execute != 0
-        archivo_pdf = File.join(directorio, dialog.value.strip)
-        archivo_pdf += ".pdf" unless archivo_pdf.end_with?(".pdf")
+    def imprimir_pdf
+      if registros_seleccionados.empty?
+        FXMessageBox.warning(self, MBOX_OK, "Advertencia", "Debe seleccionar al menos un registro")
+      else
+        # Genera el archivo PDF
+        Prawn::Document.generate(@archivo_pdf, :margin => [150, 100, 100, 100]) do |pdf|
+          pdf.font "Helvetica"
+          pdf.font_size 12
+          # Definir tres casos en los que se puede imprimir el certificado y los distintos formatos para bautismo, confirmación y matrimonio
+          # Bautismo
 
-        Prawn::Document.generate(archivo_pdf) do |pdf|
-          # Define el contenido del PDF aquí.
-          pdf.text "Resultados de la consulta", :align => :center, :size => 20
-          pdf.move_down 20
-          registros_seleccionados.each do |registro|
-            pdf.text "Registro #{registro[0]}", :align => :center, :size => 16
-            pdf.move_down 10
-            pdf.text "Sacramento: #{registro[1]}"
-            pdf.text "Fecha: #{registro[2]}"
-            # ... (otros campos)
-            pdf.move_down 10
+          case registros_seleccionados[0][1]
+          when "Bautismo"
+            # Título del certificado en color rojo
+            pdf.text "CERTIFICADO DE BAUTISMO", :align => :center, :size => 20, :style => :bold, :color => "FF0000"
+            pdf.move_down 20
+            registros_seleccionados.each do |registro|
+              # Añadir márgenes izquierdo y derecho
+              # Fecha actual alineada a la derecha
+              pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime("%d/%m/%Y"))}", :align => :right
+              pdf.move_down 20
+              # Tomo, página y número justificado
+              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de bautismos de esta parroquia: Tomo #{registro[15]} - Página #{registro[16]} - Número #{registro[17]}, se halla inscrita la siguiente partida:", :align => :justify
+              pdf.move_down 10
+              # Fecha de bautismo
+              pdf.text "El día #{cambiar_formato_fecha(registro[2])}. En la parroquia de #{registro[25]} en el sector de #{registro[26]}.", :align => :justify
+              pdf.move_down 10
+              # Celebrante
+              pdf.text "El #{registro[3]} bautizó solemnemente a #{registro[19]} #{registro[20]}.", :align => :justify
+              pdf.move_down 10
+              # Fecha de nacimiento
+              pdf.text "Nacido/da en #{registro[21]} el #{cambiar_formato_fecha(registro[22])}.", :align => :justify
+              pdf.move_down 10
+              # Padres
+              pdf.text "Hijo/ja de #{registro[9]} y de #{registro[10]}.", :align => :justify
+              pdf.move_down 10
+              # Padrinos
+              pdf.text "Fueron sus padrinos: #{registro[5]} y #{registro[6]} a quienes se advirtió de sus obligaciones y parentezco espiritual.", :align => :justify
+              pdf.move_down 10
+              # Certifica
+              pdf.text "Lo certifica: #{registro[4]}.", :align => :justify
+              pdf.move_down 10
+              # Registro civil
+              pdf.text "REGISTRO CIVIL", :align => :center, :size => 16
+              pdf.move_down 10
+              pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}", :align => :justify
+              pdf.text "Año: #{registro[32]}, Tomo: #{registro[33]}, Página: #{registro[34]}, Acta: #{registro[35]}", :align => :justify
+              pdf.text "Fecha: #{cambiar_formato_fecha(registro[36])}", :align => :justify
+              pdf.move_down 10
+              # Datos tomados fielmente de original
+              pdf.text "Datos tomados fielmente del original", :align => :center
+              pdf.move_down 40
+              # Firma del párroco
+              pdf.text "_______________________________", :align => :center
+              pdf.move_down 10
+              # Nombre del párroco
+              pdf.text "#{registro[27]}", :align => :center
+              pdf.move_down 10
+              # Parroco
+              pdf.text "Párroco", :align => :center
+              pdf.move_down 10
+            end
+          when "Confirmación"
+            pdf.text "CERTIFICADO DE CONFIRMACIÓN", :align => :center, :size => 20, :style => :bold, :color => "FF0000"
+            pdf.move_down 20
+            registros_seleccionados.each do |registro|
+              # Fecha actual alineada a la derecha
+              pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime("%d/%m/%Y"))}", :align => :right
+              pdf.move_down 20
+              # Tomo, página y número justificado
+              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de confirmaciones de esta parroquia: Tomo #{registro[15]} - Página #{registro[16]} - Número #{registro[17]}, se halla inscrita la siguiente partida:", :align => :justify
+              pdf.move_down 10
+              # Fecha de confirmación
+              pdf.text "El día #{cambiar_formato_fecha(registro[2])}. En la parroquia de #{registro[25]} en el sector de #{registro[26]}.", :align => :justify
+              pdf.move_down 10
+              # Celebrante
+              pdf.text "El #{registro[3]} confirmó en la fe critiana católica apostólica romana a #{registro[19]} #{registro[20]}.", :align => :justify
+              pdf.move_down 10
+              # Fecha de nacimiento
+              pdf.text "Nacido/da el #{registro[22]} en #{registro[21]}.", :align => :justify
+              pdf.move_down 10
+              # Padrinos
+              pdf.text "Fueron sus padrinos: #{registro[5]} y #{registro[6]} a quienes se advirtió de sus obligaciones y parentezco espiritual.", :align => :justify
+              pdf.move_down 10
+              # Certifica
+              pdf.text "Lo certifica: #{registro[4]}.", :align => :justify
+              pdf.move_down 10
+              # Datos tomados fielmente de original
+              pdf.text "Datos tomados fielmente del original", :align => :center
+              pdf.move_down 10
+               # Firma del párroco
+              pdf.text "_______________________________", :align => :center
+              pdf.move_down 10
+              # Nombre del párroco
+              pdf.text "#{registro[27]}", :align => :center
+              pdf.move_down 10
+              # Parroco
+              pdf.text "Párroco", :align => :center
+              pdf.move_down 10
+            end
+          when "Matrimonio"
+            pdf.text "CERTIFICADO DE MATRIMONIO", :align => :center, :size => 20, :style => :bold, :color => "FF0000"
+            pdf.move_down 20
+            registros_seleccionados.each do |registro|
+              # Fecha actual alineada a la derecha
+              pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime("%d/%m/%Y"))}", :align => :right
+              pdf.move_down 20
+              # Tomo, página y número justificado
+              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de matrimonios de esta parroquia: Tomo #{registro[15]} - Página #{registro[16]} - Número #{registro[17]}, se halla inscrita la siguiente partida:", :align => :justify
+              pdf.move_down 10
+              # Fecha de matrimonio
+              pdf.text "El día #{cambiar_formato_fecha(registro[2])} contrajeron matrimonio #{registro[19]} #{registro[20]} y #{registro[11]} #{registro[12]} en la parroquia de #{registro[25]} en el sector de #{registro[26]}.", :align => :justify
+              pdf.move_down 10
+              # Celebrante
+              pdf.text "Presenció y bendijo el matrimonio el #{registro[3]}.", :align => :justify
+              # Feligreses de la parroquia
+              pdf.text "Feligreses de la parroquia: #{registro[25]}.", :align => :justify
+              pdf.move_down 10
+              # Testigos
+              pdf.text "Fueron sus testigos: #{registro[7]} y #{registro[8]}.", :align => :justify
+              pdf.move_down 10
+              # Cerifica
+              pdf.text "Lo certifica: #{registro[4]}.", :align => :justify
+              pdf.move_down 10
+              # Registro civil
+              pdf.text "REGISTRO CIVIL", :align => :center, :size => 16
+              pdf.move_down 10
+              pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}", :align => :justify
+              pdf.text "Año: #{registro[32]}, Tomo: #{registro[33]}, Página: #{registro[34]}, Acta: #{registro[35]}", :align => :justify
+              pdf.text "Fecha: #{cambiar_formato_fecha(registro[36])}", :align => :justify
+              pdf.move_down 10
+              # Datos tomados fielmente de original
+              pdf.text "Datos tomados fielmente del original", :align => :center
+              pdf.move_down 40
+              # Firma del párroco
+              pdf.text "_______________________________", :align => :center
+              pdf.move_down 10
+              # Nombre del párroco
+              pdf.text "#{registro[27]}", :align => :center
+              pdf.move_down 10
+              # Parroco
+              pdf.text "Párroco", :align => :center
+              pdf.move_down 10
+            end
           end
         end
-
         # Abre el archivo PDF con el visor de PDF predeterminado del sistema
-        system("xdg-open '#{archivo_pdf}'")
+        system("xdg-open '#{@archivo_pdf}'")
       end
+      # Mensaje de confirmación
+        FXMessageBox.information(self, MBOX_OK, "Información", "El archivo PDF se ha generado correctamente")
     end
 
     @btnedit.connect(SEL_COMMAND) do
