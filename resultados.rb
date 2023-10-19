@@ -1,4 +1,5 @@
 require 'pg'
+require 'prawn'
 require 'fox16'
 include Fox
 
@@ -62,7 +63,24 @@ class ResultadosConsulta < FXMainWindow
     @tabla.setColumnText(35, "Acta")
     @tabla.setColumnText(36, "Fecha")
 
+    # Al hacer clic en una fila, se selecciona la fila completa para imprimir los datos
+    def seleccionar_fila
+      @tabla.each_row do |i|
+        if @tabla.isRowSelected(i.index)
+          @tabla.selectRow(i.index)
+        end
+      end
+    end
 
+    def registros_seleccionados
+      registros = []
+      (0...@tabla.numRows).each do |i|
+        if @tabla.isRowSelected(i)
+          registros << @result_data[i]
+        end
+      end
+      registros
+    end
 
     # Nombre de las filas
     @result_data.each_with_index do |row, i|
@@ -77,7 +95,42 @@ class ResultadosConsulta < FXMainWindow
 
     # connect buttons
     @btnprint.connect(SEL_COMMAND) do
-      # imprimir registros seleccionados
+      seleccionar_directorio
+    end
+
+    def seleccionar_directorio
+      dialog = FXDirDialog.new(self, "Seleccionar directorio para guardar PDF")
+      if dialog.execute != 0
+        directorio = dialog.getDirectory
+        generar_pdf(directorio)
+      end
+    end
+
+    def generar_pdf(directorio)
+      dialog = FXInputDialog.new(self, "Nombre del archivo PDF")
+      dialog.prompt = "Ingrese el nombre del archivo PDF:"
+      dialog.pattern = "*.pdf"
+      if dialog.execute != 0
+        archivo_pdf = File.join(directorio, dialog.value.strip)
+        archivo_pdf += ".pdf" unless archivo_pdf.end_with?(".pdf")
+
+        Prawn::Document.generate(archivo_pdf) do |pdf|
+          # Define el contenido del PDF aquí.
+          pdf.text "Resultados de la consulta", :align => :center, :size => 20
+          pdf.move_down 20
+          registros_seleccionados.each do |registro|
+            pdf.text "Registro #{registro[0]}", :align => :center, :size => 16
+            pdf.move_down 10
+            pdf.text "Sacramento: #{registro[1]}"
+            pdf.text "Fecha: #{registro[2]}"
+            # ... (otros campos)
+            pdf.move_down 10
+          end
+        end
+
+        # Abre el archivo PDF con el visor de PDF predeterminado del sistema
+        system("xdg-open '#{archivo_pdf}'")
+      end
     end
 
     @btnedit.connect(SEL_COMMAND) do

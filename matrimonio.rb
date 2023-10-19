@@ -13,12 +13,12 @@ class Matrimonio < FXMainWindow
     @date = Time.now.strftime("%d/%m/%Y %H:%M:%S")
     @lbldate = FXLabel.new(self, "Fecha: #{@date}", :opts => LAYOUT_EXPLICIT|JUSTIFY_RIGHT, :width => 1000, :height => 20, :x => 0, :y => 60)
     #section libros
-    @lbltomo = FXLabel.new(self, "Tomo", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 50, :y => 100)
-    @inputtomo = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 110, :y => 100)
-    @lblpage = FXLabel.new(self, "Pagina", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 170, :y => 100)
-    @inputpage = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 230, :y => 100)
-    @lblnumber = FXLabel.new(self, "Numero", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 290, :y => 100)
-    @inputnumber = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 350, :y => 100)
+    @lbl_tomo = FXLabel.new(self, "Tomo", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 50, :y => 100)
+    @input_tomo = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 110, :y => 100)
+    @lbl_page = FXLabel.new(self, "Pagina", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 170, :y => 100)
+    @input_page = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 230, :y => 100)
+    @lbl_number = FXLabel.new(self, "Numero", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 290, :y => 100)
+    @input_number = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 350, :y => 100)
 
     #section datos
     @lbl_fecha = FXLabel.new(self, "Fecha de matrimonio (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 150)
@@ -49,27 +49,27 @@ class Matrimonio < FXMainWindow
     @input_nombres_testigo_novio = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 300)
     @lbl_testigo_novia = FXLabel.new(self, "Testigo novia: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 300)
     @input_nombres_testigo_novia = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y => 300)
-    @lblcertifica = FXLabel.new(self, "Certifica: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 680, :y => 300)
-    @inputcertifica = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850, :y => 300)
+    @lbl_certifica = FXLabel.new(self, "Certifica: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 680, :y => 300)
+    @input_certifica = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850, :y => 300)
 
     #section registro civil
-    @lblregciv = FXLabel.new(self, "------------------------------------ REGISTRO CIVIL ------------------------------------", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width => 1050, :height => 20, :x => 10, :y => 330)
-    @lblprovinciarc = FXLabel.new(self, "Provincia: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 360)
-    @inputprovinciarc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170,:y => 360)
-    @lblcantonrc = FXLabel.new(self, "Cantón: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 360)
-    @inputcantonrc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y =>360)
-    @lblparroquiarc = FXLabel.new(self, "Parroquia: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 680, :y => 360)
-    @inputparroquiarc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850,:y => 360)
-    @lblaniorc = FXLabel.new(self, "Año: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 50, :y => 390)
-    @inputaniorc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 110,:y => 390)
-    @lbltomorc = FXLabel.new(self, "Tomo: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 170, :y => 390)
-    @inputtomorc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 230,:y => 390)
-    @lblpagrc = FXLabel.new(self, "Página: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 290, :y => 390)
-    @inputpagrc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 350,:y => 390)
-    @lblactarc = FXLabel.new(self, "Acta: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 410, :y => 390)
-    @inputactarc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 470,:y => 390)
-    @lbldaterc = FXLabel.new(self, "Fecha (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 420)
-    @inputdaterc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170,:y => 420)
+    @lbl_reg_civ = FXLabel.new(self, "------------------------------------ REGISTRO CIVIL ------------------------------------", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width => 1050, :height => 20, :x => 10, :y => 330)
+    @lbl_provincia_rc = FXLabel.new(self, "Provincia: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 360)
+    @input_provincia_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170,:y => 360)
+    @lbl_canton_rc = FXLabel.new(self, "Cantón: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 360)
+    @input_canton_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y =>360)
+    @lbl_parroquia_rc = FXLabel.new(self, "Parroquia: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 680, :y => 360)
+    @input_parroquia_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850,:y => 360)
+    @lbl_anio_rc = FXLabel.new(self, "Año: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 50, :y => 390)
+    @input_anio_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 110,:y => 390)
+    @lbl_tomo_rc = FXLabel.new(self, "Tomo: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 170, :y => 390)
+    @input_tomo_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 230,:y => 390)
+    @lbl_pag_rc = FXLabel.new(self, "Página: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 290, :y => 390)
+    @input_pag_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 350,:y => 390)
+    @lbl_acta_rc = FXLabel.new(self, "Acta: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 410, :y => 390)
+    @input_acta_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 470,:y => 390)
+    @lbl_date_rc = FXLabel.new(self, "Fecha (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 420)
+    @input_date_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170,:y => 420)
 
 
     # create buttons
@@ -78,9 +78,9 @@ class Matrimonio < FXMainWindow
 
     # connect buttons
     @btnsave.connect(SEL_COMMAND) do
-      tomo = @inputtomo.text
-      page = @inputpage.text
-      number = @inputnumber.text
+      tomo = @input_tomo.text
+      page = @input_page.text
+      number = @input_number.text
       fecha = @input_fecha.text
       sacramento = @input_sacramento.text
       parroquia = @input_parroquia.text
@@ -95,26 +95,39 @@ class Matrimonio < FXMainWindow
       cedula_novia = @input_cedula_novia.text.empty? ? nil : @input_cedula_novia.text
       testigo_novio = @input_nombres_testigo_novio.text.empty? ? nil : @input_nombres_testigo_novio.text
       testigo_novia = @input_nombres_testigo_novia.text.empty? ? nil : @input_nombres_testigo_novia.text
-      certifica = @inputcertifica.text
-      provincia_rc = @inputprovinciarc.text
-      canton_rc = @inputcantonrc.text
-      parroquia_rc = @inputparroquiarc.text
-      anio_rc = @inputaniorc.text
-      tomo_rc = @inputtomorc.text
-      pagina_rc = @inputpagrc.text
-      acta_rc = @inputactarc.text
-      fecha_rc = @inputdaterc.text
+      certifica = @input_certifica.text
+      provincia_rc = @input_provincia_rc.text
+      canton_rc = @input_canton_rc.text
+      parroquia_rc = @input_parroquia_rc.text
+      anio_rc = @input_anio_rc.text
+      tomo_rc = @input_tomo_rc.text
+      pagina_rc = @input_pag_rc.text
+      acta_rc = @input_acta_rc.text
+      fecha_rc = @input_date_rc.text
 
       begin
-        $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)', [tomo, page, number])
-        $conn.exec('INSERT INTO creyentes (nombres, apellidos, cedula) VALUES ($1, $2, $3)', [name_novio, apellido_novio, cedula_novio])
-        $conn.exec('INSERT INTO parroquias (nombre, sector, parroco) VALUES ($1, $2, $3)', [parroquia, sector, parroco])
-        $conn.exec('INSERT INTO sacramentos (nombre, fecha, celebrante, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [sacramento, fecha, celebrante, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia])
-        $conn.exec('INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc])
-        FXMessageBox.information(self, MBOX_OK, "Información", "Datos guardados correctamente")
-        clear_input_fields
+        # tables
+          # tabla libros (id, tomo, pagina, numero)
+          # tabla creyentes (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula)
+          # tabla parroquias (id, nombre, sector, parroco)
+          # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
+          # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
+        $conn.transaction do
+          $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)', [tomo, page, number])
+          $conn.exec('INSERT INTO creyentes (nombres, apellidos, cedula) VALUES ($1, $2, $3)', [name_novio, apellido_novio, cedula_novio])
+          $conn.exec('INSERT INTO parroquias (parroquia, sector, parroco) VALUES ($1, $2, $3)', [parroquia, sector, parroco])
+          $conn.exec('INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc])
+          $conn.exec('INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [sacramento, fecha, celebrante, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia])
+          $conn.exec("COMMIT")
+          FXMessageBox.information(self, MBOX_OK, "Información", "Datos guardados correctamente")
+          clear_input_fields
+        end
       rescue PG::Error => e
         FXMessageBox.error(self, MBOX_OK, "Error", "Error al guardar los datos")
+        # Imprimir el error en la consola
+        puts e.message
+        # Imprimir detalles del error en la consola
+        puts e.backtrace.inspect
       end
     end
 
@@ -123,9 +136,9 @@ class Matrimonio < FXMainWindow
     end
 
     def clear_input_fields
-      @inputtomo.text = ""
-      @inputpage.text = ""
-      @inputnumber.text = ""
+      @input_tomo.text = ""
+      @input_page.text = ""
+      @input_number.text = ""
       @input_fecha.text = ""
       @input_sacramento.text = ""
       @input_parroquia.text = ""
@@ -140,15 +153,15 @@ class Matrimonio < FXMainWindow
       @input_cedula_novia.text = ""
       @input_nombres_testigo_novio.text = ""
       @input_nombres_testigo_novia.text = ""
-      @inputcertifica.text = ""
-      @inputprovinciarc.text = ""
-      @inputcantonrc.text = ""
-      @inputparroquiarc.text = ""
-      @inputaniorc.text = ""
-      @inputtomorc.text = ""
-      @inputpagrc.text = ""
-      @inputactarc.text = ""
-      @inputdaterc.text = ""
+      @input_certifica.text = ""
+      @input_provincia_rc.text = ""
+      @input_canton_rc.text = ""
+      @input_parroquia_rc.text = ""
+      @input_anio_rc.text = ""
+      @input_tomo_rc.text = ""
+      @input_pag_rc.text = ""
+      @input_acta_rc.text = ""
+      @input_date_rc.text = ""
     end
 
 

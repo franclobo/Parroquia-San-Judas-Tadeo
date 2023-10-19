@@ -110,15 +110,31 @@ class Bautizo < FXMainWindow
 
 
       begin
-        $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)', [tomo, page, number])
-        $conn.exec('INSERT INTO creyentes (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula])
-        $conn.exec('INSERT INTO parroquias (nombre, sector, parroco) VALUES ($1, $2, $3)', [parroquia, sector, parroco])
-        $conn.exec('INSERT INTO sacramentos (nombre, fecha, celebrante, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [sacramento, fecha, ministro, certifica, padrino, madrina, padre, madre])
-        $conn.exec('INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc])
-        FXMessageBox.information(self, MBOX_OK, "Información", "Datos guardados correctamente")
-        clear_input_fields
+        # tables
+          # tabla libros (id, tomo, pagina, numero)
+          # tabla creyentes (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula)
+          # tabla parroquias (id, nombre, sector, parroco)
+          # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
+          # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
+        # Iniciar una transacción
+        $conn.transaction do
+          $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)', [tomo, page, number])
+          $conn.exec('INSERT INTO creyentes (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula])
+          $conn.exec('INSERT INTO parroquias (parroquia, sector, parroco) VALUES ($1, $2, $3)', [parroquia, sector, parroco])
+          $conn.exec('INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc])
+          $conn.exec('INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [sacramento, fecha, ministro, certifica, padrino, madrina, padre, madre])
+          # Confirmar la transacción
+          $conn.exec("COMMIT")
+          FXMessageBox.information(self, MBOX_OK, "Información", "Datos guardados correctamente")
+          clear_input_fields
+        end
+
       rescue PG::Error => e
         FXMessageBox.error(self, MBOX_OK, "Error", "Error al guardar los datos")
+        # Imprimir el error en la consola
+        puts e.message
+        # Imprimir detalles del error en la consola
+        puts e.backtrace.inspect
       end
     end
 

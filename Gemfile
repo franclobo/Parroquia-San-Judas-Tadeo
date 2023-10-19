@@ -7,3 +7,6 @@ gem 'fxruby', '~> 1.6', '>= 1.6.33'
 
 # Install PostgreSQL
 gem 'pg'
+
+# Imprimir en PDF
+gem 'prawn'
