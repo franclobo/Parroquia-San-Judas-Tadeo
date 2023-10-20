@@ -6,6 +6,7 @@ include Fox
 class ResultadosConsulta < FXMainWindow
   def initialize(app, result_data)
     super(app, "Resultados de la Consulta", :width => 800, :height => 600)
+    @app = app
 
     @result_data = result_data  # Los datos de resultados que se pasan a esta clase
 
@@ -293,7 +294,44 @@ class ResultadosConsulta < FXMainWindow
     end
 
     @btnedit.connect(SEL_COMMAND) do
-      # editar registros seleccionados
+      # Editar registros seleccionados y actualizar la basee de datos
+      registros_seleccionados.each do |registro|
+        case registros_seleccionados[0][1]
+        when "Bautismo"
+          # Obtenemos el registro de la base de datos
+          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id WHERE sacramentos.id = #{registro[0]}"
+          $conn.exec(sql) do |result|
+            @registros = result.values[0]
+            # Abrimos la ventana de edición
+            require_relative 'actualizar_bautismo'
+            vtnactualizar_bautismo = ActualizarBautismo.new(@app, @registros)
+            vtnactualizar_bautismo.create
+            vtnactualizar_bautismo.show(PLACEMENT_SCREEN)
+          end
+        when "Confirmación"
+          # Obtenemos el registro de la base de datos
+          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id WHERE sacramentos.id = #{registro[0]}"
+          $conn.exec(sql) do |result|
+            @registros = result.values[0]
+            # Abrimos la ventana de edición
+            require_relative 'actualizar_confirmacion'
+            vtnactualizar_confirmacion = ActualizarConfirmacion.new(@app, @registros)
+            vtnactualizar_confirmacion.create
+            vtnactualizar_confirmacion.show(PLACEMENT_SCREEN)
+          end
+        when "Matrimonio"
+          # Obtenemos el registro de la base de datos
+          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id WHERE sacramentos.id = #{registro[0]}"
+          $conn.exec(sql) do |result|
+            @registros = result.values[0]
+            # Abrimos la ventana de edición
+            require_relative 'actualizar_matrimonio'
+            vtnactualizar_matrimonio = ActualizarMatrimonio.new(@app, @registros)
+            vtnactualizar_matrimonio.create
+            vtnactualizar_matrimonio.show(PLACEMENT_SCREEN)
+          end
+        end
+      end
     end
 
     @btndelete.connect(SEL_COMMAND) do

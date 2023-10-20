@@ -56,8 +56,6 @@ class Home < FXMainWindow
       vtnconsulta.create
       vtnconsulta.show(PLACEMENT_SCREEN)
     end
-
-
   end
 
   def create
