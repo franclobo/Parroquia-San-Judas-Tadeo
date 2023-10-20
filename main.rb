@@ -11,8 +11,10 @@ end
 
 class Home < FXMainWindow
   def initialize(app)
-    super(app, "Parroquia San Judas Tadeo", :width => 700, :height => 500)
+    # El fondo de la pantalla es de tono gris
+    super(app, "Parroquia San Judas Tadeo", :width => 700, :height => 400)
     @app = app
+
      # create label
     @lbltitle = FXLabel.new(self, "Bienvenido a la Parroquia San Judas Tadeo", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width => 700, :height => 20, :x => 0, :y => 20)
     # create label
@@ -56,6 +58,16 @@ class Home < FXMainWindow
       vtnconsulta.create
       vtnconsulta.show(PLACEMENT_SCREEN)
     end
+
+     # Fondo de pantalla
+  #icono = FXPNGIcon.new(app, File.open("assets/images/Logo-SJT.png", "rb").read)
+  #fondo = FXLabel.new(self, "", :opts => LAYOUT_EXPLICIT, :width => 700, :height => 400, :x => 0, :y => 0)
+  #fondo.icon = icono
+  #fondo.iconPosition = ICON_BEFORE_TEXT
+  #fondo.layoutHints = LAYOUT_CENTER_X|LAYOUT_CENTER_Y
+  #fondo.backColor = FXRGB(255,255,255)
+
+
   end
 
   def create
