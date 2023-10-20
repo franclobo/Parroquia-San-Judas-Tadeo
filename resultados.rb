@@ -336,6 +336,68 @@ class ResultadosConsulta < FXMainWindow
 
     @btndelete.connect(SEL_COMMAND) do
       # eliminar registros seleccionados
+      if registros_seleccionados.empty?
+        FXMessageBox.warning(self, MBOX_OK, "Advertencia", "Debe seleccionar al menos un registro")
+      else
+        # Mensaje de confirmación
+        if FXMessageBox.question(self, MBOX_YES_NO, "Confirmación", "¿Está seguro de eliminar los registros seleccionados?") == MBOX_CLICKED_YES
+          registros_seleccionados.each do |registro|
+            # Eliminar registros de la base de datos
+            case registros_seleccionados[0][1]
+            when "Bautismo"
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+            when "Confirmación"
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+            when "Matrimonio"
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+            end
+            # Mensaje de confirmación
+            FXMessageBox.information(self, MBOX_OK, "Información", "Los registros seleccionados se han eliminado correctamente")
+          end
+        end
+      end
     end
 
     @btncancel.connect(SEL_COMMAND) do
