@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.description = "Servicio Parroquial San Judas Tadeo"
   s.authors    = ["Francisco Javier Borja Lobato"]
   s.email      = 'fjbl2788@gmail.com'
-  s.homeoage   = 'https://github.com/franclobo/Parroquia-San-Judas-Tadeo'
+  s.homepage   = 'https://github.com/franclobo/Parroquia-San-Judas-Tadeo'
   s.license    = 'MIT'
   s.required_ruby_version = '>= 3.2.2'
   s.files      = Dir["lib/**/*.rb"]
