@@ -65,7 +65,6 @@ class Consulta < FXMainWindow
           sql += " AND sacramentos.sacramento = '#{sacramento}'" unless sacramento.empty?
           puts sql
           $conn.exec(sql) do |result|
-            puts result.values
             if result.values.empty?
               FXMessageBox.information(self, MBOX_OK, "Información", "No se encontraron registros")
             else

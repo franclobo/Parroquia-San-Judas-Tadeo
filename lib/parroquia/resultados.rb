@@ -151,11 +151,11 @@ class ResultadosConsulta < FXMainWindow
           # Definir tres casos en los que se puede imprimir el certificado y los distintos formatos para bautismo, confirmación y matrimonio
           # Bautismo
           # Encabezado
-          pdf.image "assets/images/arquidiocesisquito.png", height: 100, position: :absolute, at: [-60, 680]
+          pdf.image File.join(File.dirname(__FILE__), "assets/images/arquidiocesisquito.png"), height: 100, position: :absolute, at: [-60, 680]
           pdf.text_box "Arquidiócesis de Quito", align: :center, size: 16, style: :bold, at: [10, 670], width: pdf.bounds.width
           pdf.text_box "Parroquia \"San Judas Tadeo\"", align: :center, size: 14, style: :bold, at: [10, 650], width: pdf.bounds.width
           pdf.text_box "Jaime Roldós Aguilera, calle Oe13A y N82\nEl Condado, Quito - Ecuador\nTeléfono: 02496446", align: :center, size: 10, at: [10, 630], width: pdf.bounds.width
-          pdf.image "assets/images/sanjudastadeo.png", height: 100, position: :absolute, at: [430, 680]
+          pdf.image File.join(File.dirname(__FILE__), "assets/images/sanjudastadeo.png"), height: 100, position: :absolute, at: [430, 680]
 
           case registros_seleccionados[0][1]
           when "Bautismo"
@@ -189,7 +189,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "Lo certifica: #{registro[4]}.", :align => :justify
               pdf.move_down 10
               # Registro civil
-              pdf.text "REGISTRO CIVIL", :align => :center, :size => 16
+              pdf.text "REGISTRO CIVIL", :align => :center, :size => 16, :style => :bold
               pdf.move_down 10
               pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}", :align => :justify
               pdf.text "Año: #{registro[32]}, Tomo: #{registro[33]}, Página: #{registro[34]}, Acta: #{registro[35]}", :align => :justify
@@ -271,7 +271,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "Lo certifica: #{registro[4]}.", :align => :justify
               pdf.move_down 10
               # Registro civil
-              pdf.text "REGISTRO CIVIL", :align => :center, :size => 16
+              pdf.text "REGISTRO CIVIL", :align => :center, :size => 16, :style => :bold
               pdf.move_down 10
               pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}", :align => :justify
               pdf.text "Año: #{registro[32]}, Tomo: #{registro[33]}, Página: #{registro[34]}, Acta: #{registro[35]}", :align => :justify
