@@ -1,7 +1,7 @@
 # Create gem spec file
 Gem::Specification.new do |s|
   s.name       = 'parroquia'
-  s.version    = '0.0.2'
+  s.version    = '0.0.4'
   s.date       = '2023-10-20'
   s.summary    = "Parroquia San Judas Tadeo"
   s.description = "Servicio Parroquial San Judas Tadeo"
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage   = 'https://github.com/franclobo/Parroquia-San-Judas-Tadeo'
   s.license    = 'MIT'
   s.required_ruby_version = '>= 3.2.2'
-  s.files      = Dir["lib/**/*.rb"]
+  s.files      = Dir["lib/**/*.rb", "assets/images/*.png"]
   s.executables << 'parroquia'
   s.require_paths << 'lib'
 
