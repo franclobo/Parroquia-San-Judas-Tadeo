@@ -14,8 +14,8 @@ Gem::Specification.new do |s|
   s.executables << 'parroquia'
   s.require_paths << 'lib'
 
-  s.add_dependency 'fxruby', '~> 1.6', '>= 1.6.33'
-  s.add_dependency 'pg'
-  s.add_dependency 'prawn'
+  s.add_dependency 'fxruby', '~> 1.6', '>= 1.6.46'
+  s.add_dependency 'pg', '~> 1.5', '>= 1.5.4'
+  s.add_dependency 'prawn', '~> 2.4', '>= 2.4.0'
 end
 
