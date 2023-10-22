@@ -49,7 +49,7 @@ class Home < FXMainWindow
     @btnconsulta = FXButton.new(self, "Consultar", :opts => LAYOUT_EXPLICIT|BUTTON_NORMAL, :width => 150,:height => 30, :x => 460, :y => 270)
 
      # Footer
-    @lblfooter = FXLabel.new(self, "Web Minds Studio - 2023", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width =>700, :height => 20, :x => 0, :y => 400)
+    @lblfooter = FXLabel.new(self, "WebMinds Studio - 2023", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width =>700, :height => 20, :x => 0, :y => 400)
     @lblfooter.font = FXFont.new(app, "Geneva", 10)
     @lblfooter.backColor = FXRGB(3,187,133)
     @lblauthor = FXLabel.new(self, "Desarrollado por Ing. Francisco J. Borja L.", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width =>700, :height => 20, :x => 0, :y => 420)
