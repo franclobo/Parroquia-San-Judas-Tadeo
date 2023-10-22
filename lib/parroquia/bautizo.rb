@@ -4,73 +4,113 @@ include Fox
 class Bautizo < FXMainWindow
   def initialize(app)
     super(app, "Parroquia San Judas Tadeo", :width => 1050, :height => 600)
+    self.backColor = FXRGB(3,187,133)
     # create label
+    # Title
     @lbltitle = FXLabel.new(self, "Bienvenido a la Parroquia San Judas Tadeo", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width => 1050, :height => 20, :x => 0, :y => 20)
-    # create label
-    @lblsubtitle = FXLabel.new(self, "ARQUIDIOSESIS DE QUITO - VICARIA NORTE SERVICIO PARROQUIAL DE SAN JUDAS TADEO", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width => 1050, :height => 20, :x => 0, :y => 40)
-
-    #create label
-    @date = Time.now.strftime("%d/%m/%Y %H:%M:%S")
-    @lbldate = FXLabel.new(self, "Fecha: #{@date}", :opts => LAYOUT_EXPLICIT|JUSTIFY_RIGHT, :width => 1000, :height => 20, :x => 0, :y => 60)
-    #section libros
+    @lbltitle.font = FXFont.new(app, "Geneva", 16, FONTWEIGHT_BOLD)
+    @lbltitle.backColor = FXRGB(3,187,133)
+    # Subtitle
+    @lblsubtitle = FXLabel.new(self, "ARQUIDIOSESIS DE QUITO - SERVICIO PARROQUIAL DE SAN JUDAS TADEO", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width => 1050, :height => 20, :x => 0, :y => 40)
+    @lblsubtitle.font = FXFont.new(app, "Geneva", 10, FONTWEIGHT_BOLD)
+    @lblsubtitle.backColor = FXRGB(3,187,133)
+    # Date
+    @date = Time.now.strftime("%d/%m/%Y")
+    @lbldate = FXLabel.new(self, "Fecha: #{cambiar_formato_fecha(@date)}", :opts => LAYOUT_EXPLICIT|JUSTIFY_RIGHT, :width => 1050, :height => 20, :x => 0, :y => 60, :padRight => 20)
+    @lbldate.font = FXFont.new(app, "Geneva", 12, FONTWEIGHT_BOLD)
+    @lbldate.backColor = FXRGB(3,187,133)
+    # section libros
     @lbl_tomo = FXLabel.new(self, "Tomo", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 50, :y => 100)
+    @lbl_tomo.backColor = FXRGB(3,187,133)
     @input_tomo = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 110, :y => 100)
     @lbl_page = FXLabel.new(self, "Pagina", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 170, :y => 100)
+    @lbl_page.backColor = FXRGB(3,187,133)
     @input_page = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 230, :y => 100)
     @lbl_number = FXLabel.new(self, "Numero", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 290, :y => 100)
+    @lbl_number.backColor = FXRGB(3,187,133)
     @input_number = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 350, :y => 100)
 
-    #section datos
+    # section datos
     @lbl_fecha = FXLabel.new(self, "Fecha de bautismo (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 150)
+    @lbl_fecha.backColor = FXRGB(3,187,133)
     @input_fecha = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 340, :y => 150)
     @lbl_sacramento = FXLabel.new(self, "Sacramento: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 680, :y => 150)
+    @lbl_sacramento.backColor = FXRGB(3,187,133)
     @input_sacramento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850, :y => 150)
+    @input_sacramento.text = "Bautismo"
+    @input_sacramento.disable
     @lbl_parroquia = FXLabel.new(self, "Iglesia parroquial: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 180)
+    @lbl_parroquia.backColor = FXRGB(3,187,133)
     @input_parroquia = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 180)
+    @input_parroquia.text = "San Judas Tadeo"
+    @input_parroquia.disable
     @lbl_sector = FXLabel.new(self, "Sector: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 180)
+    @lbl_sector.backColor = FXRGB(3,187,133)
     @input_sector = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y => 180)
+    @input_sector.text = "La Roldós"
     @lbl_parroco = FXLabel.new(self, "Parroco: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 680, :y => 180)
+    @lbl_parroco.backColor = FXRGB(3,187,133)
     @input_parroco = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850, :y => 180)
     @lbl_ministro = FXLabel.new(self, "Ministro: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 210)
+    @lbl_ministro.backColor = FXRGB(3,187,133)
     @input_ministro = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 210)
     @lbl_name = FXLabel.new(self, "Nombres: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 240)
+    @lbl_name.backColor = FXRGB(3,187,133)
     @input_name = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 240)
     @lbl_apellidos = FXLabel.new(self, "Apellidos: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 240)
+    @lbl_apellidos.backColor = FXRGB(3,187,133)
     @input_apellidos = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y => 240)
     @lbl_cedula = FXLabel.new(self, "Cédula: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 270)
+    @lbl_cedula.backColor = FXRGB(3,187,133)
     @input_cedula = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 270)
     @lbl_lugar_nacimiento = FXLabel.new(self, "Lugar de nacimiento: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 300)
+    @lbl_lugar_nacimiento.backColor = FXRGB(3,187,133)
     @input_lugar_nacimiento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 300)
     @lbl_fecha_nacimiento = FXLabel.new(self, "Fecha de nacimiento (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 340, :y => 300)
+    @lbl_fecha_nacimiento.backColor = FXRGB(3,187,133)
     @input_fecha_nacimiento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 590, :y => 300)
     @lbl_padre = FXLabel.new(self, "Padre: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 330)
+    @lbl_padre.backColor = FXRGB(3,187,133)
     @input_padre = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 330)
     @lbl_madre = FXLabel.new(self, "Madre: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 330)
+    @lbl_madre.backColor = FXRGB(3,187,133)
     @input_madre = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y => 330)
     @lbl_padrino = FXLabel.new(self, "Padrino: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 360)
+    @lbl_padrino.backColor = FXRGB(3,187,133)
     @input_padrino = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 360)
     @lbl_madrina = FXLabel.new(self, "Madrina: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 360)
+    @lbl_madrina.backColor = FXRGB(3,187,133)
     @input_madrina = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y => 360)
     @lbl_certifica = FXLabel.new(self, "Certifica: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 390)
+    @lbl_certifica.backColor = FXRGB(3,187,133)
     @input_certifica = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 390)
 
-    #section registro civil
+    # section registro civil
     @lbl_reg_civ = FXLabel.new(self, "------------------------------------ REGISTRO CIVIL ------------------------------------", :opts => LAYOUT_EXPLICIT|JUSTIFY_CENTER_X, :width => 1050, :height => 20, :x => 10, :y => 420)
+    @lbl_reg_civ.backColor = FXRGB(3,187,133)
     @lbl_provincia_rc = FXLabel.new(self, "Provincia: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 450)
+    @lbl_provincia_rc.backColor = FXRGB(3,187,133)
     @input_provincia_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170,:y => 450)
     @lbl_canton_rc = FXLabel.new(self, "Cantón: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 450)
+    @lbl_canton_rc.backColor = FXRGB(3,187,133)
     @input_canton_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y =>450)
     @lbl_parroquia_rc = FXLabel.new(self, "Parroquia: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 680, :y => 450)
+    @lbl_parroquia_rc.backColor = FXRGB(3,187,133)
     @input_parroquia_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850,:y => 450)
     @lbl_anio_rc = FXLabel.new(self, "Año: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 50, :y => 480)
+    @lbl_anio_rc.backColor = FXRGB(3,187,133)
     @input_anio_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 110,:y => 480)
     @lbl_tomo_rc = FXLabel.new(self, "Tomo: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 170, :y => 480)
+    @lbl_tomo_rc.backColor = FXRGB(3,187,133)
     @input_tomo_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 230,:y => 480)
     @lbl_pag_rc = FXLabel.new(self, "Página: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 290, :y => 480)
+    @lbl_pag_rc.backColor = FXRGB(3,187,133)
     @input_pag_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 350,:y => 480)
     @lbl_acta_rc = FXLabel.new(self, "Acta: ", :opts => LAYOUT_EXPLICIT, :width => 50, :height => 20, :x => 410, :y => 480)
+    @lbl_acta_rc.backColor = FXRGB(3,187,133)
     @input_acta_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 50,:height => 20, :x => 470,:y => 480)
     @lbl_date_rc = FXLabel.new(self, "Fecha (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 510)
+    @lbl_date_rc.backColor = FXRGB(3,187,133)
     @input_date_rc = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170,:y => 510)
 
 
@@ -128,8 +168,8 @@ class Bautizo < FXMainWindow
           FXMessageBox.information(self, MBOX_OK, "Información", "Datos guardados correctamente")
           clear_input_fields
         end
-
       rescue PG::Error => e
+        $conn.exec("ROLLBACK")
         FXMessageBox.error(self, MBOX_OK, "Error", "Error al guardar los datos")
         # Imprimir el error en la consola
         puts e.message
@@ -147,9 +187,6 @@ class Bautizo < FXMainWindow
       @input_page.text = ""
       @input_number.text = ""
       @input_fecha.text = ""
-      @input_sacramento.text = ""
-      @input_parroquia.text = ""
-      @input_sector.text = ""
       @input_parroco.text = ""
       @input_ministro.text = ""
       @input_name.text = ""
@@ -172,6 +209,38 @@ class Bautizo < FXMainWindow
       @input_date_rc.text = ""
     end
   end
+
+  # Nombre del mes
+    def nombre_mes(mes)
+      meses = {
+        "01" => "enero",
+        "02" => "febrero",
+        "03" => "marzo",
+        "04" => "abril",
+        "05" => "mayo",
+        "06" => "junio",
+        "07" => "julio",
+        "08" => "agosto",
+        "09" => "septiembre",
+        "10" => "octubre",
+        "11" => "noviembre",
+        "12" => "diciembre"
+      }
+      meses[mes]
+    end
+
+
+  # Cambiar el formato de la fecga de YYYY-MM-DD a DD de nombre_mes de YYYY
+    def cambiar_formato_fecha(fecha)
+      # split "-" or "/"
+      fecha = fecha.split(/-|\//)
+      # si el formato de fecha es YYYY-MM-DD o YYYY/MM/DD, sino si es DD-MM-YYYY o DD/MM/YYYY
+      if fecha[0].length == 4
+        "#{fecha[2]} de #{nombre_mes(fecha[1])} de #{fecha[0]}"
+      else
+        "#{fecha[0]} de #{nombre_mes(fecha[1])} de #{fecha[2]}"
+      end
+    end
 
   def create
     super

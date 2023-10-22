@@ -6,30 +6,42 @@ class Consulta < FXMainWindow
   def initialize(app)
     super(app, "Parroquia San Judas Tadeo", :width => 700, :height => 500)
     @app = app
+    self.backColor = FXRGB(3,187,133)
 
     # seccion encabezado
     # create label
     @lbltitle = FXLabel.new(self, "Bienvenido a la Parroquia San Judas Tadeo", :opts => LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, :width => 700, :height => 20, :x => 0, :y => 20)
+    @lbltitle.font = FXFont.new(app, "Geneva", 16, FONTWEIGHT_BOLD)
+    @lbltitle.backColor = FXRGB(3,187,133)
     # create label
     @lblsubtitle = FXLabel.new(self, "ARQUIDIOSESIS DE QUITO - VICARIA NORTE SERVICIO PARROQUIAL DE SAN JUDAS TADEO", :opts => LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, :width => 700, :height => 20, :x => 0, :y => 40)
-
+    @lblsubtitle.font = FXFont.new(app, "Geneva", 10, FONTWEIGHT_BOLD)
+    @lblsubtitle.backColor = FXRGB(3,187,133)
     # create label
-    @date = Time.now.strftime("%d/%m/%Y %H:%M:%S")
-    @lbldate = FXLabel.new(self, "Fecha: #{@date}", :opts => LAYOUT_EXPLICIT | JUSTIFY_RIGHT, :width => 680, :height => 20, :x => 0, :y => 60)
-
+    @date = Time.now.strftime("%d/%m/%Y")
+    @lbldate = FXLabel.new(self, "Fecha: #{cambiar_formato_fecha(@date)} ", :opts => LAYOUT_EXPLICIT | JUSTIFY_RIGHT, :width => 680, :height => 20, :x => 0, :y => 60)
+    @lbldate.font = FXFont.new(app, "Geneva", 12, FONTWEIGHT_BOLD)
+    @lbldate.backColor = FXRGB(3,187,133)
     # seccioan consulta
     @lbl_consulta = FXLabel.new(self, "Consultar por: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 150)
+    @lbl_consulta.backColor = FXRGB(3,187,133)
     @lbl_apellidos = FXLabel.new(self, "Apellidos: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 180)
+    @lbl_apellidos.backColor = FXRGB(3,187,133)
     @input_apellidos = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 180)
     @lbl_nombres = FXLabel.new(self, "Nombres: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 180)
+    @lbl_nombres.backColor = FXRGB(3,187,133)
     @input_nombres = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 510, :y => 180)
     @lbl_cedula = FXLabel.new(self, "Cédula: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 210)
+    @lbl_cedula.backColor = FXRGB(3,187,133)
     @input_cedula = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 210)
     @lbl_fecha_desde = FXLabel.new(self, "Fecha desde (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 240)
+    @lbl_fecha_desde.backColor = FXRGB(3,187,133)
     @input_fecha_desde = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 240)
     @lbl_fecha_hasta = FXLabel.new(self, "Fecha hasta (AAAA/MM/DD): ", :opts => LAYOUT_EXPLICIT, :width => 250, :height => 20, :x => 10, :y => 270)
+    @lbl_fecha_hasta.backColor = FXRGB(3,187,133)
     @input_fecha_hasta = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 270)
     @lbl_sacramento = FXLabel.new(self, "Sacramento: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 300)
+    @lbl_sacramento.backColor = FXRGB(3,187,133)
     @input_sacramento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 170, :y => 300)
 
     # create buttons
@@ -95,6 +107,39 @@ class Consulta < FXMainWindow
       @input_sacramento.text = ""
     end
   end
+
+  # Nombre del mes
+    def nombre_mes(mes)
+      meses = {
+        "01" => "enero",
+        "02" => "febrero",
+        "03" => "marzo",
+        "04" => "abril",
+        "05" => "mayo",
+        "06" => "junio",
+        "07" => "julio",
+        "08" => "agosto",
+        "09" => "septiembre",
+        "10" => "octubre",
+        "11" => "noviembre",
+        "12" => "diciembre"
+      }
+      meses[mes]
+    end
+
+
+  # Cambiar el formato de la fecga de YYYY-MM-DD a DD de nombre_mes de YYYY
+    def cambiar_formato_fecha(fecha)
+      # split "-" or "/"
+      fecha = fecha.split(/-|\//)
+      # si el formato de fecha es YYYY-MM-DD o YYYY/MM/DD, sino si es DD-MM-YYYY o DD/MM/YYYY
+      if fecha[0].length == 4
+        "#{fecha[2]} de #{nombre_mes(fecha[1])} de #{fecha[0]}"
+      else
+        "#{fecha[0]} de #{nombre_mes(fecha[1])} de #{fecha[2]}"
+      end
+    end
+
 
   def create
     super

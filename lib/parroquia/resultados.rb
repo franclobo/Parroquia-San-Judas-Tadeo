@@ -153,7 +153,7 @@ class ResultadosConsulta < FXMainWindow
           # Encabezado
           pdf.image File.join(File.dirname(__FILE__), "assets/images/arquidiocesisquito.png"), height: 100, position: :absolute, at: [-60, 680]
           pdf.text_box "Arquidiócesis de Quito", align: :center, size: 16, style: :bold, at: [10, 670], width: pdf.bounds.width
-          pdf.text_box "Parroquia \"San Judas Tadeo\"", align: :center, size: 14, style: :bold, at: [10, 650], width: pdf.bounds.width
+          pdf.text_box "Parroquia Eclesiástica \"San Judas Tadeo\"", align: :center, size: 14, style: :bold, at: [10, 650], width: pdf.bounds.width
           pdf.text_box "Jaime Roldós Aguilera, calle Oe13A y N82\nEl Condado, Quito - Ecuador\nTeléfono: 02496446", align: :center, size: 10, at: [10, 630], width: pdf.bounds.width
           pdf.image File.join(File.dirname(__FILE__), "assets/images/sanjudastadeo.png"), height: 100, position: :absolute, at: [430, 680]
 
