@@ -41,8 +41,8 @@
 <details>
   <summary>Client</summary>
   <ul>
-    <li><a href="https://reactjs.org/">Ruby</a></li>
-    <li><a href="https://reactjs.org/">FXRuby</a></li>
+    <li><a href="https://www.ruby-lang.org/es/">Ruby</a></li>
+    <li><a href="https://rubydoc.info/gems/fxruby/frames">FXRuby</a></li>
   </ul>
 </details>
 
@@ -127,6 +127,11 @@ Install this project with:
   bundle install
 ```
 
+Also you can install the gem:
+
+```sh
+  gem install parroquia
+```
 
 ### Usage
 
@@ -147,6 +152,7 @@ To run the project, execute the following command:
 - GitHub: [@franclobo](https://github.com/franclobo)
 - Twitter: [@Pancho2788](https://twitter.com/Pancho2788)
 - LinkedIn: [Francisco Borja](https://www.linkedin.com/in/francisco-borja-lobato/)
+- WEbsite: [Web Minds Studio](https://www.webmindsstudio.com)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

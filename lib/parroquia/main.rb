@@ -19,7 +19,8 @@ class Home < FXMainWindow
     @font = FXFont.new(app, "Geneva", 12, FONTWEIGHT_BOLD)
 
     # Inserar imagen del logo
-    @image = File.open("lib/parroquia/assets/images/Logo-SJT.png", "rb")
+    @image = File.join(File.dirname(__FILE__), "assets/images/Logo-SJT.png")
+    @image = File.open(@image, "rb")
     @image = FXPNGIcon.new(app, @image.read)
     @logo = FXImageFrame.new(self, @image, :opts => LAYOUT_EXPLICIT|LAYOUT_CENTER_X|LAYOUT_CENTER_Y, :width => 400, :height => 250, :x => 10, :y => 100)
     # Color de fondo de image frame es el mismo que el de la ventana
