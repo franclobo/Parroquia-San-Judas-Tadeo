@@ -69,23 +69,33 @@
 
 - **Home page**
 
-  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/1735692c-1695-4fdd-8513-9f17397eb5e7)
+  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/fc4b5bec-25e3-41fa-ab64-30581c3ff1fe)
+
 
 - **Baptism registration**
 
-  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/fa4899be-c2f0-40d8-b666-d0f8720ac505)
+  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/9dd51556-3383-4239-b53c-3fd0975dadf0)
+
 
 - **Confirmation registration**
 
-  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/eb01aa3f-daaf-4224-9404-a27a267ea0cd)
+  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/fc926963-dd7a-48ad-8f1b-8e20b1093bec)
+
 
 - **Marriage registration**
 
-  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/bcd2b719-441e-4cb9-8c5c-f992379117c0)
+  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/38e52084-bbc7-41a2-aaaf-5c6b8726549c)
+
 
 - **Searchings**
 
-  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/214d8143-4dbb-4ee3-aee1-40646657ba40)
+  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/798259a0-8509-4786-9370-da26ab260dc0)
+
+  **Searching Results**
+
+  ![image](https://github.com/franclobo/Parroquia-San-Judas-Tadeo/assets/58642949/d1f131cf-7ad1-4792-a9d8-23160786dfee)
+
+
 
 - **ERD Schema**
 
