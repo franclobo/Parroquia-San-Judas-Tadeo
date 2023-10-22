@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <img src="./astets/images/Logo-SJT.png" alt="logo" width="140"  height="auto" />
+  <img src="./lib/parroquia/astets/images/Logo-SJT.png" alt="logo" width="140"  height="auto" />
   <br/>
 
   <h3><b>Parroquia San Judas Tadeo</b></h3>
