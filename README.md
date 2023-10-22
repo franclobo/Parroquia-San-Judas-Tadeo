@@ -89,7 +89,7 @@
 
 - **ERD Schema**
 
- <img src="./astets/images/schema.png" alt="schema" />
+ <img src="./lib/parroquia/assets/images/schema.png" alt="schema" />
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
