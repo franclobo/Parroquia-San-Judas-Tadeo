@@ -4,7 +4,7 @@ include Fox
 
 class Consulta < FXMainWindow
   def initialize(app)
-    super(app, "Parroquia San Judas Tadeo", :width => 700, :height => 500)
+    super(app, "Parroquia San Judas Tadeo", :width => 700, :height => 380)
     @app = app
     self.backColor = FXRGB(3,187,133)
 
@@ -75,7 +75,6 @@ class Consulta < FXMainWindow
           sql += " AND sacramentos.fecha >= '#{fecha_desde}'" unless fecha_desde.empty?
           sql += " AND sacramentos.fecha <= '#{fecha_hasta}'" unless fecha_hasta.empty?
           sql += " AND sacramentos.sacramento = '#{sacramento}'" unless sacramento.empty?
-          puts sql
           $conn.exec(sql) do |result|
             if result.values.empty?
               FXMessageBox.information(self, MBOX_OK, "Información", "No se encontraron registros")

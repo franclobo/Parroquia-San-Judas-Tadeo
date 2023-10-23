@@ -5,7 +5,7 @@ include Fox
 
 class ResultadosConsulta < FXMainWindow
   def initialize(app, result_data)
-    super(app, "Resultados de la Consulta", :width => 800, :height => 600)
+    super(app, "Resultados de la Consulta", :width => 800, :height => 480)
     @app = app
 
     @result_data = result_data  # Los datos de resultados que se pasan a esta clase
@@ -120,10 +120,9 @@ class ResultadosConsulta < FXMainWindow
     end
 
     # create buttons
-    @btnprint = FXButton.new(self, "Imprimir", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 10, :y => 430)
-    @btnedit = FXButton.new(self, "Editar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 120, :y => 430)
-    @btndelete = FXButton.new(self, "Eliminar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 230, :y => 430)
-    @btncancel = FXButton.new(self, "Cancelar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 340, :y => 430)
+    @btnprint = FXButton.new(self, "Exportar PDF", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 460, :y => 430)
+    @btnedit = FXButton.new(self, "Editar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 570, :y => 430)
+    @btndelete = FXButton.new(self, "Eliminar", :opts => LAYOUT_EXPLICIT | BUTTON_NORMAL, :width => 100, :height => 30, :x => 680, :y => 430)
 
     # connect buttons
     @btnprint.connect(SEL_COMMAND) do
@@ -404,11 +403,6 @@ class ResultadosConsulta < FXMainWindow
           end
         end
       end
-    end
-
-    @btncancel.connect(SEL_COMMAND) do
-      # cerrar ventana
-      close
     end
   end
 
