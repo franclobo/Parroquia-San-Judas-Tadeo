@@ -162,7 +162,7 @@ Or you can run the gem:
 
 > Mention all of the collaborators of this project.
 
-👤 **Author1**
+👤 **Francisco J. Borja L.**
 
 - GitHub: [@franclobo](https://github.com/franclobo)
 - Twitter: [@Pancho2788](https://twitter.com/Pancho2788)
