@@ -150,6 +150,11 @@ To run the project, execute the following command:
 ```sh
   ruby main.rb
 ```
+Or you can run the gem:
+
+```sh
+  parroquia
+```
 
 <!-- AUTHORS -->
 
