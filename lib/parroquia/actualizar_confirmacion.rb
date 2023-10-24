@@ -44,6 +44,7 @@ class ActualizarConfirmacion < FXMainWindow
     @lbl_sacramento.backColor = FXRGB(3,187,133)
     @input_sacramento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850, :y => 150)
     @input_sacramento.text = @registro[1]
+    @input_sacramento.disable
     @lbl_parroquia = FXLabel.new(self, "Iglesia parroquial: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 180)
     @lbl_parroquia.backColor = FXRGB(3,187,133)
     @input_parroquia = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 180)
@@ -81,7 +82,7 @@ class ActualizarConfirmacion < FXMainWindow
     @input_cedula = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x =>850, :y => 300)
     @input_cedula.text = @registro[23]
     @lbl_padrino = FXLabel.new(self, "Padrino: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 330)
-    @lbl_pdrino.backColor = FXRGB(3,187,133)
+    @lbl_padrino.backColor = FXRGB(3,187,133)
     @input_padrino = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 330)
     @input_padrino.text = @registro[5]
     @lbl_certifica = FXLabel.new(self, "Certifica: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 360)
@@ -135,10 +136,17 @@ class ActualizarConfirmacion < FXMainWindow
           # Actualizar la tabla sacramentos
           $conn.exec('UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4, padrino = $5 WHERE id = $6', [sacramento, fecha, celebrante, certifica, padrino, registro[0]])
 
-          # Confirmar la transacción
-          $conn.exec("COMMIT")
-          FXMessageBox.information(self, MBOX_OK, "Información", "Datos actualizados correctamente")
-          clear_input_fields
+
+          # ¿Desea guardar los cambios? SI: commit msg: datos actualizados correctamente, NO: rollback, close
+          if FXMessageBox.question(self, MBOX_YES_NO, "Pregunta", "¿Desea guardar los cambios?") == MBOX_CLICKED_YES
+            # Confirmar la transacción
+            $conn.exec("COMMIT")
+            FXMessageBox.information(self, MBOX_OK, "Información", "Datos actualizados correctamente")
+            close
+          else
+            $conn.exec("ROLLBACK")
+            close
+          end
         end
       rescue PG::Error => e
         # En caso de error, se realizará automáticamente un rollback
@@ -151,26 +159,8 @@ class ActualizarConfirmacion < FXMainWindow
     end
 
     @btncancel.connect(SEL_COMMAND) do
-      clear_input_fields
-    end
-
-    def clear_input_fields
-      @input_tomo.text = ""
-      @input_page.text = ""
-      @input_number.text = ""
-      @input_fecha.text = ""
-      @input_sacramento.text = ""
-      @input_parroquia.text = ""
-      @input_sector.text = ""
-      @input_parroco.text = ""
-      @input_celebrante.text = ""
-      @input_name.text = ""
-      @input_apellidos.text = ""
-      @input_lugar_nacimiento.text = ""
-      @input_fecha_nacimiento.text = ""
-      @input_cedula.text = ""
-      @input_padrino.text = ""
-      @input_certifica.text = ""
+      FXMessageBox.warning(self, MBOX_OK, "Advertencia", "No se guardarán los cambios")
+      close
     end
   end
 

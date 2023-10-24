@@ -43,6 +43,7 @@ class ActualizarMatrimonio < FXMainWindow
     @lbl_sacramento.backColor = FXRGB(3,187,133)
     @input_sacramento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850, :y => 150)
     @input_sacramento.text = @registro[1]
+    @input_sacramento.disable
     @lbl_parroquia = FXLabel.new(self, "Iglesia parroquial: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 180)
     @lbl_parroquia.backColor = FXRGB(3,187,133)
     @input_parroquia = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 180)
@@ -177,9 +178,16 @@ class ActualizarMatrimonio < FXMainWindow
           $conn.exec('UPDATE creyentes SET nombres = $1, apellidos = $2, cedula = $3 WHERE id = $4', [name_novio, apellido_novio, cedula_novio, registro[18]])
           $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4', [parroquia, sector, parroco, registro[24]])
           $conn.exec('UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc, registro[28]])
-          $conn.exec("COMMIT")
-          FXMessageBox.information(self, MBOX_OK, "Información", "Datos actualizados correctamente")
-          clear_input_fields
+
+          # ¿Desea guardar los cambios? SI: commit msg: datos actualizados correctamente, NO: rollback, close
+          if FXMessageBox.question(self, MBOX_YES_NO, "Pregunta", "¿Desea guardar los cambios?") == MBOX_CLICKED_YES
+            $conn.exec("COMMIT")
+            FXMessageBox.information(self, MBOX_OK, "Información", "Datos actualizados correctamente")
+            close
+          else
+            $conn.exec("ROLLBACK")
+            close
+          end
         end
       rescue PG::Error => e
         FXMessageBox.error(self, MBOX_OK, "Error", "Error al guardar los datos")
@@ -191,36 +199,8 @@ class ActualizarMatrimonio < FXMainWindow
     end
 
     @btncancel.connect(SEL_COMMAND) do
-      clear_input_fields
-    end
-
-    def clear_input_fields
-      @input_tomo.text = ""
-      @input_page.text = ""
-      @input_number.text = ""
-      @input_fecha.text = ""
-      @input_sacramento.text = ""
-      @input_parroquia.text = ""
-      @input_sector.text = ""
-      @input_parroco.text = ""
-      @input_celebrante.text = ""
-      @input_name_novio.text = ""
-      @input_apellido_novio.text = ""
-      @input_cedula_novio.text = ""
-      @input_name_novia.text = ""
-      @input_apellido_novia.text = ""
-      @input_cedula_novia.text = ""
-      @input_nombres_testigo_novio.text = ""
-      @input_nombres_testigo_novia.text = ""
-      @input_certifica.text = ""
-      @input_provincia_rc.text = ""
-      @input_canton_rc.text = ""
-      @input_parroquia_rc.text = ""
-      @input_anio_rc.text = ""
-      @input_tomo_rc.text = ""
-      @input_pag_rc.text = ""
-      @input_acta_rc.text = ""
-      @input_date_rc.text = ""
+      FXMessageBox.warning(self, MBOX_OK, "Advertencia", "No se guardarán los cambios")
+      close
     end
   end
 

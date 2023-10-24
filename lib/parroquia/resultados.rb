@@ -404,6 +404,7 @@ class ResultadosConsulta < FXMainWindow
         end
       end
     end
+    Prawn::Fonts::AFM.hide_m17n_warning = true
   end
 
   def create

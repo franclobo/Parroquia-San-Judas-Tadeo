@@ -44,6 +44,7 @@ class ActualizarBautismo < FXMainWindow
     @lbl_sacramento.backColor = FXRGB(3,187,133)
     @input_sacramento = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850, :y => 150)
     @input_sacramento.text = registro[1]
+    @input_sacramento.disable
     @lbl_parroquia = FXLabel.new(self, "Iglesia parroquial: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 180)
     @lbl_parroquia.backColor = FXRGB(3,187,133)
     @input_parroquia = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 170, :y => 180)
@@ -53,7 +54,7 @@ class ActualizarBautismo < FXMainWindow
     @input_sector = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y => 180)
     @input_sector.text = registro[26]
     @lbl_parroco = FXLabel.new(self, "Parroco: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 680, :y => 180)
-    @lbl_parroc.backColor = FXRGB(3,187,133)
+    @lbl_parroco.backColor = FXRGB(3,187,133)
     @input_parroco = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850, :y => 180)
     @input_parroco.text = registro[27]
     @lbl_ministro = FXLabel.new(self, "Ministro: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 10, :y => 210)
@@ -187,10 +188,17 @@ class ActualizarBautismo < FXMainWindow
           $conn.exec('UPDATE creyentes SET nombres = $1, apellidos = $2, lugar_nacimiento = $3, fecha_nacimiento = $4, cedula = $5 WHERE id = $6', [name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula, registro[18]])
           $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4', [parroquia, sector, parroco, registro[24]])
           $conn.exec('UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc, registro[28]])
-          # Confirmar la transacción
-          $conn.exec("COMMIT")
-          FXMessageBox.information(self, MBOX_OK, "Información", "Datos guardados correctamente")
-          clear_input_fields
+
+          # ¿Desea guardar los cambios? SI: commit msg: datos actualizados correctamente, NO: rollback, close
+          if FXMessageBox.question(self, MBOX_YES_NO, "Pregunta", "¿Desea guardar los cambios?") == MBOX_CLICKED_YES
+            # Confirmar la transacción
+            $conn.exec("COMMIT")
+            FXMessageBox.information(self, MBOX_OK, "Información", "Datos actualizados correctamente")
+            close
+          else
+            $conn.exec("ROLLBACK")
+            close
+          end
         end
 
       rescue PG::Error => e
@@ -203,37 +211,8 @@ class ActualizarBautismo < FXMainWindow
     end
 
     @btncancel.connect(SEL_COMMAND) do
-      clear_input_fields
-    end
-
-    def clear_input_fields
-      @input_tomo.text = ""
-      @input_page.text = ""
-      @input_number.text = ""
-      @input_fecha.text = ""
-      @input_sacramento.text = ""
-      @input_parroquia.text = ""
-      @input_sector.text = ""
-      @input_parroco.text = ""
-      @input_ministro.text = ""
-      @input_name.text = ""
-      @input_apellidos.text = ""
-      @input_lugar_nacimiento.text = ""
-      @input_fecha_nacimiento.text = ""
-      @input_cedula.text = ""
-      @input_padrino.text = ""
-      @input_madrina.text = ""
-      @input_padre.text = ""
-      @input_madre.text = ""
-      @input_certifica.text = ""
-      @input_provincia_rc.text = ""
-      @input_canton_rc.text = ""
-      @input_parroquia_rc.text = ""
-      @input_anio_rc.text = ""
-      @input_tomo_rc.text = ""
-      @input_pag_rc.text = ""
-      @input_acta_rc.text = ""
-      @input_date_rc.text = ""
+      FXMessageBox.warning(self, MBOX_OK, "Advertencia", "No se guardarán los cambios")
+      close
     end
   end
 
