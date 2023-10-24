@@ -1,6 +1,7 @@
 require 'pg'
 require 'fox16'
 include Fox
+require_relative 'parroquia/main'
 
 class Parroquia::Main < FXMainWindow
   def initialize(app)
