@@ -1,2 +1,4 @@
+#!/usr/bin/env ruby
+
 require_relative '../lib/parroquia/main'
 Parroquia::Main.new.start
