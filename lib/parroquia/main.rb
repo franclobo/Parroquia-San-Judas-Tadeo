@@ -1,9 +1,8 @@
 require 'pg'
 require 'fox16'
 include Fox
-require_relative 'parroquia/main'
 
-class Parroquia::Main < FXMainWindow
+class Home < FXMainWindow
   def initialize(app)
     super(app, "Parroquia San Judas Tadeo", :width => 700, :height => 500)
     @app = app
@@ -128,7 +127,7 @@ if $conn.status != PG::CONNECTION_OK
 end
 
 app = FXApp.new
-vtnhome = Parroquia::Main.new(app)
+vtnhome = Home.new(app)
 app.create
 app.run
 
