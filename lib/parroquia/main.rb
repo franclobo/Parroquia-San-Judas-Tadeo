@@ -2,14 +2,7 @@ require 'pg'
 require 'fox16'
 include Fox
 
-$conn = PG.connect(host: 'localhost', port: '5432', dbname: 'sacramentos', user: 'postgres', password: 'postgres')
-# Comprobar conexión con la base de datos
-if $conn.status != PG::CONNECTION_OK
-  puts "Error de conexión con la base de datos"
-  exit
-end
-
-class Home < FXMainWindow
+class Parroquia::Main < FXMainWindow
   def initialize(app)
     super(app, "Parroquia San Judas Tadeo", :width => 700, :height => 500)
     @app = app
@@ -126,8 +119,15 @@ class Home < FXMainWindow
   end
 end
 
+$conn = PG.connect(host: 'localhost', port: '5432', dbname: 'sacramentos', user: 'postgres', password: 'postgres')
+# Comprobar conexión con la base de datos
+if $conn.status != PG::CONNECTION_OK
+  puts "Error de conexión con la base de datos"
+  exit
+end
+
 app = FXApp.new
-vtnhome = Home.new(app)
+vtnhome = Parroquia::Main.new(app)
 app.create
 app.run
 
