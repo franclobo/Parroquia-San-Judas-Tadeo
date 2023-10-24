@@ -222,7 +222,7 @@ class Matrimonio < FXMainWindow
     end
 
 
-  # Cambiar el formato de la fecga de YYYY-MM-DD a DD de nombre_mes de YYYY
+  # Cambiar el formato de la fecha de YYYY-MM-DD a DD de nombre_mes de YYYY
     def cambiar_formato_fecha(fecha)
       # split "-" or "/"
       fecha = fecha.split(/-|\//)
