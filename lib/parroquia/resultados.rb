@@ -227,7 +227,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "Nacido/da el #{registro[22]} en #{registro[21]}.", :align => :justify
               pdf.move_down 10
               # Padrinos
-              pdf.text "Fueron sus padrinos: #{registro[5]} y #{registro[6]} a quienes se advirtió de sus obligaciones y parentezco espiritual.", :align => :justify
+              pdf.text "Fue su padrino: #{registro[5]} a quien se advirtió de sus obligaciones y parentezco espiritual.", :align => :justify
               pdf.move_down 10
               # Certifica
               pdf.text "Lo certifica: #{registro[4]}.", :align => :justify
