@@ -112,49 +112,40 @@ class ActualizarConfirmacion < FXMainWindow
       padrino = @input_padrino.text.empty? ? nil : @input_padrino.text
       certifica = @input_certifica.text
 
-      begin
-        # tables
-          # tabla libros (id, tomo, pagina, numero)
-          # tabla creyentes (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula)
-          # tabla parroquias (id, nombre, sector, parroco)
-          # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
-          # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
-        # Iniciar una transacción
-        $conn.transaction do
-          # Actualizar la tabla libros
-          $conn.exec('UPDATE libros SET tomo = $1, pagina = $2, numero = $3 WHERE id = $4', [tomo, page, number, registro[14]])
+      # tables
+        # tabla libros (id, tomo, pagina, numero)
+        # tabla creyentes (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula)
+        # tabla parroquias (id, nombre, sector, parroco)
+        # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
+        # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
+      # Iniciar una transacción
+      $conn.transaction do
+        # Actualizar la tabla libros
+        $conn.exec('UPDATE libros SET tomo = $1, pagina = $2, numero = $3 WHERE id = $4', [tomo, page, number, registro[14]])
 
-          # Actualizar la tabla creyentes
-          $conn.exec('UPDATE creyentes SET nombres = $1, apellidos = $2, lugar_nacimiento = $3, fecha_nacimiento = $4, cedula = $5 WHERE id = $6', [name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula, registro[18]])
+        # Actualizar la tabla creyentes
+        $conn.exec('UPDATE creyentes SET nombres = $1, apellidos = $2, lugar_nacimiento = $3, fecha_nacimiento = $4, cedula = $5 WHERE id = $6', [name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula, registro[18]])
 
-          # Actualizar la tabla parroquias
-          $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4', [parroquia, sector, parroco, registro[24]])
+        # Actualizar la tabla parroquias
+        $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4', [parroquia, sector, parroco, registro[24]])
 
-          # Actualizar la tabla registros civiles, si no existen datos se crea un registro nuevo con id que corresponda y se llena los demaás datos con nil
-          $conn.exec('UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [nil, nil, nil, nil, nil, nil, nil, nil, registro[28]])
+        # Actualizar la tabla registros civiles, si no existen datos se crea un registro nuevo con id que corresponda y se llena los demaás datos con nil
+        $conn.exec('UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [nil, nil, nil, nil, nil, nil, nil, nil, registro[28]])
 
-          # Actualizar la tabla sacramentos
-          $conn.exec('UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4, padrino = $5 WHERE id = $6', [sacramento, fecha, celebrante, certifica, padrino, registro[0]])
+        # Actualizar la tabla sacramentos
+        $conn.exec('UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4, padrino = $5 WHERE id = $6', [sacramento, fecha, celebrante, certifica, padrino, registro[0]])
 
 
-          # ¿Desea guardar los cambios? SI: commit msg: datos actualizados correctamente, NO: rollback, close
-          if FXMessageBox.question(self, MBOX_YES_NO, "Pregunta", "¿Desea guardar los cambios?") == MBOX_CLICKED_YES
-            # Confirmar la transacción
-            $conn.exec("COMMIT")
-            FXMessageBox.information(self, MBOX_OK, "Información", "Datos actualizados correctamente")
-            close
-          else
-            $conn.exec("ROLLBACK")
-            close
-          end
+        # ¿Desea guardar los cambios? SI: commit msg: datos actualizados correctamente, NO: rollback, close
+        if FXMessageBox.question(self, MBOX_YES_NO, "Pregunta", "¿Desea guardar los cambios?") == MBOX_CLICKED_YES
+          # Confirmar la transacción
+          $conn.exec("COMMIT")
+          FXMessageBox.information(self, MBOX_OK, "Información", "Datos actualizados correctamente")
+          close
+        else
+          $conn.exec("ROLLBACK")
+          close
         end
-      rescue PG::Error => e
-        # En caso de error, se realizará automáticamente un rollback
-        FXMessageBox.error(self, MBOX_OK, "Error", "Error al guardar los datos")
-        # Imprimir el error en la consola
-        puts e.message
-        # Imprimir detalles del error en la consola
-        puts e.backtrace.inspect
       end
     end
 

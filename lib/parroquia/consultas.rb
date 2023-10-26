@@ -60,35 +60,32 @@ class Consulta < FXMainWindow
       if apellidos.empty? && nombres.empty? && cedula.empty? && fecha_desde.empty? && fecha_hasta.empty? && sacramento.empty?
         FXMessageBox.warning(self, MBOX_OK, "Advertencia", "Debe ingresar al menos un criterio de búsqueda")
       else
-        begin
-          # tables
-          # tabla libros (id, tomo, pagina, numero)
-          # tabla creyentes (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula)
-          # tabla parroquias (id, nombre, sector, parroco)
-          # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
-          # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
-          # Join tables
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id"
-          sql += " WHERE creyentes.apellidos LIKE '%#{apellidos}%'" unless apellidos.empty?
-          sql += " AND creyentes.nombres LIKE '%#{nombres}%'" unless nombres.empty?
-          sql += " AND creyentes.cedula = '#{cedula}'" unless cedula.empty?
-          sql += " AND sacramentos.fecha >= '#{fecha_desde}'" unless fecha_desde.empty?
-          sql += " AND sacramentos.fecha <= '#{fecha_hasta}'" unless fecha_hasta.empty?
-          sql += " AND sacramentos.sacramento = '#{sacramento}'" unless sacramento.empty?
-          $conn.exec(sql) do |result|
-            if result.values.empty?
-              FXMessageBox.information(self, MBOX_OK, "Información", "No se encontraron registros")
-            else
-              # mostrar resultados
-              FXMessageBox.information(self, MBOX_OK, "Información", "Se encontraron #{result.values.length} registros")
-              require_relative 'resultados.rb'
-              vtnresultados = ResultadosConsulta.new(@app, result.values)
-              vtnresultados.create
-              vtnresultados.show(PLACEMENT_SCREEN)
-            end
+        # conectar a la base de datos
+        # tables
+        # tabla libros (id, tomo, pagina, numero)
+        # tabla creyentes (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula)
+        # tabla parroquias (id, nombre, sector, parroco)
+        # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
+        # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
+        # Join tables
+        sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id"
+        sql += " WHERE creyentes.apellidos LIKE '%#{apellidos}%'" unless apellidos.empty?
+        sql += " AND creyentes.nombres LIKE '%#{nombres}%'" unless nombres.empty?
+        sql += " AND creyentes.cedula = '#{cedula}'" unless cedula.empty?
+        sql += " AND sacramentos.fecha >= '#{fecha_desde}'" unless fecha_desde.empty?
+        sql += " AND sacramentos.fecha <= '#{fecha_hasta}'" unless fecha_hasta.empty?
+        sql += " AND sacramentos.sacramento = '#{sacramento}'" unless sacramento.empty?
+        $conn.exec(sql) do |result|
+          if result.values.empty?
+            FXMessageBox.information(self, MBOX_OK, "Información", "No se encontraron registros")
+          else
+            # mostrar resultados
+            FXMessageBox.information(self, MBOX_OK, "Información", "Se encontraron #{result.values.length} registros")
+            require_relative 'resultados.rb'
+            vtnresultados = ResultadosConsulta.new(@app, result.values)
+            vtnresultados.create
+            vtnresultados.show(PLACEMENT_SCREEN)
           end
-        rescue PG::Error => e
-          puts e.message
         end
       end
     end
