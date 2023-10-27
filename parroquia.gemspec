@@ -1,7 +1,7 @@
 # Create gem spec file
 Gem::Specification.new do |s|
   s.name       = 'parroquia'
-  s.version    = '1.1.12'
+  s.version    = '1.1.13'
   s.date       = '2023-10-20'
   s.summary    = "Parroquia San Judas Tadeo"
   s.description = "Servicio Parroquial San Judas Tadeo"
