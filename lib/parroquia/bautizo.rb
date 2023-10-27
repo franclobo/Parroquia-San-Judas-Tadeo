@@ -47,7 +47,7 @@ class Bautizo < FXMainWindow
     @lbl_sector = FXLabel.new(self, "Sector: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 340, :y => 180)
     @lbl_sector.backColor = FXRGB(3,187,133)
     @input_sector = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 510, :y => 180)
-    @input_sector.text = "La Roldós"
+    @input_sector.text = "Jaime Roldós"
     @lbl_parroco = FXLabel.new(self, "Parroco: ", :opts => LAYOUT_EXPLICIT, :width => 150, :height => 20, :x => 680, :y => 180)
     @lbl_parroco.backColor = FXRGB(3,187,133)
     @input_parroco = FXTextField.new(self, 10, :opts => LAYOUT_EXPLICIT, :width => 150,:height => 20, :x => 850, :y => 180)
