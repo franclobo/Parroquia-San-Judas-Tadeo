@@ -2,7 +2,7 @@ require 'pg'
 require 'fox16'
 include Fox
 
-class Home < FXMainWindow
+class Catecismo < FXMainWindow
   def initialize(app)
     super(app, 'Parroquia San Judas Tadeo', width: 700, height: 500)
     @app = app
@@ -12,7 +12,7 @@ class Home < FXMainWindow
     @font = FXFont.new(app, 'Geneva', 12, FONTWEIGHT_BOLD)
 
     # Inserar imagen del logo
-    @image = File.join(File.dirname(__FILE__), 'assets/images/Logo-SJT.png')
+    @image = File.join(File.dirname(__FILE__), '../assets/images/Logo-SJT.png')
     @image = File.open(@image, 'rb')
     @image = FXPNGIcon.new(app, @image.read)
     @logo = FXImageFrame.new(self, @image, opts: LAYOUT_EXPLICIT | LAYOUT_CENTER_X | LAYOUT_CENTER_Y, width: 400,
@@ -40,10 +40,10 @@ class Home < FXMainWindow
     @lbldate.backColor = FXRGB(3, 187, 133)
 
     # section lista
-    @btnsacramentos = FXButton.new(self, 'Sacramentos', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150,
-                                                        height: 30, x: 460, y: 150)
-    @btncatecismo = FXButton.new(self, 'Catecismo', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150,
-                                                    height: 30, x: 460, y: 190)
+    @btnalumno = FXButton.new(self, 'Ingresar Alumno', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150,
+                                                       height: 30, x: 460, y: 150)
+    @btnconsulta = FXButton.new(self, 'Consultar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150,
+                                                          height: 30, x: 460, y: 190)
 
     # Footer
     @lblfooter = FXLabel.new(self, 'WebMinds Studio - 2023', opts: LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, width: 700,
@@ -63,17 +63,17 @@ class Home < FXMainWindow
     @lbllicence.font = FXFont.new(app, 'Geneva', 10)
     @lbllicence.backColor = FXRGB(3, 187, 133)
     # section buttons executions
-    @btnsacramentos.connect(SEL_COMMAND) do
-      require_relative 'sacramentos/sacramentos'
-      vtnsacramentos = Sacramentos.new(@app)
-      vtnsacramentos.create
-      vtnsacramentos.show(PLACEMENT_SCREEN)
+    @btnalumno.connect(SEL_COMMAND) do
+      require_relative 'alumno'
+      vtnalumno = Alumno.new(@app)
+      vtnalumno.create
+      vtnalumno.show(PLACEMENT_SCREEN)
     end
-    @btncatecismo.connect(SEL_COMMAND) do
-      require_relative 'catecismo/catecismo'
-      vtncatecismo = Catecismo.new(@app)
-      vtncatecismo.create
-      vtncatecismo.show(PLACEMENT_SCREEN)
+    @btnconsulta.connect(SEL_COMMAND) do
+      require_relative 'consulta'
+      vtnconsulta = Consulta.new(@app)
+      vtnconsulta.create
+      vtnconsulta.show(PLACEMENT_SCREEN)
     end
   end
 
@@ -114,11 +114,6 @@ class Home < FXMainWindow
   end
 end
 
-$conn = PG.connect(host: 'localhost', port: '5432', dbname: 'sacramentos', user: 'postgres', password: 'postgres')
+$conn = PG.connect(host: 'localhost', port: '5432', dbname: 'catecismo', user: 'postgres', password: 'postgres')
 # Comprobar conexión con la base de datos
 exit if $conn.status != PG::CONNECTION_OK
-
-app = FXApp.new
-Home.new(app)
-app.create
-app.run
