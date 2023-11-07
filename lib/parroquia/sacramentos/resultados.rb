@@ -89,14 +89,11 @@ class ResultadosConsulta < FXMainWindow
       selected_columns = []
 
       (0...@tabla.numColumns).each do |i|
-        if @tabla.isColumnSelected(i)
-          selected_columns << i
-        end
+        selected_columns << i if @tabla.isColumnSelected(i)
       end
 
-      return selected_columns
+      selected_columns
     end
-
 
     # Cambiar el formato de la fecha de YYYY-MM-DD a DD de nombre_mes de YYYY
     def cambiar_formato_fecha(fecha)
@@ -136,7 +133,7 @@ class ResultadosConsulta < FXMainWindow
 
     # create buttons
     @btnlists = FXButton.new(self, 'Listar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                            x: 350, y: 430)
+                                             x: 350, y: 430)
     @btnprint = FXButton.new(self, 'Exportar PDF', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100,
                                                    height: 30, x: 460, y: 430)
     @btnedit = FXButton.new(self, 'Editar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
@@ -167,22 +164,22 @@ class ResultadosConsulta < FXMainWindow
           pdf.font 'Helvetica'
           pdf.font_size 12
           pdf.image File.join(File.dirname(__FILE__), '../assets/images/arquidiocesisquito.png'), height: 100,
-              position: :absolute, at: [-60, 680]
+                                                                                                  position: :absolute, at: [-60, 680]
           pdf.text_box 'Arquidiócesis de Quito', align: :center, size: 16, style: :bold, at: [10, 670],
-              width: pdf.bounds.width
+                                                 width: pdf.bounds.width
           pdf.text_box 'Parroquia Eclesiástica "San Judas Tadeo"', align: :center, size: 14, style: :bold,
-              at: [10, 650], width: pdf.bounds.width
+                                                                   at: [10, 650], width: pdf.bounds.width
           pdf.text_box "Jaime Roldós Aguilera, calle Oe13A y N82\nEl Condado, Quito - Ecuador\nTeléfono: 02496446",
-              align: :center, size: 10, at: [10, 630], width: pdf.bounds.width
+                       align: :center, size: 10, at: [10, 630], width: pdf.bounds.width
           pdf.image File.join(File.dirname(__FILE__), '../assets/images/sanjudastadeo.png'), height: 100,
-              position: :absolute, at: [430, 680]
+                                                                                             position: :absolute, at: [430, 680]
           # Título del certificado en color rojo
           pdf.text 'HORARIO DE MISAS', align: :center, size: 20, style: :bold, color: 'FF0000'
           pdf.move_down 20
 
           # Recorre todos los registros seleccionados y agrega sus horarios de misas
           registros_seleccionados.each do |registro|
-            pdf.text "Hora | Capilla | Sector | Intención"
+            pdf.text 'Hora | Capilla | Sector | Intención'
             pdf.move_down 10
             pdf.text "#{registro[selected_columns[40]]} | #{registro[selected_columns[25]]} | #{registro[selected_columns[26]]} | #{registro[selected_columns[38]]}"
             pdf.move_down 10
@@ -220,7 +217,7 @@ class ResultadosConsulta < FXMainWindow
           # Bautismo
           # Encabezado
           pdf.image File.join(File.dirname(__FILE__), '../assets/images/arquidiocesisquito.png'), height: 100,
-                                                                                               position: :absolute, at: [-60, 680]
+                                                                                                  position: :absolute, at: [-60, 680]
           pdf.text_box 'Arquidiócesis de Quito', align: :center, size: 16, style: :bold, at: [10, 670],
                                                  width: pdf.bounds.width
           pdf.text_box 'Parroquia Eclesiástica "San Judas Tadeo"', align: :center, size: 14, style: :bold,
@@ -228,7 +225,7 @@ class ResultadosConsulta < FXMainWindow
           pdf.text_box "Jaime Roldós Aguilera, calle Oe13A y N82\nEl Condado, Quito - Ecuador\nTeléfono: 02496446",
                        align: :center, size: 10, at: [10, 630], width: pdf.bounds.width
           pdf.image File.join(File.dirname(__FILE__), '../assets/images/sanjudastadeo.png'), height: 100,
-                                                                                          position: :absolute, at: [430, 680]
+                                                                                             position: :absolute, at: [430, 680]
 
           case registros_seleccionados[0][1]
           when 'Bautismo'
@@ -739,188 +736,188 @@ class ResultadosConsulta < FXMainWindow
     @btndelete.connect(SEL_COMMAND) do
       # eliminar registros seleccionados
       if registros_seleccionados.empty?
-        FXMessageBox.warning(self, MBOX_OK, "Advertencia", "Debe seleccionar al menos un registro")
-      else
+        FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Debe seleccionar al menos un registro')
+      elsif FXMessageBox.question(self, MBOX_YES_NO, 'Confirmación',
+                                  '¿Está seguro de eliminar los registros seleccionados?') == MBOX_CLICKED_YES
         # Mensaje de confirmación
-        if FXMessageBox.question(self, MBOX_YES_NO, "Confirmación", "¿Está seguro de eliminar los registros seleccionados?") == MBOX_CLICKED_YES
-          registros_seleccionados.each do |registro|
-            # Eliminar registros de la base de datos
-            case registros_seleccionados[0][1]
-            when "Bautismo"
-              # Eliminar registros de la tabla sacramentos
-              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla libros
-              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla creyentes
-              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla parroquias
-              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla registros_civiles
-              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla misas
-              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-              $conn.exec(sql)
-            when "Comunión"
-              # Eliminar registros de la tabla sacramentos
-              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla libros
-              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla creyentes
-              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla parroquias
-              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla registros_civiles
-              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla misas
-              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-              $conn.exec(sql)
-            when "Confirmación"
-              # Eliminar registros de la tabla sacramentos
-              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla libros
-              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla creyentes
-              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla parroquias
-              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla registros_civiles
-              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla misas
-              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-              $conn.exec(sql)
-            when "Matrimonio"
-              # Eliminar registros de la tabla sacramentos
-              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla libros
-              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla creyentes
-              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla parroquias
-              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla registros_civiles
-              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla misas
-              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-              $conn.exec(sql)
-            when "Partida Supletoria del Bautismo"
-              # Eliminar registros de la tabla sacramentos
-              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla libros
-              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla creyentes
-              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla parroquias
-              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla registros_civiles
-              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla misas
-              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-              $conn.exec(sql)
-            when "Curso Prebautismal"
-              # Eliminar registros de la tabla sacramentos
-              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla libros
-              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla creyentes
-              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla parroquias
-              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla registros_civiles
-              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla misas
-              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-              $conn.exec(sql)
-            when "Permiso de Bautismo"
-              # Eliminar registros de la tabla sacramentos
-              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla libros
-              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla creyentes
-              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla parroquias
-              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla registros_civiles
-              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla misas
-              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-              $conn.exec(sql)
-            when "Permiso de Matrimonio"
-              # Eliminar registros de la tabla sacramentos
-              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla libros
-              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla creyentes
-              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla parroquias
-              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla registros_civiles
-              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla misas
-              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-              $conn.exec(sql)
-            when "Misa"
-              # Eliminar registros de la tabla sacramentos
-              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla libros
-              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla creyentes
-              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla parroquias
-              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla registros_civiles
-              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-              $conn.exec(sql)
-              # Eliminar registros de la tabla misas
-              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-              $conn.exec(sql)
-            end
-            # Mensaje de confirmación
-            FXMessageBox.information(self, MBOX_OK, "Información", "Los registros seleccionados se han eliminado correctamente")
+        registros_seleccionados.each do |registro|
+          # Eliminar registros de la base de datos
+          case registros_seleccionados[0][1]
+          when 'Bautismo'
+            # Eliminar registros de la tabla sacramentos
+            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla libros
+            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla creyentes
+            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla parroquias
+            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla registros_civiles
+            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla misas
+            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+            $conn.exec(sql)
+          when 'Comunión'
+            # Eliminar registros de la tabla sacramentos
+            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla libros
+            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla creyentes
+            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla parroquias
+            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla registros_civiles
+            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla misas
+            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+            $conn.exec(sql)
+          when 'Confirmación'
+            # Eliminar registros de la tabla sacramentos
+            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla libros
+            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla creyentes
+            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla parroquias
+            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla registros_civiles
+            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla misas
+            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+            $conn.exec(sql)
+          when 'Matrimonio'
+            # Eliminar registros de la tabla sacramentos
+            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla libros
+            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla creyentes
+            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla parroquias
+            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla registros_civiles
+            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla misas
+            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+            $conn.exec(sql)
+          when 'Partida Supletoria del Bautismo'
+            # Eliminar registros de la tabla sacramentos
+            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla libros
+            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla creyentes
+            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla parroquias
+            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla registros_civiles
+            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla misas
+            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+            $conn.exec(sql)
+          when 'Curso Prebautismal'
+            # Eliminar registros de la tabla sacramentos
+            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla libros
+            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla creyentes
+            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla parroquias
+            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla registros_civiles
+            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla misas
+            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+            $conn.exec(sql)
+          when 'Permiso de Bautismo'
+            # Eliminar registros de la tabla sacramentos
+            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla libros
+            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla creyentes
+            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla parroquias
+            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla registros_civiles
+            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla misas
+            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+            $conn.exec(sql)
+          when 'Permiso de Matrimonio'
+            # Eliminar registros de la tabla sacramentos
+            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla libros
+            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla creyentes
+            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla parroquias
+            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla registros_civiles
+            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla misas
+            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+            $conn.exec(sql)
+          when 'Misa'
+            # Eliminar registros de la tabla sacramentos
+            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla libros
+            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla creyentes
+            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla parroquias
+            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla registros_civiles
+            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+            $conn.exec(sql)
+            # Eliminar registros de la tabla misas
+            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+            $conn.exec(sql)
           end
+          # Mensaje de confirmación
+          FXMessageBox.information(self, MBOX_OK, 'Información',
+                                   'Los registros seleccionados se han eliminado correctamente')
         end
       end
     end

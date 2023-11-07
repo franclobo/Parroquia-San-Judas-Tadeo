@@ -26,15 +26,15 @@ class Alumno < FXMainWindow
 
     # section datos
     @lbl_anio_lectivo = FXLabel.new(self, 'Año lectivo: ', opts: LAYOUT_EXPLICIT, width: 250,
-                                                                              height: 20, x: 10, y: 150)
+                                                           height: 20, x: 10, y: 150)
     @lbl_anio_lectivo.backColor = FXRGB(3, 187, 133)
     @input_anio_lectivo = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
-                                             y: 150)
+                                                    y: 150)
     @lbl_nivel = FXLabel.new(self, 'Nivel: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                        x: 680, y: 150)
+                                              x: 680, y: 150)
     @lbl_nivel.backColor = FXRGB(3, 187, 133)
     @input_nivel = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                                  y: 150)
+                                             y: 150)
     @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
                                                 y: 180)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
@@ -66,15 +66,15 @@ class Alumno < FXMainWindow
     @input_cedula = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                               y: 300)
     @lbl_nombre_catequista = FXLabel.new(self, 'Nombre del catequista: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                              height: 20, x: 10, y: 330)
+                                                                          height: 20, x: 10, y: 330)
     @lbl_nombre_catequista.backColor = FXRGB(3, 187, 133)
     @input_nombre_catequista = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                        x: 170, y: 330)
+                                                         x: 170, y: 330)
     @lbl_apellidos_catequista = FXLabel.new(self, 'Apellidos del catequista: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                                  height: 20, x: 340, y: 330)
+                                                                                height: 20, x: 340, y: 330)
     @lbl_apellidos_catequista.backColor = FXRGB(3, 187, 133)
     @input_apellidos_catequista = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                          x: 510, y: 330)
+                                                            x: 510, y: 330)
     # create buttons
     @btnsave = FXButton.new(self, 'Guardar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
                                              x: 790, y: 400)
@@ -102,7 +102,7 @@ class Alumno < FXMainWindow
       $conn.transaction do
         # Insertar en la tabla catequistas
         @registro_catequistas = $conn.exec('INSERT INTO catequistas (nombres, apellidos) VALUES ($1, $2)',
-                                      [nombres_catequista, apellidos_catequista])
+                                           [nombres_catequista, apellidos_catequista])
         # Insertar en la tabla niveles
         @registro_parroquias = $conn.exec('INSERT INTO niveles (anio_lectivo, nivel, sector) VALUES ($1, $2, $3)',
                                           [anio_lectivo, nivel, sector])

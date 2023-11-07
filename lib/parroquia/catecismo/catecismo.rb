@@ -43,7 +43,7 @@ class Catecismo < FXMainWindow
     @btnalumno = FXButton.new(self, 'Ingresar Alumno', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150,
                                                        height: 30, x: 460, y: 150)
     @btnconsulta = FXButton.new(self, 'Consultar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150,
-                                                          height: 30, x: 460, y: 190)
+                                                   height: 30, x: 460, y: 190)
 
     # Footer
     @lblfooter = FXLabel.new(self, 'WebMinds Studio - 2023', opts: LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, width: 700,

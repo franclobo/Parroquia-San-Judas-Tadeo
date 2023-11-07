@@ -45,30 +45,30 @@ class Consulta < FXMainWindow
     @input_cedula = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                               y: 210)
     @lbl_anio_lectivo = FXLabel.new(self, 'Año lectivo: ', opts: LAYOUT_EXPLICIT, width: 250,
-                                                                       height: 20, x: 10, y: 240)
+                                                           height: 20, x: 10, y: 240)
     @lbl_anio_lectivo.backColor = FXRGB(3, 187, 133)
     @input_anio_lectivo = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
-                                                   y: 240)
+                                                    y: 240)
     @lbl_nivel = FXLabel.new(self, 'Nivel: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                        x: 10, y: 300)
+                                              x: 10, y: 300)
     @lbl_nivel.backColor = FXRGB(3, 187, 133)
     @input_nivel = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                  y: 300)
+                                             y: 300)
     @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                          x: 340, y: 270)
+                                                x: 340, y: 270)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
     @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                    y: 270)
+                                              y: 270)
     @lbl_nombres_catequista = FXLabel.new(self, 'Nombres catequista: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                                                height: 20, x: 340, y: 300)
+                                                                        height: 20, x: 340, y: 300)
     @lbl_nombres_catequista.backColor = FXRGB(3, 187, 133)
     @input_nombres_catequista = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                                                              y: 300)
+                                                          y: 300)
     @lbl_apellidos_catequista = FXLabel.new(self, 'Apellidos catequista: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                                                  height: 20, x: 340, y: 330)
+                                                                            height: 20, x: 340, y: 330)
     @lbl_apellidos_catequista.backColor = FXRGB(3, 187, 133)
     @input_apellidos_catequista = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                                                                y: 330)
+                                                            y: 330)
 
     # create buttons
     @btnsearch = FXButton.new(self, 'Buscar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
@@ -104,7 +104,9 @@ class Consulta < FXMainWindow
         sql += " AND catequistas.nombres LIKE '%#{nombres_catequista}%'" unless nombres_catequista.empty?
         sql += " AND catequistas.apellidos LIKE '%#{apellidos_catequista}%'" unless apellidos_catequista.empty?
         # Se escoge año lectivo, sector, catequista y nivel
-        sql += " AND niveles.anio_lectivo = '#{anio_lectivo}' AND niveles.nivel = '#{nivel}' AND catequistas.nombres LIKE '%#{nombres_catequista}%' AND catequistas.apellidos LIKE '%#{apellidos_catequista}%'" unless anio_lectivo.empty? || nivel.empty? || nombres_catequista.empty? || apellidos_catequista.empty?
+        unless anio_lectivo.empty? || nivel.empty? || nombres_catequista.empty? || apellidos_catequista.empty?
+          sql += " AND niveles.anio_lectivo = '#{anio_lectivo}' AND niveles.nivel = '#{nivel}' AND catequistas.nombres LIKE '%#{nombres_catequista}%' AND catequistas.apellidos LIKE '%#{apellidos_catequista}%'"
+        end
 
 
         $conn.exec(sql) do |result|

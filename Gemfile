@@ -11,5 +11,3 @@ gem 'pg'
 # Imprimir en PDF
 gem 'prawn'
 
-# Linters
-gem 'rubocop', '>= 1.0', '< 2.0'

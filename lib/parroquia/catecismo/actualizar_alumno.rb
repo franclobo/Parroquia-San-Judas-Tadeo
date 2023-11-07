@@ -20,22 +20,22 @@ class ActualizarAlumno < FXMainWindow
     # Date
     @date = Time.now.strftime('%d/%m/%Y')
     @lbldate = FXLabel.new(self, "anio_lectivo: #{cambiar_formato_anio_lectivo(@date)}", opts: LAYOUT_EXPLICIT | JUSTIFY_RIGHT,
-                                                                           width: 1050, height: 20, x: 0, y: 60, padRight: 20)
+                                                                                         width: 1050, height: 20, x: 0, y: 60, padRight: 20)
     @lbldate.font = FXFont.new(app, 'Geneva', 12, FONTWEIGHT_BOLD)
     @lbldate.backColor = FXRGB(3, 187, 133)
 
     # section datos
     @lbl_anio_lectivo = FXLabel.new(self, 'Año lectivo', opts: LAYOUT_EXPLICIT, width: 250,
-                                                                              height: 20, x: 10, y: 150)
+                                                         height: 20, x: 10, y: 150)
     @lbl_anio_lectivo.backColor = FXRGB(3, 187, 133)
     @input_anio_lectivo = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
-                                             y: 150)
+                                                    y: 150)
     @input_anio_lectivo.text = @registro[12]
     @lbl_nivel = FXLabel.new(self, 'Nivel: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                        x: 680, y: 150)
+                                              x: 680, y: 150)
     @lbl_nivel.backColor = FXRGB(3, 187, 133)
     @input_nivel = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                                  y: 150)
+                                             y: 150)
     @input_nivel.text = @registro[10]
     @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
                                                 y: 180)
@@ -74,16 +74,16 @@ class ActualizarAlumno < FXMainWindow
                                               y: 300)
     @input_cedula.text = @registro[5]
     @lbl_nombres_catequista = FXLabel.new(self, 'Nombres Catequista: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                  y: 330)
+                                                                        y: 330)
     @lbl_nombres_catequista.backColor = FXRGB(3, 187, 133)
     @input_nombres_catequista = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                               y: 330)
+                                                          y: 330)
     @input_nombres_catequista.text = @registro[7]
     @lbl_apellidos_catequista = FXLabel.new(self, 'Apellidos catequista: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                      y: 360)
+                                                                            y: 360)
     @lbl_apellidos_catequista.backColor = FXRGB(3, 187, 133)
     @input_apellidos_catequista = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                 y: 360)
+                                                            y: 360)
     @input_apellidos_catequista.text = @registro[8]
     # create buttons
     @btnupdate = FXButton.new(self, 'Actualizar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
