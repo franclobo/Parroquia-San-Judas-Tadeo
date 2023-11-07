@@ -5,7 +5,7 @@ include Fox
 class Alumno < FXMainWindow
   def initialize(app)
     @app = app
-    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 450)
+    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 330)
     self.backColor = FXRGB(3, 187, 133)
     # Title
     @lbltitle = FXLabel.new(self, 'Bienvenido a la Parroquia San Judas Tadeo',
@@ -25,61 +25,61 @@ class Alumno < FXMainWindow
     @lbldate.backColor = FXRGB(3, 187, 133)
 
     # section datos
-    @lbl_anio_lectivo = FXLabel.new(self, 'Año lectivo: ', opts: LAYOUT_EXPLICIT, width: 250,
+    @lbl_anio_lectivo = FXLabel.new(self, 'Año lectivo: ', opts: LAYOUT_EXPLICIT, width: 150,
                                                            height: 20, x: 10, y: 150)
     @lbl_anio_lectivo.backColor = FXRGB(3, 187, 133)
-    @input_anio_lectivo = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
+    @input_anio_lectivo = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                     y: 150)
     @lbl_nivel = FXLabel.new(self, 'Nivel: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                              x: 680, y: 150)
+                                              x: 330, y: 150)
     @lbl_nivel.backColor = FXRGB(3, 187, 133)
-    @input_nivel = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
+    @input_nivel = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 490,
                                              y: 150)
-    @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
-                                                y: 180)
+    @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 650,
+                                                y: 150)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
-    @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                              y: 180)
+    @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 810,
+                                              y: 150)
     @lbl_name = FXLabel.new(self, 'Nombres: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                               y: 240)
+                                               y: 180)
     @lbl_name.backColor = FXRGB(3, 187, 133)
     @input_name = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                            y: 240)
-    @lbl_apellidos = FXLabel.new(self, 'Apellidos: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                      y: 270)
+                                            y: 180)
+    @lbl_apellidos = FXLabel.new(self, 'Apellidos: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 330,
+                                                      y: 180)
     @lbl_apellidos.backColor = FXRGB(3, 187, 133)
-    @input_apellidos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                 y: 270)
+    @input_apellidos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 490,
+                                                 y: 180)
     @lbl_lugar_nacimiento = FXLabel.new(self, 'Lugar de nacimiento: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                       height: 20, x: 10, y: 300)
+                                                                       height: 20, x: 10, y: 210)
     @lbl_lugar_nacimiento.backColor = FXRGB(3, 187, 133)
     @input_lugar_nacimiento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                        x: 170, y: 300)
+                                                        x: 170, y: 210)
     @lbl_fecha_nacimiento = FXLabel.new(self, 'Fecha de nacimiento (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT,
-                                                                                    width: 250, height: 20, x: 340, y: 300)
+                                                                                    width: 250, height: 20, x: 340, y: 210)
     @lbl_fecha_nacimiento.backColor = FXRGB(3, 187, 133)
     @input_fecha_nacimiento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                        x: 590, y: 300)
+                                                        x: 590, y: 210)
     @lbl_cedula = FXLabel.new(self, 'Cédula: ', opts: LAYOUT_EXPLICIT, width: 80, height: 20, x: 750,
-                                                y: 300)
+                                                y: 210)
     @lbl_cedula.backColor = FXRGB(3, 187, 133)
     @input_cedula = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                              y: 300)
+                                              y: 210)
     @lbl_nombre_catequista = FXLabel.new(self, 'Nombre del catequista: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                          height: 20, x: 10, y: 330)
+                                                                          height: 20, x: 10, y: 240)
     @lbl_nombre_catequista.backColor = FXRGB(3, 187, 133)
     @input_nombre_catequista = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                         x: 170, y: 330)
+                                                         x: 170, y: 240)
     @lbl_apellidos_catequista = FXLabel.new(self, 'Apellidos del catequista: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                                height: 20, x: 340, y: 330)
+                                                                                height: 20, x: 340, y: 240)
     @lbl_apellidos_catequista.backColor = FXRGB(3, 187, 133)
     @input_apellidos_catequista = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                            x: 510, y: 330)
+                                                            x: 510, y: 240)
     # create buttons
     @btnsave = FXButton.new(self, 'Guardar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                             x: 790, y: 400)
+                                             x: 790, y: 270)
     @btncancel = FXButton.new(self, 'Cancelar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                x: 900, y: 400)
+                                                x: 900, y: 270)
 
     # connect buttons
     @btnsave.connect(SEL_COMMAND) do
