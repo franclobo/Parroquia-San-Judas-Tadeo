@@ -125,7 +125,6 @@ class Comunion < FXMainWindow
       lugar_nacimiento = @input_lugar_nacimiento.text
       fecha_nacimiento = @input_fecha_nacimiento.text
       cedula = @input_cedula.text.empty? ? nil : @input_cedula.text
-      padrino = @input_padrino.text.empty? ? nil : @input_padrino.text
       certifica = @input_certifica.text
 
 
@@ -164,8 +163,8 @@ class Comunion < FXMainWindow
 
         # Insertar en la tabla sacramentos
         @registro_sacramentos = $conn.exec(
-          'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, padrino) VALUES ($1, $2, $3, $4, $5)', [sacramento,
-                                                                                                                      fecha, celebrante, certifica, padrino]
+          'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica) VALUES ($1, $2, $3, $4)', [sacramento,
+                                                                                                                      fecha, celebrante, certifica]
         )
 
         # Confirmar la transacción
@@ -191,7 +190,6 @@ class Comunion < FXMainWindow
       @input_lugar_nacimiento.text = ''
       @input_fecha_nacimiento.text = ''
       @input_cedula.text = ''
-      @input_padrino.text = ''
       @input_certifica.text = ''
     end
   end

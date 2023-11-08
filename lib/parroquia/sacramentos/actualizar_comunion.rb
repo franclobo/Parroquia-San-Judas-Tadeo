@@ -142,7 +142,6 @@ class ActualizarComunion < FXMainWindow
       lugar_nacimiento = @input_lugar_nacimiento.text
       fecha_nacimiento = @input_fecha_nacimiento.text
       cedula = @input_cedula.text.empty? ? nil : @input_cedula.text
-      padrino = @input_padrino.text.empty? ? nil : @input_padrino.text
       certifica = @input_certifica.text
 
       # tables
@@ -177,8 +176,8 @@ class ActualizarComunion < FXMainWindow
 
         # Actualizar la tabla sacramentos
         $conn.exec(
-          'UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4, padrino = $5 WHERE id = $6', [
-            sacramento, fecha, celebrante, certifica, padrino, registro[0]
+          'UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4 WHERE id = $6', [
+            sacramento, fecha, celebrante, certifica, registro[0]
           ]
         )
 
