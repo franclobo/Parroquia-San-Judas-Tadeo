@@ -90,17 +90,17 @@ class PreBautismal < FXMainWindow
 
     # connect buttons
     @btnsave.connect(SEL_COMMAND) do
-      fecha = @input_fecha.text
+      fecha = @input_fecha.text.empty? ? nil : @input_fecha.text
       sacramento = @input_sacramento.text
-      parroquia = @input_parroquia.text
-      sector = @input_sector.text
-      parroco = @input_parroco.text
-      name = @input_name.text
-      apellidos = @input_apellidos.text
+      parroquia = @input_parroquia.text.empty? ? nil : @input_parroquia.text
+      sector = @input_sector.text.empty? ? nil : @input_sector.text
+      parroco = @input_parroco.text.empty? ? nil : @input_parroco.text
+      name = @input_name.text.empty? ? nil : @input_name.text
+      apellidos = @input_apellidos.text.empty? ? nil : @input_apellidos.text
       cedula = @input_cedula.text.empty? ? nil : @input_cedula.text
       padrino = @input_padrino.text.empty? ? nil : @input_padrino.text
       madrina = @input_madrina.text.empty? ? nil : @input_madrina.text
-      certifica = @input_certifica.text
+      certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
 
       # tables
       # tabla libros (id, tomo, pagina, numero)
@@ -143,16 +143,15 @@ class PreBautismal < FXMainWindow
 
     def clear_input_fields
       @input_fecha.text = ''
+      @input_sacramento.text = ''
+      @input_parroquia.text = ''
+      @input_sector.text = ''
       @input_parroco.text = ''
       @input_name.text = ''
       @input_apellidos.text = ''
-      @input_lugar_nacimiento.text = ''
-      @input_fecha_nacimiento.text = ''
       @input_cedula.text = ''
       @input_padrino.text = ''
       @input_madrina.text = ''
-      @input_padre.text = ''
-      @input_madre.text = ''
       @input_certifica.text = ''
     end
   end

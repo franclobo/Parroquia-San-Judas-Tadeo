@@ -105,20 +105,20 @@ class PermisoMatrimonio < FXMainWindow
 
     # connect buttons
     @btnsave.connect(SEL_COMMAND) do
-      fecha = @input_fecha.text
+      fecha = @input_fecha.text.empty? ? nil : @input_fecha.text
       sacramento = @input_sacramento.text
-      parroquia = @input_parroquia.text
-      sector = @input_sector.text
-      parroco = @input_parroco.text
-      name_novio = @input_name_novio.text
-      apellido_novio = @input_apellido_novio.text
+      parroquia = @input_parroquia.text.empty? ? nil : @input_parroquia.text
+      sector = @input_sector.text.empty? ? nil : @input_sector.text
+      parroco = @input_parroco.text.empty? ? nil : @input_parroco.text
+      name_novio = @input_name_novio.text.empty? ? nil : @input_name_novio.text
+      apellido_novio = @input_apellido_novio.text.empty? ? nil : @input_apellido_novio.text
       cedula_novio = @input_cedula_novio.text.empty? ? nil : @input_cedula_novio.text
       nombres_novia = @input_name_novia.text.empty? ? nil : @input_name_novia.text
       apellidos_novia = @input_apellido_novia.text.empty? ? nil : @input_apellido_novia.text
       cedula_novia = @input_cedula_novia.text.empty? ? nil : @input_cedula_novia.text
       testigo_novio = @input_nombres_testigo_novio.text.empty? ? nil : @input_nombres_testigo_novio.text
       testigo_novia = @input_nombres_testigo_novia.text.empty? ? nil : @input_nombres_testigo_novia.text
-      certifica = @input_certifica.text
+      certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
 
       # tables
       # tabla libros (id, tomo, pagina, numero)
@@ -140,8 +140,8 @@ class PermisoMatrimonio < FXMainWindow
         # Insertar en la tabla misas
         @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
         $conn.exec(
-          'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [
-            sacramento, fecha, celebrante, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia
+          'INSERT INTO sacramentos (sacramento, fecha, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
+            sacramento, fecha, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia
           ]
         )
         $conn.exec('COMMIT')
@@ -155,12 +155,11 @@ class PermisoMatrimonio < FXMainWindow
     end
 
     def clear_input_fields
-      @input_tomo.text = ''
-      @input_page.text = ''
-      @input_number.text = ''
       @input_fecha.text = ''
+      @input_sacramento.text = ''
+      @input_parroquia.text = ''
+      @input_sector.text = ''
       @input_parroco.text = ''
-      @input_celebrante.text = ''
       @input_name_novio.text = ''
       @input_apellido_novio.text = ''
       @input_cedula_novio.text = ''
@@ -170,14 +169,6 @@ class PermisoMatrimonio < FXMainWindow
       @input_nombres_testigo_novio.text = ''
       @input_nombres_testigo_novia.text = ''
       @input_certifica.text = ''
-      @input_provincia_rc.text = ''
-      @input_canton_rc.text = ''
-      @input_parroquia_rc.text = ''
-      @input_anio_rc.text = ''
-      @input_tomo_rc.text = ''
-      @input_pag_rc.text = ''
-      @input_acta_rc.text = ''
-      @input_date_rc.text = ''
     end
   end
 

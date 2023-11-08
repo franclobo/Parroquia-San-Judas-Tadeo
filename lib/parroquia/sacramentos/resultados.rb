@@ -97,6 +97,9 @@ class ResultadosConsulta < FXMainWindow
 
     # Cambiar el formato de la fecha de YYYY-MM-DD a DD de nombre_mes de YYYY
     def cambiar_formato_fecha(fecha)
+      if fecha.nil?
+        return ''
+      end
       # split "-" or "/"
       fecha = fecha.split(%r{-|/})
       # si el formato de fecha es YYYY-MM-DD o YYYY/MM/DD, sino si es DD-MM-YYYY o DD/MM/YYYY
@@ -438,7 +441,7 @@ class ResultadosConsulta < FXMainWindow
             end
           when 'Partida Supletoria del Bautismo'
             pdf.move_down 20
-            pdf.text 'CERTIFICADO DE PARTIDA SUPLETORIA DEL BAUTISMO', align: :center, size: 20, style: :bold,
+            pdf.text 'PARTIDA SUPLETORIA DEL BAUTISMO', align: :center, size: 20, style: :bold,
                                                                        color: 'FF0000'
             pdf.move_down 20
             registros_seleccionados.each do |registro|

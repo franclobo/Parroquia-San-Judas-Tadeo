@@ -176,33 +176,33 @@ class Supletoria < FXMainWindow
 
     # connect buttons
     @btnsave.connect(SEL_COMMAND) do
-      tomo = @input_tomo.text
-      page = @input_page.text
-      number = @input_number.text
-      fecha = @input_fecha.text
+      tomo = @input_tomo.text.empty? ? nil : @input_tomo.text
+      page = @input_page.text.empty? ? nil : @input_page.text
+      number = @input_number.text.empty? ? nil : @input_number.text
+      fecha = @input_fecha.text.empty? ? nil : @input_fecha.text
       sacramento = @input_sacramento.text
-      parroquia = @input_parroquia.text
-      sector = @input_sector.text
-      parroco = @input_parroco.text
-      ministro = @input_ministro.text
-      name = @input_name.text
-      apellidos = @input_apellidos.text
-      lugar_nacimiento = @input_lugar_nacimiento.text
-      fecha_nacimiento = @input_fecha_nacimiento.text
+      parroquia = @input_parroquia.text.empty? ? nil : @input_parroquia.text
+      sector = @input_sector.text.empty? ? nil : @input_sector.text
+      parroco = @input_parroco.text.empty? ? nil : @input_parroco.text
+      ministro = @input_ministro.text.empty? ? nil : @input_ministro.text
+      name = @input_name.text.empty? ? nil : @input_name.text
+      apellidos = @input_apellidos.text.empty? ? nil : @input_apellidos.text
+      lugar_nacimiento = @input_lugar_nacimiento.text.empty? ? nil : @input_lugar_nacimiento.text
+      fecha_nacimiento = @input_fecha_nacimiento.text.empty? ? nil : @input_fecha_nacimiento.text
       cedula = @input_cedula.text.empty? ? nil : @input_cedula.text
       padrino = @input_padrino.text.empty? ? nil : @input_padrino.text
       madrina = @input_madrina.text.empty? ? nil : @input_madrina.text
       padre = @input_padre.text.empty? ? nil : @input_padre.text
       madre = @input_madre.text.empty? ? nil : @input_madre.text
-      certifica = @input_certifica.text
-      provincia_rc = @input_provincia_rc.text
-      canton_rc = @input_canton_rc.text
-      parroquia_rc = @input_parroquia_rc.text
-      anio_rc = @input_anio_rc.text
-      tomo_rc = @input_tomo_rc.text
-      pag_rc = @input_pag_rc.text
-      acta_rc = @input_acta_rc.text
-      date_rc = @input_date_rc.text
+      certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
+      provincia_rc = @input_provincia_rc.text.empty? ? nil : @input_provincia_rc.text
+      canton_rc = @input_canton_rc.text.empty? ? nil : @input_canton_rc.text
+      parroquia_rc = @input_parroquia_rc.text.empty? ? nil : @input_parroquia_rc.text
+      anio_rc = @input_anio_rc.text.empty? ? nil : @input_anio_rc.text
+      tomo_rc = @input_tomo_rc.text.empty? ? nil : @input_tomo_rc.text
+      pag_rc = @input_pag_rc.text.empty? ? nil : @input_pag_rc.text
+      acta_rc = @input_acta_rc.text.empty? ? nil : @input_acta_rc.text
+      date_rc = @input_date_rc.text.empty? ? nil : @input_date_rc.text
 
       # tables
       # tabla libros (id, tomo, pagina, numero)
@@ -215,23 +215,17 @@ class Supletoria < FXMainWindow
         $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)', [tomo, page, number])
         $conn.exec(
           'INSERT INTO creyentes (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [
-            name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula
-          ]
-        )
+            name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula])
         $conn.exec('INSERT INTO parroquias (parroquia, sector, parroco) VALUES ($1, $2, $3)',
                    [parroquia, sector, parroco])
         $conn.exec(
           'INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
-            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc
-          ]
-        )
+            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc])
         # Insertar en la tabla misas
         @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
         $conn.exec(
           'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
-            sacramento, fecha, ministro, certifica, padrino, madrina, padre, madre
-          ]
-        )
+            sacramento, fecha, ministro, certifica, padrino, madrina, padre, madre])
         # Confirmar la transacción
         $conn.exec('COMMIT')
         FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos guardados correctamente')
