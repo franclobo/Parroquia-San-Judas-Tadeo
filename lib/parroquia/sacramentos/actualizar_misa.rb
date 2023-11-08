@@ -5,29 +5,29 @@ include Fox
 class ActualizarMisa < FXMainWindow
   def initialize(app, registro)
     @registro = registro
-    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 450)
+    super(app, 'Parroquia San Judas Tadeo', width: 700, height: 370)
     self.backColor = FXRGB(3, 187, 133)
     # Title
     @lbltitle = FXLabel.new(self, 'Bienvenido a la Parroquia San Judas Tadeo',
-                            opts: LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, width: 1050, height: 20, x: 0, y: 20)
+                            opts: LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, width: 700, height: 20, x: 0, y: 20)
     @lbltitle.font = FXFont.new(app, 'Geneva', 16, FONTWEIGHT_BOLD)
     @lbltitle.backColor = FXRGB(3, 187, 133)
     # Subtitle
     @lblsubtitle = FXLabel.new(self, 'ARQUIDIOSESIS DE QUITO - SERVICIO PARROQUIAL DE SAN JUDAS TADEO',
-                               opts: LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, width: 1050, height: 20, x: 0, y: 40)
+                               opts: LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, width: 700, height: 20, x: 0, y: 40)
     @lblsubtitle.font = FXFont.new(app, 'Geneva', 10, FONTWEIGHT_BOLD)
     @lblsubtitle.backColor = FXRGB(3, 187, 133)
     # Date
     @date = Time.now.strftime('%d/%m/%Y')
     @lbldate = FXLabel.new(self, "Fecha: #{cambiar_formato_fecha(@date)}", opts: LAYOUT_EXPLICIT | JUSTIFY_RIGHT,
-                                                                           width: 1050, height: 20, x: 0, y: 60, padRight: 20)
+                                                                           width: 700, height: 20, x: 0, y: 60, padRight: 20)
     @lbldate.font = FXFont.new(app, 'Geneva', 12, FONTWEIGHT_BOLD)
     @lbldate.backColor = FXRGB(3, 187, 133)
     # section datos
     @lbl_sacramento = FXLabel.new(self, 'Sacramento: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                        x: 680, y: 150)
+                                                        x: 10, y: 150)
     @lbl_sacramento.backColor = FXRGB(3, 187, 133)
-    @input_sacramento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
+    @input_sacramento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                   y: 150)
     @input_sacramento.text = @registro[1]
     @input_sacramento.disable
@@ -37,17 +37,17 @@ class ActualizarMisa < FXMainWindow
     @input_parroquia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 180)
     @input_parroquia.text = @registro[25]
-    @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
+    @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 330,
                                                 y: 180)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
-    @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
+    @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 490,
                                               y: 180)
     @input_sector.text = @registro[26]
     @lbl_parroco = FXLabel.new(self, 'Celebranteo: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                      x: 680, y: 180)
+                                                      x: 10, y: 210)
     @lbl_parroco.backColor = FXRGB(3, 187, 133)
-    @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                               y: 180)
+    @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
+                                               y: 210)
     @input_parroco.text = @registro[27]
     @lbl_intencion = FXLabel.new(self, 'Intención: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
                                                       y: 240)
@@ -56,23 +56,23 @@ class ActualizarMisa < FXMainWindow
                                                  y: 240)
     @input_intencion.text = @registro[38]
     @lbl_fecha = FXLabel.new(self, 'Fecha de la misa (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT, width: 250,
-                                                                      height: 20, x: 340, y: 300)
+                                                                      height: 20, x: 10, y: 300)
     @lbl_fecha.backColor = FXRGB(3, 187, 133)
-    @input_fecha = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 590,
-                                             y: 300)
+    @input_fecha = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 280,
+                                             y: 270)
     @input_fecha.text = @registro[39]
-    @lbl_hora = FXLabel.new(self, 'Hora (HH:MM): ', opts: LAYOUT_EXPLICIT, width: 80, height: 20, x: 750,
+    @lbl_hora = FXLabel.new(self, 'Hora (HH:MM): ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
                                                     y: 300)
     @lbl_hora.backColor = FXRGB(3, 187, 133)
-    @input_hora = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
+    @input_hora = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                             y: 300)
     @input_hora.text = @registro[40]
 
     # create buttons
     @btnupdate = FXButton.new(self, 'Actualizar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                  x: 790, y: 400)
+                                                  x: 480, y: 330)
     @btncancel = FXButton.new(self, 'Cancelar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                x: 900, y: 400)
+                                                x: 590, y: 330)
 
     # connect buttons
     @btnupdate.connect(SEL_COMMAND) do
