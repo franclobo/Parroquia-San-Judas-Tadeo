@@ -210,13 +210,13 @@ class ResultadosConsulta < FXMainWindow
         FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Debe seleccionar al menos un registro')
       else
         # Genera el archivo PDF
-        Prawn::Document.generate(@archivo_pdf, margin: [150, 100, 100, 100]) do |pdf|
+        Prawn::Document.generate(@archivo_pdf, margin: [100, 100, 100, 100]) do |pdf|
           pdf.font 'Helvetica'
           pdf.font_size 12
           # Definir tres casos en los que se puede imprimir el certificado y los distintos formatos para bautismo, confirmación y matrimonio
           # Bautismo
           # Encabezado
-          pdf.image File.join(File.dirname(__FILE__), '../assets/images/arquidiocesisquito.png'), height: 100,
+          pdf.image File.join(File.dirname(__FILE__), '../assets/images/arquidiocesisquito.png'), height: 80,
                                                                                                   position: :absolute, at: [-60, 680]
           pdf.text_box 'Arquidiócesis de Quito', align: :center, size: 16, style: :bold, at: [10, 670],
                                                  width: pdf.bounds.width
@@ -224,12 +224,13 @@ class ResultadosConsulta < FXMainWindow
                                                                    at: [10, 650], width: pdf.bounds.width
           pdf.text_box "Jaime Roldós Aguilera, calle Oe13A y N82\nEl Condado, Quito - Ecuador\nTeléfono: 02496446",
                        align: :center, size: 10, at: [10, 630], width: pdf.bounds.width
-          pdf.image File.join(File.dirname(__FILE__), '../assets/images/sanjudastadeo.png'), height: 100,
+          pdf.image File.join(File.dirname(__FILE__), '../assets/images/sanjudastadeo.png'), height: 80,
                                                                                              position: :absolute, at: [430, 680]
 
           case registros_seleccionados[0][1]
           when 'Bautismo'
             # Título del certificado en color rojo
+            pdf.move_down 20
             pdf.text 'CERTIFICADO DE BAUTISMO', align: :center, size: 20, style: :bold, color: 'FF0000'
             pdf.move_down 20
             registros_seleccionados.each do |registro|
@@ -274,7 +275,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "CERTIFICA: #{registro[4]}.", align: :justify
               pdf.move_down 10
               # Registro civil
-              pdf.text 'REGISTRO CIVIL', align: :center, size: 16, style: :bold
+              pdf.text 'REGISTRO CIVIL', align: :center, size: 14, style: :bold
               pdf.move_down 10
               pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}",
                        align: :justify
@@ -284,18 +285,16 @@ class ResultadosConsulta < FXMainWindow
               pdf.move_down 10
               # Datos tomados fielmente de original
               pdf.text 'Datos tomados fielmente del original', align: :center
-              pdf.move_down 40
+              pdf.move_down 30
               # Firma del párroco
               pdf.text '_______________________________', align: :center
-              pdf.move_down 10
               # Nombre del párroco
               pdf.text (registro[27]).to_s, align: :center
-              pdf.move_down 10
               # Parroco
               pdf.text 'Párroco', align: :center
-              pdf.move_down 10
             end
           when 'Comunión'
+            pdf.move_down 20
             pdf.text 'CERTIFICADO DE PRIMERA COMUNIÓN', align: :center, size: 20, style: :bold,
                                                         color: 'FF0000'
             pdf.move_down 20
@@ -330,18 +329,17 @@ class ResultadosConsulta < FXMainWindow
               pdf.move_down 10
               # Datos tomados fielmente de original
               pdf.text 'Datos tomados fielmente del original', align: :center
-              pdf.move_down 10
+              pdf.move_down 40
               # Firma del párroco
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
               pdf.text (registro[27]).to_s, align: :center
-              pdf.move_down 10
               # Parroco
               pdf.text 'Párroco', align: :center
-              pdf.move_down 10
             end
           when 'Confirmación'
+            pdf.move_down 20
             pdf.text 'CERTIFICADO DE CONFIRMACIÓN', align: :center, size: 20, style: :bold, color: 'FF0000'
             pdf.move_down 20
             registros_seleccionados.each do |registro|
@@ -367,18 +365,17 @@ class ResultadosConsulta < FXMainWindow
               pdf.move_down 10
               # Datos tomados fielmente de original
               pdf.text 'Datos tomados fielmente del original', align: :center
-              pdf.move_down 10
+              pdf.move_down 40
               # Firma del párroco
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
               pdf.text (registro[27]).to_s, align: :center
-              pdf.move_down 10
               # Parroco
               pdf.text 'Párroco', align: :center
-              pdf.move_down 10
             end
           when 'Matrimonio'
+            pdf.move_down 20
             pdf.text 'CERTIFICADO DE MATRIMONIO', align: :center, size: 20, style: :bold, color: 'FF0000'
             pdf.move_down 20
             registros_seleccionados.each do |registro|
@@ -420,7 +417,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "CERTIFICA: #{registro[4]}.", align: :justify
               pdf.move_down 10
               # Registro civil
-              pdf.text 'REGISTRO CIVIL', align: :center, size: 16, style: :bold
+              pdf.text 'REGISTRO CIVIL', align: :center, size: 14, style: :bold
               pdf.move_down 10
               pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}",
                        align: :justify
@@ -430,18 +427,17 @@ class ResultadosConsulta < FXMainWindow
               pdf.move_down 10
               # Datos tomados fielmente de original
               pdf.text 'Datos tomados fielmente del original', align: :center
-              pdf.move_down 40
+              pdf.move_down 30
               # Firma del párroco
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
               pdf.text (registro[27]).to_s, align: :center
-              pdf.move_down 10
               # Parroco
               pdf.text 'Párroco', align: :center
-              pdf.move_down 10
             end
           when 'Partida Supletoria del Bautismo'
+            pdf.move_down 20
             pdf.text 'CERTIFICADO DE PARTIDA SUPLETORIA DEL BAUTISMO', align: :center, size: 20, style: :bold,
                                                                        color: 'FF0000'
             pdf.move_down 20
@@ -469,7 +465,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "Fueron sus padrinos: #{registro[5]} y #{registro[6]}.", align: :justify
               pdf.move_down 10
               # Registro civil
-              pdf.text 'REGISTRO CIVIL', align: :center, size: 16, style: :bold
+              pdf.text 'REGISTRO CIVIL', align: :center, size: 14, style: :bold
               pdf.move_down 10
               pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}",
                        align: :justify
@@ -488,18 +484,17 @@ class ResultadosConsulta < FXMainWindow
               pdf.text 'TESTIGO 1): ................................... FIRMA: __________________', align: :center
               pdf.move_down 10
               pdf.text 'TESTIGO 2): ................................... FIRMA: __________________', align: :center
-              pdf.move_down 40
+              pdf.move_down 30
               # Firma del párroco
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
               pdf.text (registro[27]).to_s, align: :center
-              pdf.move_down 10
               # Parroco
               pdf.text 'Párroco', align: :center
-              pdf.move_down 10
             end
           when 'Curso Prebautismal'
+            pdf.move_down 20
             pdf.text 'CERTIFICADO DEL CURSO PREBAUTISMAL', align: :center, size: 20, style: :bold,
                                                            color: 'FF0000'
             pdf.move_down 20
@@ -528,18 +523,17 @@ class ResultadosConsulta < FXMainWindow
                        align: :justify
               pdf.move_down 10
               pdf.text 'En Dios y María Santísima.', align: :justify
-              pdf.move_down 40
+              pdf.move_down 30
               # Firma del párroco
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
               pdf.text (registro[4]).to_s, align: :center
-              pdf.move_down 10
               # Parroco
               pdf.text 'Párroco', align: :center
-              pdf.move_down 10
             end
           when 'Permiso de Bautismo'
+            pdf.move_down 20
             pdf.text 'PERMISO DE BAUTISMO', align: :center, size: 20, style: :bold, color: 'FF0000'
             pdf.move_down 20
             registros_seleccionados.each do |registro|
@@ -566,18 +560,17 @@ class ResultadosConsulta < FXMainWindow
               pdf.move_down 10
               # Despedida
               pdf.text 'En Dios y María Santísima.', align: :justify
-              pdf.move_down 40
+              pdf.move_down 30
               # Firma del párroco
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
               pdf.text (registro[4]).to_s, align: :center
-              pdf.move_down 10
               # Parroco
               pdf.text 'Párroco', align: :center
-              pdf.move_down 10
             end
           when 'Permiso de Matrimonio'
+            pdf.move_down 20
             pdf.text 'PERMISO DE MATRIMONIO', align: :center, size: 20, style: :bold, color: 'FF0000'
             pdf.move_down 20
             registros_seleccionados.each do |registro|
@@ -606,16 +599,14 @@ class ResultadosConsulta < FXMainWindow
               pdf.text 'Es todo cuanto puedo certificar en honor a la verdad.', align: :justify
               pdf.move_down 10
               pdf.text 'En Dios y María Santísima.', align: :justify
-              pdf.move_down 40
+              pdf.move_down 30
               # Firma del párroco
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
               pdf.text (registro[4]).to_s, align: :center
-              pdf.move_down 10
               # Parroco
               pdf.text 'Párroco', align: :center
-              pdf.move_down 10
             end
           end
         end

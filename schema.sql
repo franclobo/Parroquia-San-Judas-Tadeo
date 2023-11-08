@@ -1,3 +1,17 @@
+-- Database: sacramentos
+
+-- DROP DATABASE IF EXISTS sacramentos;
+
+CREATE DATABASE sacramentos
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
 -- Table: public.sacramentos
 
 -- DROP TABLE IF EXISTS public.sacramentos;
@@ -124,4 +138,108 @@ CREATE TABLE IF NOT EXISTS public.registros_civiles
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.registros_civiles
+    OWNER to postgres;
+
+
+-- Table: public.misas
+
+-- DROP TABLE IF EXISTS public.misas;
+
+CREATE TABLE IF NOT EXISTS public.misas
+(
+    id integer NOT NULL DEFAULT nextval('misas_id_seq'::regclass),
+    intencion text COLLATE pg_catalog."default",
+    fecha date,
+    hora text COLLATE pg_catalog."default",
+    CONSTRAINT "Misas_pkey" PRIMARY KEY (id),
+    CONSTRAINT fk_parroquias FOREIGN KEY (id)
+        REFERENCES public.parroquias (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.misas
+    OWNER to postgres;
+
+
+-- Database: catecismo
+
+-- DROP DATABASE IF EXISTS catecismo;
+
+CREATE DATABASE catecismo
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+-- Table: public.alumnos
+
+-- DROP TABLE IF EXISTS public.alumnos;
+
+CREATE TABLE IF NOT EXISTS public.alumnos
+(
+    id integer NOT NULL DEFAULT nextval('alumnos_id_seq'::regclass),
+    nombres text COLLATE pg_catalog."default",
+    apellidos text COLLATE pg_catalog."default",
+    fecha_nacimiento date,
+    lugar_nacimiento text COLLATE pg_catalog."default",
+    cedula text COLLATE pg_catalog."default",
+    CONSTRAINT alumnos_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_catequistas FOREIGN KEY (id)
+        REFERENCES public.catequistas (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT fk_niveles FOREIGN KEY (id)
+        REFERENCES public.niveles (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.alumnos
+    OWNER to postgres;
+
+-- Table: public.catequistas
+
+-- DROP TABLE IF EXISTS public.catequistas;
+
+CREATE TABLE IF NOT EXISTS public.catequistas
+(
+    id integer NOT NULL DEFAULT nextval('catequistas_id_seq'::regclass),
+    nombres text COLLATE pg_catalog."default",
+    apellidos text COLLATE pg_catalog."default",
+    CONSTRAINT catequistas_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.catequistas
+    OWNER to postgres;
+
+-- Table: public.niveles
+
+-- DROP TABLE IF EXISTS public.niveles;
+
+CREATE TABLE IF NOT EXISTS public.niveles
+(
+    id integer NOT NULL DEFAULT nextval('niveles_id_seq'::regclass),
+    nivel text COLLATE pg_catalog."default",
+    sector text COLLATE pg_catalog."default",
+    anio_lectivo text COLLATE pg_catalog."default",
+    CONSTRAINT niveles_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.niveles
     OWNER to postgres;
