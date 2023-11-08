@@ -56,7 +56,7 @@ class ActualizarMisa < FXMainWindow
                                                  y: 240)
     @input_intencion.text = @registro[38]
     @lbl_fecha = FXLabel.new(self, 'Fecha de la misa (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT, width: 250,
-                                                                      height: 20, x: 10, y: 300)
+                                                                      height: 20, x: 10, y: 270)
     @lbl_fecha.backColor = FXRGB(3, 187, 133)
     @input_fecha = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 280,
                                              y: 270)
