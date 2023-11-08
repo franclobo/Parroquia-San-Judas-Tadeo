@@ -178,9 +178,9 @@ class ResultadosConsulta < FXMainWindow
           pdf.move_down 20
 
           # Recorre todos los registros seleccionados y agrega sus horarios de misas
-          registros_seleccionados.each do |registro|
-            pdf.text 'Hora | Capilla | Sector | Intención'
+          pdf.text 'Hora | Capilla | Sector | Intención'
             pdf.move_down 10
+          registros_seleccionados.each do |registro|
             pdf.text "#{registro[selected_columns[40]]} | #{registro[selected_columns[25]]} | #{registro[selected_columns[26]]} | #{registro[selected_columns[38]]}"
             pdf.move_down 10
           end
