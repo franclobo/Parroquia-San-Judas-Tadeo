@@ -657,6 +657,7 @@ class ResultadosConsulta < FXMainWindow
         # Mensaje de confirmación
         FXMessageBox.information(self, MBOX_OK, 'Información', 'El archivo PDF se ha generado correctamente')
       end
+    end
 
       @btnedit.connect(SEL_COMMAND) do
         # Editar registros seleccionados y actualizar la basee de datos
@@ -761,16 +762,16 @@ class ResultadosConsulta < FXMainWindow
               vtnactualizar_misa.create
               vtnactualizar_misa.show(PLACEMENT_SCREEN)
             end
-          when 'Permiso de Matrimonio'
+          when 'Licencia de Matrimonio'
             # Obtenemos el registro de la base de datos
-            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON parroquias.id = misas.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE misas.id = #{registro[0]}"
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
             $conn.exec(sql) do |result|
               @registros = result.values[0]
               # Abrimos la ventana de edición
               require_relative 'actualizar_licencia_matrimonio'
-              vtnactualizar_misa = ActualizarLicenciaMatrimonio.new(@app, @registros)
-              vtnactualizar_misa.create
-              vtnactualizar_misa.show(PLACEMENT_SCREEN)
+              vtnactualizar_licencia_matrimonio = ActualizarLicenciaMatrimonio.new(@app, @registros)
+              vtnactualizar_licencia_matrimonio.create
+              vtnactualizar_licencia_matrimonio.show(PLACEMENT_SCREEN)
             end
           end
         end
@@ -983,7 +984,7 @@ class ResultadosConsulta < FXMainWindow
           end
         end
       end
-    end
+
     Prawn::Fonts::AFM.hide_m17n_warning = true
   end
 
