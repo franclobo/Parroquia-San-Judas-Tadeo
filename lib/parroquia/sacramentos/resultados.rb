@@ -381,7 +381,7 @@ class ResultadosConsulta < FXMainWindow
           when 'Matrimonio'
             pdf.move_down 20
             pdf.text 'CERTIFICADO DE MATRIMONIO', align: :center, size: 20, style: :bold, color: 'FF0000'
-            pdf.move_down 20
+            pdf.move_down 10
             registros_seleccionados.each do |registro|
               # Fecha actual alineada a la derecha
               pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime('%d/%m/%Y'))}", align: :right
