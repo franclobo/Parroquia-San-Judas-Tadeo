@@ -104,11 +104,11 @@ ALTER TABLE IF EXISTS public.parroquias
 CREATE TABLE IF NOT EXISTS public.creyentes
 (
     id integer NOT NULL DEFAULT nextval('creyentes_id_seq'::regclass),
-    nombres text COLLATE pg_catalog."default" NOT NULL,
-    apellidos text COLLATE pg_catalog."default" NOT NULL,
+    nombres text COLLATE pg_catalog."default",
+    apellidos text COLLATE pg_catalog."default",
     lugar_nacimiento text COLLATE pg_catalog."default",
     fecha_nacimiento date,
-    cedula integer,
+    cedula text COLLATE pg_catalog."default",
     CONSTRAINT creyentes_pkey PRIMARY KEY (id)
 )
 

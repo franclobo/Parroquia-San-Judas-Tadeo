@@ -410,8 +410,9 @@ class ResultadosConsulta < FXMainWindow
               pdf.move_down 10
               # Celebrante
               pdf.text "CELEBRANTE: #{registro[3]}.", align: :justify
+              pdf.move_down 10
               # Feligreses de la parroquia
-              pdf.text "Feligreses de la parroquia: #{registro[25]}.", align: :justify
+              pdf.text "FELIGRESES DE LA PARROQUIA: #{registro[25]}.", align: :justify
               pdf.move_down 10
               # Testigos
               pdf.text "TESTIGOS: #{registro[7]} y #{registro[8]}.", align: :justify
