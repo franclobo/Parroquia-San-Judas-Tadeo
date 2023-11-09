@@ -1,7 +1,7 @@
 require 'fox16'
 include Fox
 
-class ActualizarMatrimonio < FXMainWindow
+class ActualizarLicenciaMatrimonio < FXMainWindow
   def initialize(app, registro)
     @registro = registro
     super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 530)

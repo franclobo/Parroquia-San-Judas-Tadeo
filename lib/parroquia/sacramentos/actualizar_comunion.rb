@@ -128,21 +128,21 @@ class ActualizarComunion < FXMainWindow
 
     # connect buttons
     @btnupdate.connect(SEL_COMMAND) do
-      tomo = @input_tomo.text
-      page = @input_page.text
-      number = @input_number.text
-      fecha = @input_fecha.text
-      sacramento = @input_sacramento.text
-      parroquia = @input_parroquia.text
-      sector = @input_sector.text
-      parroco = @input_parroco.text
-      celebrante = @input_celebrante.text
-      name = @input_name.text
-      apellidos = @input_apellidos.text
-      lugar_nacimiento = @input_lugar_nacimiento.text
-      fecha_nacimiento = @input_fecha_nacimiento.text
+      tomo = @input_tomo.text.empty? ? nil : @input_tomo.text
+      page = @input_page.text.empty? ? nil : @input_page.text
+      number = @input_number.text.empty? ? nil : @input_number.text
+      fecha = @input_fecha.text.empty? ? nil : @input_fecha.text
+      sacramento = @input_sacramento.text.empty? ? nil : @input_sacramento.text
+      parroquia = @input_parroquia.text.empty? ? nil : @input_parroquia.text
+      sector = @input_sector.text.empty? ? nil : @input_sector.text
+      parroco = @input_parroco.text.empty? ? nil : @input_parroco.text
+      celebrante = @input_celebrante.text.empty? ? nil : @input_celebrante.text
+      name = @input_name.text.empty? ? nil : @input_name.text
+      apellidos = @input_apellidos.text.empty? ? nil : @input_apellidos.text
+      lugar_nacimiento = @input_lugar_nacimiento.text.empty? ? nil : @input_lugar_nacimiento.text
+      fecha_nacimiento = @input_fecha_nacimiento.text.empty? ? nil : @input_fecha_nacimiento.text
       cedula = @input_cedula.text.empty? ? nil : @input_cedula.text
-      certifica = @input_certifica.text
+      certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
 
       # tables
       # tabla libros (id, tomo, pagina, numero)

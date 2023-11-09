@@ -111,19 +111,19 @@ class ActualizarPermisoBautismo < FXMainWindow
 
     # connect buttons
     @btnupdate.connect(SEL_COMMAND) do
-      fecha = @input_fecha.text
-      sacramento = @input_sacramento.text
-      parroquia = @input_parroquia.text
-      sector = @input_sector.text
-      parroco = @input_parroco.text
-      name = @input_name.text
-      apellidos = @input_apellidos.text
+      fecha = @input_fecha.text.empty? ? nil : @input_fecha.text
+      sacramento = @input_sacramento.text.empty? ? nil : @input_sacramento.text
+      parroquia = @input_parroquia.text.empty? ? nil : @input_parroquia.text
+      sector = @input_sector.text.empty? ? nil : @input_sector.text
+      parroco = @input_parroco.text.empty? ? nil : @input_parroco.text
+      name = @input_name.text.empty? ? nil : @input_name.text
+      apellidos = @input_apellidos.text.empty? ? nil : @input_apellidos.text
       cedula = @input_cedula.text.empty? ? nil : @input_cedula.text
       padrino = @input_padrino.text.empty? ? nil : @input_padrino.text
       madrina = @input_madrina.text.empty? ? nil : @input_madrina.text
       padre = @input_padre.text.empty? ? nil : @input_padre.text
       madre = @input_madre.text.empty? ? nil : @input_madre.text
-      certifica = @input_certifica.text
+      certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
 
 
       # tables

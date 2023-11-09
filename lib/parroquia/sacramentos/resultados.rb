@@ -484,9 +484,9 @@ class ResultadosConsulta < FXMainWindow
               pdf.move_down 10
               pdf.text "MADRE: #{registro[10]} FIRMA: __________________", align: :center
               pdf.move_down 10
-              pdf.text 'TESTIGO 1): ................................... FIRMA: __________________', align: :center
+              pdf.text "TESTIGO 1): #{registro[7]} FIRMA: __________________", align: :center
               pdf.move_down 10
-              pdf.text 'TESTIGO 2): ................................... FIRMA: __________________', align: :center
+              pdf.text "TESTIGO 2): #{registro[8]} FIRMA: __________________", align: :center
               pdf.move_down 30
               # Firma del párroco
               pdf.text '_______________________________', align: :center
@@ -611,6 +611,42 @@ class ResultadosConsulta < FXMainWindow
               # Parroco
               pdf.text 'Párroco', align: :center
             end
+          when 'Licencia de Matrimonio'
+            pdf.move_down 20
+            pdf.text 'LICENCIA DE MATRIMONIO', align: :center, size: 20, style: :bold, color: 'FF0000'
+            pdf.move_down 20
+            registros_seleccionados.each do |registro|
+              # Fecha actual alineada a la derecha
+              pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime('%d/%m/%Y'))}", align: :right
+              pdf.move_down 20
+              # Título
+              pdf.text 'Zona Pastoral Norte', align: :justify
+              pdf.move_down 10
+              pdf.text "Ministerio Parroquial \"San Judas Tadeo\"", align: :justify
+              pdf.move_down 10
+              pdf.text 'Rvdo. Padre', align: :justify
+              # Nombre del párroco
+              pdf.text (registro[27]).to_s, align: :justify
+              pdf.move_down 10
+              # Parroquia
+              pdf.text "Párroco de \"#{registro[25]}\" #{registro[26]}", align: :justify
+              pdf.move_down 10
+              pdf.text 'Presente.', align: :justify
+              pdf.move_down 40
+              # Cuerpo
+              pdf.text "Habiendose realizado en este despacho parroquial las informaciones previas al matrimonio del Sr. #{registro[19]} #{registro[20]} C.I. #{registro[23]} con la Sra. #{registro[11]} #{registro[12]} C.I. #{registro[13]}. Feligreses de esta parroquia, San Judas Tadeo, sin que de lo actudo haya aparecido impedimento alguno, habiéndose así mismo realizado la dispensa de las tres moniciones canónicas, concedo a V. Reverencia la licencia prescrita por el canon 1115, para que dentro de esta jurisdicción parroquial precencia lícitamente y bendiga el sobredicho matrimonio, de lo que servirá notificar a esta parroquia con la incicación de la fecha y de los testigos.",
+                        align: :justify
+              pdf.move_down 40
+              # Despedida
+              pdf.text 'Dios N. S. guarde a V. Reverencia', align: :justify
+              pdf.move_down 40
+              # Firma del párroco
+              pdf.text '_______________________________', align: :center
+              pdf.move_down 10
+              # Nombre del párroco
+              pdf.text (registro[4]).to_s, align: :center
+              # Parroco
+              pdf.text 'PÁRROCO', align: :center
           end
         end
         # Abre el archivo PDF con el visor de PDF predeterminado del sistema

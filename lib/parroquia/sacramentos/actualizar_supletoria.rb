@@ -132,10 +132,22 @@ class ActualizarSupletoria < FXMainWindow
     @input_madrina = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                                y: 360)
     @input_madrina.text = registro[6]
-    @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
+    @lbl_testigo_uno = FXLabel.new(self, 'Testigo 1): ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
+                                                      x: 10, y: 390)
+    @lbl_testigo_uno.backColor = FXRGB(3, 187, 133)
+    @input_testigo_uno = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
+                                                    y: 390)
+    @input_testigo_uno.text = registro[7]
+    @lbl_testigo_dos = FXLabel.new(self, 'Testigo 2): ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
+                                                      x: 340, y: 390)
+    @lbl_testigo_dos.backColor = FXRGB(3, 187, 133)
+    @input_testigo_dos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
+                                                    y: 390)
+    @input_testigo_dos.text = registro[8]
+    @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
                                                       y: 390)
     @lbl_certifica.backColor = FXRGB(3, 187, 133)
-    @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
+    @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                  y: 390)
     @input_certifica.text = registro[4]
 
@@ -201,33 +213,35 @@ class ActualizarSupletoria < FXMainWindow
 
     # connect buttons
     @btnupdate.connect(SEL_COMMAND) do
-      tomo = @input_tomo.text
-      page = @input_page.text
-      number = @input_number.text
-      fecha = @input_fecha.text
-      sacramento = @input_sacramento.text
-      parroquia = @input_parroquia.text
-      sector = @input_sector.text
-      parroco = @input_parroco.text
-      ministro = @input_ministro.text
-      name = @input_name.text
-      apellidos = @input_apellidos.text
-      lugar_nacimiento = @input_lugar_nacimiento.text
-      fecha_nacimiento = @input_fecha_nacimiento.text
+      tomo = @input_tomo.text.empty? ? nil : @input_tomo.text
+      page = @input_page.text.empty? ? nil : @input_page.text
+      number = @input_number.text.empty? ? nil : @input_number.text
+      fecha = @input_fecha.text.empty? ? nil : @input_fecha.text
+      sacramento = @input_sacramento.text.empty? ? nil : @input_sacramento.text
+      parroquia = @input_parroquia.text.empty? ? nil : @input_parroquia.text
+      sector = @input_sector.text.empty? ? nil : @input_sector.text
+      parroco = @input_parroco.text.empty? ? nil : @input_parroco.text
+      ministro = @input_ministro.text.empty? ? nil : @input_ministro.text
+      name = @input_name.text.empty? ? nil : @input_name.text
+      apellidos = @input_apellidos.text.empty? ? nil : @input_apellidos.text
+      lugar_nacimiento = @input_lugar_nacimiento.text.empty? ? nil : @input_lugar_nacimiento.text
+      fecha_nacimiento = @input_fecha_nacimiento.text.empty? ? nil : @input_fecha_nacimiento.text
       cedula = @input_cedula.text.empty? ? nil : @input_cedula.text
       padrino = @input_padrino.text.empty? ? nil : @input_padrino.text
       madrina = @input_madrina.text.empty? ? nil : @input_madrina.text
       padre = @input_padre.text.empty? ? nil : @input_padre.text
       madre = @input_madre.text.empty? ? nil : @input_madre.text
-      certifica = @input_certifica.text
-      provincia_rc = @input_provincia_rc.text
-      canton_rc = @input_canton_rc.text
-      parroquia_rc = @input_parroquia_rc.text
-      anio_rc = @input_anio_rc.text
-      tomo_rc = @input_tomo_rc.text
-      pag_rc = @input_pag_rc.text
-      acta_rc = @input_acta_rc.text
-      date_rc = @input_date_rc.text
+      testigo_uno = @input_testigo_uno.text.empty? ? nil : @input_testigo_uno.text
+      testigo_dos = @input_testigo_dos.text.empty? ? nil : @input_testigo_dos.text
+      certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
+      provincia_rc = @input_provincia_rc.text.empty? ? nil : @input_provincia_rc.text
+      canton_rc = @input_canton_rc.text.empty? ? nil : @input_canton_rc.text
+      parroquia_rc = @input_parroquia_rc.text. empty? ? nil : @input_parroquia_rc.text
+      anio_rc = @input_anio_rc.text.empty? ? nil : @input_anio_rc.text
+      tomo_rc = @input_tomo_rc.text.empty? ? nil : @input_tomo_rc.text
+      pag_rc = @input_pag_rc.text.empty? ? nil : @input_pag_rc.text
+      acta_rc = @input_acta_rc.text.empty? ? nil : @input_acta_rc.text
+      date_rc = @input_date_rc.text.empty? ? nil : @input_date_rc.text
 
       # tables
       # tabla libros (id, tomo, pagina, numero)
@@ -240,8 +254,8 @@ class ActualizarSupletoria < FXMainWindow
         $conn.exec('UPDATE libros SET tomo = $1, pagina = $2, numero = $3 WHERE id = $4',
                    [tomo, page, number, registro[14]])
         $conn.exec(
-          'UPDATE sacramentos SET fecha = $1, sacramento = $2, celebrante = $3, certifica = $4, padrino = $5, madrina = $6, padre = $7, madre = $8 WHERE id = $9', [
-            fecha, sacramento, ministro, certifica, padrino, madrina, padre, madre, registro[0]
+          'UPDATE sacramentos SET fecha = $1, sacramento = $2, celebrante = $3, testigo_novio = $4, testigo_novia = $5, certifica = $6, padrino = $7, madrina = $8, padre = $9, madre = $10 WHERE id = $11', [
+            fecha, sacramento, ministro, testigo_uno, testigo_dos, certifica, padrino, madrina, padre, madre, registro[0]
           ]
         )
         $conn.exec(

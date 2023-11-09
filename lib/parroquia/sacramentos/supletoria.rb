@@ -53,14 +53,11 @@ class Supletoria < FXMainWindow
     @lbl_parroquia.backColor = FXRGB(3, 187, 133)
     @input_parroquia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 180)
-    @input_parroquia.text = 'San Judas Tadeo'
-    @input_parroquia.disable
     @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
                                                 y: 180)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
     @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                               y: 180)
-    @input_sector.text = 'Jaime Roldós'
     @lbl_parroco = FXLabel.new(self, 'Parroco: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
                                                   y: 180)
     @lbl_parroco.backColor = FXRGB(3, 187, 133)
@@ -116,10 +113,20 @@ class Supletoria < FXMainWindow
     @lbl_madrina.backColor = FXRGB(3, 187, 133)
     @input_madrina = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                                y: 360)
-    @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
+    @lbl_testigo_uno = FXLabel.new(self, 'Testigo 1): ', opts: LAYOUT_EXPLICIT, width: 150,
+                                                                    height: 20, x: 10, y: 390)
+    @lbl_testigo_uno.backColor = FXRGB(3, 187, 133)
+    @input_testigo_uno = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
+                                                      x: 170, y: 390)
+    @lbl_testigo_dos = FXLabel.new(self, 'Testigo 2): ', opts: LAYOUT_EXPLICIT, width: 150,
+                                                                    height: 20, x: 340, y: 390)
+    @lbl_testigo_dos.backColor = FXRGB(3, 187, 133)
+    @input_testigo_dos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
+                                                      x: 510, y: 390)
+    @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
                                                       y: 390)
     @lbl_certifica.backColor = FXRGB(3, 187, 133)
-    @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
+    @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                  y: 390)
 
     # section registro civil
@@ -194,6 +201,8 @@ class Supletoria < FXMainWindow
       madrina = @input_madrina.text.empty? ? nil : @input_madrina.text
       padre = @input_padre.text.empty? ? nil : @input_padre.text
       madre = @input_madre.text.empty? ? nil : @input_madre.text
+      testigo_uno = @input_testigo_uno.text.empty? ? nil : @input_testigo_uno.text
+      testigo_dos = @input_testigo_dos.text.empty? ? nil : @input_testigo_dos.text
       certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
       provincia_rc = @input_provincia_rc.text.empty? ? nil : @input_provincia_rc.text
       canton_rc = @input_canton_rc.text.empty? ? nil : @input_canton_rc.text
@@ -224,8 +233,8 @@ class Supletoria < FXMainWindow
         # Insertar en la tabla misas
         @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
         $conn.exec(
-          'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
-            sacramento, fecha, ministro, certifica, padrino, madrina, padre, madre])
+          'INSERT INTO sacramentos (sacramento, fecha, celebrante, testigo_novio, testigo_novia, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [
+            sacramento, fecha, ministro, teatigo_uno, testigo_dos, certifica, padrino, madrina, padre, madre])
         # Confirmar la transacción
         $conn.exec('COMMIT')
         FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos guardados correctamente')

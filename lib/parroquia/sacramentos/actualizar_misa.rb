@@ -76,13 +76,13 @@ class ActualizarMisa < FXMainWindow
 
     # connect buttons
     @btnupdate.connect(SEL_COMMAND) do
-      sacramento = @input_sacramento.text
-      capilla = @input_parroquia.text
-      sector = @input_sector.text
-      celebrante = @input_parroco.text
-      fecha_misa = @input_fecha.text
-      hora = @input_hora.text
-      intencion = @input_intencion.text
+      sacramento = @input_sacramento.text.empty? ? nil : @input_sacramento.text
+      capilla = @input_parroquia.text.empty? ? nil : @input_parroquia.text
+      sector = @input_sector.text.empty? ? nil : @input_sector.text
+      celebrante = @input_parroco.text.empty? ? nil : @input_parroco.text
+      fecha_misa = @input_fecha.text.empty? ? nil : @input_fecha.text
+      hora = @input_hora.text.empty? ? nil : @input_hora.text
+      intencion = @input_intencion.text.empty? ? nil : @input_intencion.text
 
       # tables
       # tabla libros (id, tomo, pagina, numero)

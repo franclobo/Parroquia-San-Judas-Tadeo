@@ -118,20 +118,20 @@ class ActualizarPreMatrimonial < FXMainWindow
 
     # connect buttons
     @btnupdate.connect(SEL_COMMAND) do
-      fecha = @input_fecha.text
-      sacramento = @input_sacramento.text
-      parroquia = @input_parroquia.text
-      sector = @input_sector.text
-      parroco = @input_parroco.text
-      name_novio = @input_name_novio.text
-      apellido_novio = @input_apellido_novio.text
+      fecha = @input_fecha.text.empty? ? nil : @input_fecha.text
+      sacramento = @input_sacramento.text.empty? ? nil : @input_sacramento.text
+      parroquia = @input_parroquia.text.empty? ? nil : @input_parroquia.text
+      sector = @input_sector.text.empty? ? nil : @input_sector.text
+      parroco = @input_parroco.text.empty? ? nil : @input_parroco.text
+      name_novio = @input_name_novio.text.empty? ? nil : @input_name_novio.text
+      apellido_novio = @input_apellido_novio.text.empty? ? nil : @input_apellido_novio.text
       cedula_novio = @input_cedula_novio.text.empty? ? nil : @input_cedula_novio.text
       nombres_novia = @input_name_novia.text.empty? ? nil : @input_name_novia.text
       apellidos_novia = @input_apellido_novia.text.empty? ? nil : @input_apellido_novia.text
       cedula_novia = @input_cedula_novia.text.empty? ? nil : @input_cedula_novia.text
       testigo_novio = @input_nombres_testigo_novio.text.empty? ? nil : @input_nombres_testigo_novio.text
       testigo_novia = @input_nombres_testigo_novia.text.empty? ? nil : @input_nombres_testigo_novia.text
-      certifica = @input_certifica.text
+      certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
 
       # tables
       # tabla libros (id, tomo, pagina, numero)

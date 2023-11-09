@@ -58,8 +58,10 @@ class Sacramentos < FXMainWindow
                                                                    width: 150, height: 30, x: 620, y: 230)
     @btnprematrimonial = FXButton.new(self, 'Permiso Prematrimonial', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
                                                                       width: 150, height: 30, x: 620, y: 270)
+    @btnlicenciamatrimonio = FXButton.new(self, 'Licencia de Matrimonio', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
+                                                                        width: 150, height: 30, x: 620, y: 310)
     @btnmisa = FXButton.new(self, 'Misa', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150, height: 30,
-                                          x: 620, y: 310)
+                                          x: 620, y: 350)
     # Footer
     @lblfooter = FXLabel.new(self, 'WebMinds Studio - 2023', opts: LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, width: 700,
                                                              height: 20, x: 0, y: 400)
@@ -131,6 +133,12 @@ class Sacramentos < FXMainWindow
       vtnprematrimonial = PermisoMatrimonio.new(@app)
       vtnprematrimonial.create
       vtnprematrimonial.show(PLACEMENT_SCREEN)
+    end
+    @btnlicenciamatrimonio.connect(SEL_COMMAND) do
+      require_relative 'licencia_matrimonio'
+      vtnlicenciamatrimonio = LicenciaMatrimonio.new(@app)
+      vtnlicenciamatrimonio.create
+      vtnlicenciamatrimonio.show(PLACEMENT_SCREEN)
     end
     @btnmisa.connect(SEL_COMMAND) do
       require_relative 'misa'
