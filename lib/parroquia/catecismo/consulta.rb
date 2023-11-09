@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pg'
 require 'fox16'
 include Fox
@@ -30,17 +32,17 @@ class Consulta < FXMainWindow
                                                          x: 10, y: 150)
     @lbl_consulta.backColor = FXRGB(3, 187, 133)
     @lbl_apellidos = FXLabel.new(self, 'Apellidos del alumno: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                      y: 180)
+                                                                 y: 180)
     @lbl_apellidos.backColor = FXRGB(3, 187, 133)
     @input_apellidos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 180)
     @lbl_nombres = FXLabel.new(self, 'Nombres del alumno: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
-                                                  y: 180)
+                                                             y: 180)
     @lbl_nombres.backColor = FXRGB(3, 187, 133)
     @input_nombres = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                                y: 180)
     @lbl_cedula = FXLabel.new(self, 'Cédula del alumno: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                y: 210)
+                                                           y: 210)
     @lbl_cedula.backColor = FXRGB(3, 187, 133)
     @input_cedula = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                               y: 210)

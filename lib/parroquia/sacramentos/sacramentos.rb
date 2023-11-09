@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pg'
 require 'fox16'
 include Fox
@@ -59,7 +61,7 @@ class Sacramentos < FXMainWindow
     @btnprematrimonial = FXButton.new(self, 'Permiso Prematrimonial', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
                                                                       width: 150, height: 30, x: 620, y: 270)
     @btnlicenciamatrimonio = FXButton.new(self, 'Licencia de Matrimonio', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
-                                                                        width: 150, height: 30, x: 620, y: 310)
+                                                                          width: 150, height: 30, x: 620, y: 310)
     @btnmisa = FXButton.new(self, 'Misa', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150, height: 30,
                                           x: 620, y: 350)
     # Footer

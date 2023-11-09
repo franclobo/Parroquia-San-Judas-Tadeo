@@ -20,9 +20,9 @@ CREATE TABLE IF NOT EXISTS public.sacramentos
 (
     id integer NOT NULL DEFAULT nextval('sacramentos_id_seq'::regclass),
     sacramento text COLLATE pg_catalog."default" NOT NULL,
-    fecha date NOT NULL,
-    celebrante text COLLATE pg_catalog."default" NOT NULL,
-    certifica text COLLATE pg_catalog."default" NOT NULL,
+    fecha date,
+    celebrante text COLLATE pg_catalog."default",
+    certifica text COLLATE pg_catalog."default",
     padrino text COLLATE pg_catalog."default",
     madrina text COLLATE pg_catalog."default",
     testigo_novio text COLLATE pg_catalog."default",
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS public.sacramentos
     madre text COLLATE pg_catalog."default",
     nombres_novia text COLLATE pg_catalog."default",
     apellidos_novia text COLLATE pg_catalog."default",
-    cedula_novia integer,
+    cedula_novia text COLLATE pg_catalog."default",
     CONSTRAINT sacramentos_pkey PRIMARY KEY (id),
     CONSTRAINT fk_creyentes FOREIGN KEY (id)
         REFERENCES public.creyentes (id) MATCH SIMPLE

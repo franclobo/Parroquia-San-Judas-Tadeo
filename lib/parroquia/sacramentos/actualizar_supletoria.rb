@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fox16'
 include Fox
 
@@ -133,16 +135,16 @@ class ActualizarSupletoria < FXMainWindow
                                                y: 360)
     @input_madrina.text = registro[6]
     @lbl_testigo_uno = FXLabel.new(self, 'Testigo 1): ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                      x: 10, y: 390)
+                                                         x: 10, y: 390)
     @lbl_testigo_uno.backColor = FXRGB(3, 187, 133)
     @input_testigo_uno = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                    y: 390)
+                                                   y: 390)
     @input_testigo_uno.text = registro[7]
     @lbl_testigo_dos = FXLabel.new(self, 'Testigo 2): ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                      x: 340, y: 390)
+                                                         x: 340, y: 390)
     @lbl_testigo_dos.backColor = FXRGB(3, 187, 133)
     @input_testigo_dos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                    y: 390)
+                                                   y: 390)
     @input_testigo_dos.text = registro[8]
     @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
                                                       y: 390)
@@ -236,7 +238,7 @@ class ActualizarSupletoria < FXMainWindow
       certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
       provincia_rc = @input_provincia_rc.text.empty? ? nil : @input_provincia_rc.text
       canton_rc = @input_canton_rc.text.empty? ? nil : @input_canton_rc.text
-      parroquia_rc = @input_parroquia_rc.text. empty? ? nil : @input_parroquia_rc.text
+      parroquia_rc = @input_parroquia_rc.text.empty? ? nil : @input_parroquia_rc.text
       anio_rc = @input_anio_rc.text.empty? ? nil : @input_anio_rc.text
       tomo_rc = @input_tomo_rc.text.empty? ? nil : @input_tomo_rc.text
       pag_rc = @input_pag_rc.text.empty? ? nil : @input_pag_rc.text

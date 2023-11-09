@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fox16'
 include Fox
 
@@ -114,15 +116,15 @@ class Supletoria < FXMainWindow
     @input_madrina = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                                y: 360)
     @lbl_testigo_uno = FXLabel.new(self, 'Testigo 1): ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                    height: 20, x: 10, y: 390)
+                                                         height: 20, x: 10, y: 390)
     @lbl_testigo_uno.backColor = FXRGB(3, 187, 133)
     @input_testigo_uno = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                      x: 170, y: 390)
+                                                   x: 170, y: 390)
     @lbl_testigo_dos = FXLabel.new(self, 'Testigo 2): ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                    height: 20, x: 340, y: 390)
+                                                         height: 20, x: 340, y: 390)
     @lbl_testigo_dos.backColor = FXRGB(3, 187, 133)
     @input_testigo_dos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                      x: 510, y: 390)
+                                                   x: 510, y: 390)
     @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
                                                       y: 390)
     @lbl_certifica.backColor = FXRGB(3, 187, 133)
@@ -201,7 +203,7 @@ class Supletoria < FXMainWindow
       madrina = @input_madrina.text.empty? ? nil : @input_madrina.text
       padre = @input_padre.text.empty? ? nil : @input_padre.text
       madre = @input_madre.text.empty? ? nil : @input_madre.text
-      testigo_uno = @input_testigo_uno.text.empty? ? nil : @input_testigo_uno.text
+      @input_testigo_uno.text.empty? ? nil : @input_testigo_uno.text
       testigo_dos = @input_testigo_dos.text.empty? ? nil : @input_testigo_dos.text
       certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
       provincia_rc = @input_provincia_rc.text.empty? ? nil : @input_provincia_rc.text
@@ -224,17 +226,23 @@ class Supletoria < FXMainWindow
         $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)', [tomo, page, number])
         $conn.exec(
           'INSERT INTO creyentes (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [
-            name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula])
+            name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula
+          ]
+        )
         $conn.exec('INSERT INTO parroquias (parroquia, sector, parroco) VALUES ($1, $2, $3)',
                    [parroquia, sector, parroco])
         $conn.exec(
           'INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
-            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc])
+            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc
+          ]
+        )
         # Insertar en la tabla misas
         @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
         $conn.exec(
           'INSERT INTO sacramentos (sacramento, fecha, celebrante, testigo_novio, testigo_novia, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [
-            sacramento, fecha, ministro, teatigo_uno, testigo_dos, certifica, padrino, madrina, padre, madre])
+            sacramento, fecha, ministro, teatigo_uno, testigo_dos, certifica, padrino, madrina, padre, madre
+          ]
+        )
         # Confirmar la transacción
         $conn.exec('COMMIT')
         FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos guardados correctamente')

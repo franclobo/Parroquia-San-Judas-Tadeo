@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pg'
 require 'fox16'
 include Fox
@@ -93,7 +95,9 @@ class Consulta < FXMainWindow
         sql += " AND sacramentos.fecha >= '#{fecha_desde}'" unless fecha_desde.empty?
         sql += " AND sacramentos.fecha <= '#{fecha_hasta}'" unless fecha_hasta.empty?
         # Se hace una consulta desde una fecha hasta otra fecha
-        sql += " AND sacramentos.fecha BETWEEN '#{fecha_desde}' AND '#{fecha_hasta}'" unless fecha_desde.empty? || fecha_hasta.empty?
+        unless fecha_desde.empty? || fecha_hasta.empty?
+          sql += " AND sacramentos.fecha BETWEEN '#{fecha_desde}' AND '#{fecha_hasta}'"
+        end
         sql += " AND sacramentos.sacramento = '#{sacramento}'" unless sacramento.empty?
         $conn.exec(sql) do |result|
           if result.values.empty?

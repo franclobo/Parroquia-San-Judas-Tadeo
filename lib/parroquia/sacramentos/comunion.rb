@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pg'
 require 'fox16'
 include Fox
@@ -164,7 +166,7 @@ class Comunion < FXMainWindow
         # Insertar en la tabla sacramentos
         @registro_sacramentos = $conn.exec(
           'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica) VALUES ($1, $2, $3, $4)', [sacramento,
-                                                                                                                      fecha, celebrante, certifica]
+                                                                                                         fecha, celebrante, certifica]
         )
 
         # Confirmar la transacción

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pg'
 require 'prawn'
 require 'fox16'
@@ -97,9 +99,8 @@ class ResultadosConsulta < FXMainWindow
 
     # Cambiar el formato de la fecha de YYYY-MM-DD a DD de nombre_mes de YYYY
     def cambiar_formato_fecha(fecha)
-      if fecha.nil?
-        return ''
-      end
+      return '' if fecha.nil?
+
       # split "-" or "/"
       fecha = fecha.split(%r{-|/})
       # si el formato de fecha es YYYY-MM-DD o YYYY/MM/DD, sino si es DD-MM-YYYY o DD/MM/YYYY
@@ -182,7 +183,7 @@ class ResultadosConsulta < FXMainWindow
 
           # Recorre todos los registros seleccionados y agrega sus horarios de misas
           pdf.text 'Hora | Capilla | Sector | Intención'
-            pdf.move_down 10
+          pdf.move_down 10
           registros_seleccionados.each do |registro|
             pdf.text "#{registro[selected_columns[40]]} | #{registro[selected_columns[25]]} | #{registro[selected_columns[26]]} | #{registro[selected_columns[38]]}"
             pdf.move_down 10
@@ -443,7 +444,7 @@ class ResultadosConsulta < FXMainWindow
           when 'Partida Supletoria del Bautismo'
             pdf.move_down 20
             pdf.text 'PARTIDA SUPLETORIA DEL BAUTISMO', align: :center, size: 20, style: :bold,
-                                                                       color: 'FF0000'
+                                                        color: 'FF0000'
             pdf.move_down 20
             registros_seleccionados.each do |registro|
               # Fecha actual alineada a la derecha
@@ -623,7 +624,7 @@ class ResultadosConsulta < FXMainWindow
               # Título
               pdf.text 'Zona Pastoral Norte', align: :justify
               pdf.move_down 10
-              pdf.text "Ministerio Parroquial \"San Judas Tadeo\"", align: :justify
+              pdf.text 'Ministerio Parroquial "San Judas Tadeo"', align: :justify
               pdf.move_down 10
               pdf.text 'Rvdo. Padre', align: :justify
               # Nombre del párroco
@@ -636,7 +637,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.move_down 40
               # Cuerpo
               pdf.text "Habiendose realizado en este despacho parroquial las informaciones previas al matrimonio del Sr. #{registro[19]} #{registro[20]} C.I. #{registro[23]} con la Sra. #{registro[11]} #{registro[12]} C.I. #{registro[13]}. Feligreses de esta parroquia, San Judas Tadeo, sin que de lo actudo haya aparecido impedimento alguno, habiéndose así mismo realizado la dispensa de las tres moniciones canónicas, concedo a V. Reverencia la licencia prescrita por el canon 1115, para que dentro de esta jurisdicción parroquial precencia lícitamente y bendiga el sobredicho matrimonio, de lo que servirá notificar a esta parroquia con la incicación de la fecha y de los testigos.",
-                        align: :justify
+                       align: :justify
               pdf.move_down 40
               # Despedida
               pdf.text 'Dios N. S. guarde a V. Reverencia', align: :justify
@@ -648,307 +649,338 @@ class ResultadosConsulta < FXMainWindow
               pdf.text (registro[4]).to_s, align: :center
               # Parroco
               pdf.text 'PÁRROCO', align: :center
+            end
           end
+          # Abre el archivo PDF con el visor de PDF predeterminado del sistema
+          system("xdg-open '#{@archivo_pdf}'")
         end
-        # Abre el archivo PDF con el visor de PDF predeterminado del sistema
-        system("xdg-open '#{@archivo_pdf}'")
-      end
-      # Mensaje de confirmación
-      FXMessageBox.information(self, MBOX_OK, 'Información', 'El archivo PDF se ha generado correctamente')
-    end
-
-    @btnedit.connect(SEL_COMMAND) do
-      # Editar registros seleccionados y actualizar la basee de datos
-      registros_seleccionados.each do |registro|
-        case registros_seleccionados[0][1]
-        when 'Bautismo'
-          # Obtenemos el registro de la base de datos
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
-          $conn.exec(sql) do |result|
-            @registros = result.values[0]
-            # Abrimos la ventana de edición
-            require_relative 'actualizar_bautismo'
-            vtnactualizar_bautismo = ActualizarBautismo.new(@app, @registros)
-            vtnactualizar_bautismo.create
-            vtnactualizar_bautismo.show(PLACEMENT_SCREEN)
-          end
-        when 'Comunión'
-          # Obtenemos el registro de la base de datos
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
-          $conn.exec(sql) do |result|
-            @registros = result.values[0]
-            # Abrimos la ventana de edición
-            require_relative 'actualizar_comunion'
-            vtnactualizar_comunion = ActualizarComunion.new(@app, @registros)
-            vtnactualizar_comunion.create
-            vtnactualizar_comunion.show(PLACEMENT_SCREEN)
-          end
-        when 'Confirmación'
-          # Obtenemos el registro de la base de datos
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
-          $conn.exec(sql) do |result|
-            @registros = result.values[0]
-            # Abrimos la ventana de edición
-            require_relative 'actualizar_confirmacion'
-            vtnactualizar_confirmacion = ActualizarConfirmacion.new(@app, @registros)
-            vtnactualizar_confirmacion.create
-            vtnactualizar_confirmacion.show(PLACEMENT_SCREEN)
-          end
-        when 'Matrimonio'
-          # Obtenemos el registro de la base de datos
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
-          $conn.exec(sql) do |result|
-            @registros = result.values[0]
-            # Abrimos la ventana de edición
-            require_relative 'actualizar_matrimonio'
-            vtnactualizar_matrimonio = ActualizarMatrimonio.new(@app, @registros)
-            vtnactualizar_matrimonio.create
-            vtnactualizar_matrimonio.show(PLACEMENT_SCREEN)
-          end
-        when 'Partida Supletoria del Bautismo'
-          # Obtenemos el registro de la base de datos
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
-          $conn.exec(sql) do |result|
-            @registros = result.values[0]
-            # Abrimos la ventana de edición
-            require_relative 'actualizar_supletoria'
-            vtnactualizar_partida_supletoria_bautismo = ActualizarSupletoria.new(@app, @registros)
-            vtnactualizar_partida_supletoria_bautismo.create
-            vtnactualizar_partida_supletoria_bautismo.show(PLACEMENT_SCREEN)
-          end
-        when 'Curso Prebautismal'
-          # Obtenemos el registro de la base de datos
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
-          $conn.exec(sql) do |result|
-            @registros = result.values[0]
-            # Abrimos la ventana de edición
-            require_relative 'actualizar_certificado_prebautismal'
-            vtnactualizar_prebautismal = ActualizarPreBautismal.new(@app, @registros)
-            vtnactualizar_prebautismal.create
-            vtnactualizar_prebautismal.show(PLACEMENT_SCREEN)
-          end
-        when 'Permiso de Bautismo'
-          # Obtenemos el registro de la base de datos
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
-          $conn.exec(sql) do |result|
-            @registros = result.values[0]
-            # Abrimos la ventana de edición
-            require_relative 'actualizar_permiso_prebautismal'
-            vtnactualizar_permiso_bautismo = ActualizarPermisoBautismo.new(@app, @registros)
-            vtnactualizar_permiso_bautismo.create
-            vtnactualizar_permiso_bautismo.show(PLACEMENT_SCREEN)
-          end
-        when 'Permiso de Matrimonio'
-          # Obtenemos el registro de la base de datos
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
-          $conn.exec(sql) do |result|
-            @registros = result.values[0]
-            # Abrimos la ventana de edición
-            require_relative 'actualizar_permiso_prematrimonial'
-            vtnactualizar_permiso_matrimonio = ActualizarPreMatrimonial.new(@app, @registros)
-            vtnactualizar_permiso_matrimonio.create
-            vtnactualizar_permiso_matrimonio.show(PLACEMENT_SCREEN)
-          end
-        when 'Misa'
-          # Obtenemos el registro de la base de datos
-          sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
-          $conn.exec(sql) do |result|
-            @registros = result.values[0]
-            # Abrimos la ventana de edición
-            require_relative 'actualizar_misa'
-            vtnactualizar_misa = ActualizarMisa.new(@app, @registros)
-            vtnactualizar_misa.create
-            vtnactualizar_misa.show(PLACEMENT_SCREEN)
-          end
-        end
-      end
-    end
-
-    @btndelete.connect(SEL_COMMAND) do
-      # eliminar registros seleccionados
-      if registros_seleccionados.empty?
-        FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Debe seleccionar al menos un registro')
-      elsif FXMessageBox.question(self, MBOX_YES_NO, 'Confirmación',
-                                  '¿Está seguro de eliminar los registros seleccionados?') == MBOX_CLICKED_YES
         # Mensaje de confirmación
+        FXMessageBox.information(self, MBOX_OK, 'Información', 'El archivo PDF se ha generado correctamente')
+      end
+
+      @btnedit.connect(SEL_COMMAND) do
+        # Editar registros seleccionados y actualizar la basee de datos
         registros_seleccionados.each do |registro|
-          # Eliminar registros de la base de datos
           case registros_seleccionados[0][1]
           when 'Bautismo'
-            # Eliminar registros de la tabla sacramentos
-            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla libros
-            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla creyentes
-            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla parroquias
-            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla registros_civiles
-            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla misas
-            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-            $conn.exec(sql)
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_bautismo'
+              vtnactualizar_bautismo = ActualizarBautismo.new(@app, @registros)
+              vtnactualizar_bautismo.create
+              vtnactualizar_bautismo.show(PLACEMENT_SCREEN)
+            end
           when 'Comunión'
-            # Eliminar registros de la tabla sacramentos
-            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla libros
-            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla creyentes
-            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla parroquias
-            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla registros_civiles
-            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla misas
-            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-            $conn.exec(sql)
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_comunion'
+              vtnactualizar_comunion = ActualizarComunion.new(@app, @registros)
+              vtnactualizar_comunion.create
+              vtnactualizar_comunion.show(PLACEMENT_SCREEN)
+            end
           when 'Confirmación'
-            # Eliminar registros de la tabla sacramentos
-            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla libros
-            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla creyentes
-            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla parroquias
-            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla registros_civiles
-            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla misas
-            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-            $conn.exec(sql)
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_confirmacion'
+              vtnactualizar_confirmacion = ActualizarConfirmacion.new(@app, @registros)
+              vtnactualizar_confirmacion.create
+              vtnactualizar_confirmacion.show(PLACEMENT_SCREEN)
+            end
           when 'Matrimonio'
-            # Eliminar registros de la tabla sacramentos
-            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla libros
-            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla creyentes
-            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla parroquias
-            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla registros_civiles
-            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla misas
-            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-            $conn.exec(sql)
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_matrimonio'
+              vtnactualizar_matrimonio = ActualizarMatrimonio.new(@app, @registros)
+              vtnactualizar_matrimonio.create
+              vtnactualizar_matrimonio.show(PLACEMENT_SCREEN)
+            end
           when 'Partida Supletoria del Bautismo'
-            # Eliminar registros de la tabla sacramentos
-            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla libros
-            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla creyentes
-            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla parroquias
-            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla registros_civiles
-            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla misas
-            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-            $conn.exec(sql)
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_supletoria'
+              vtnactualizar_partida_supletoria_bautismo = ActualizarSupletoria.new(@app, @registros)
+              vtnactualizar_partida_supletoria_bautismo.create
+              vtnactualizar_partida_supletoria_bautismo.show(PLACEMENT_SCREEN)
+            end
           when 'Curso Prebautismal'
-            # Eliminar registros de la tabla sacramentos
-            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla libros
-            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla creyentes
-            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla parroquias
-            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla registros_civiles
-            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla misas
-            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-            $conn.exec(sql)
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_certificado_prebautismal'
+              vtnactualizar_prebautismal = ActualizarPreBautismal.new(@app, @registros)
+              vtnactualizar_prebautismal.create
+              vtnactualizar_prebautismal.show(PLACEMENT_SCREEN)
+            end
           when 'Permiso de Bautismo'
-            # Eliminar registros de la tabla sacramentos
-            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla libros
-            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla creyentes
-            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla parroquias
-            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla registros_civiles
-            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla misas
-            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-            $conn.exec(sql)
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_permiso_prebautismal'
+              vtnactualizar_permiso_bautismo = ActualizarPermisoBautismo.new(@app, @registros)
+              vtnactualizar_permiso_bautismo.create
+              vtnactualizar_permiso_bautismo.show(PLACEMENT_SCREEN)
+            end
           when 'Permiso de Matrimonio'
-            # Eliminar registros de la tabla sacramentos
-            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla libros
-            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla creyentes
-            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla parroquias
-            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla registros_civiles
-            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla misas
-            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-            $conn.exec(sql)
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_permiso_prematrimonial'
+              vtnactualizar_permiso_matrimonio = ActualizarPreMatrimonial.new(@app, @registros)
+              vtnactualizar_permiso_matrimonio.create
+              vtnactualizar_permiso_matrimonio.show(PLACEMENT_SCREEN)
+            end
           when 'Misa'
-            # Eliminar registros de la tabla sacramentos
-            sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla libros
-            sql = "DELETE FROM libros WHERE id = #{registro[14]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla creyentes
-            sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla parroquias
-            sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla registros_civiles
-            sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
-            $conn.exec(sql)
-            # Eliminar registros de la tabla misas
-            sql = "DELETE FROM misas WHERE id = #{registro[37]}"
-            $conn.exec(sql)
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON sacramentos.id = parroquias.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE sacramentos.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_misa'
+              vtnactualizar_misa = ActualizarMisa.new(@app, @registros)
+              vtnactualizar_misa.create
+              vtnactualizar_misa.show(PLACEMENT_SCREEN)
+            end
+          when 'Permiso de Matrimonio'
+            # Obtenemos el registro de la base de datos
+            sql = "SELECT * FROM sacramentos INNER JOIN libros ON sacramentos.id = libros.id INNER JOIN creyentes ON sacramentos.id = creyentes.id INNER JOIN parroquias ON parroquias.id = misas.id INNER JOIN registros_civiles ON sacramentos.id = registros_civiles.id INNER JOIN misas ON parroquias.id = misas.id WHERE misas.id = #{registro[0]}"
+            $conn.exec(sql) do |result|
+              @registros = result.values[0]
+              # Abrimos la ventana de edición
+              require_relative 'actualizar_licencia_matrimonio'
+              vtnactualizar_misa = ActualizarLicenciaMatrimonio.new(@app, @registros)
+              vtnactualizar_misa.create
+              vtnactualizar_misa.show(PLACEMENT_SCREEN)
+            end
           end
+        end
+      end
+
+      @btndelete.connect(SEL_COMMAND) do
+        # eliminar registros seleccionados
+        if registros_seleccionados.empty?
+          FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Debe seleccionar al menos un registro')
+        elsif FXMessageBox.question(self, MBOX_YES_NO, 'Confirmación',
+                                    '¿Está seguro de eliminar los registros seleccionados?') == MBOX_CLICKED_YES
           # Mensaje de confirmación
-          FXMessageBox.information(self, MBOX_OK, 'Información',
-                                   'Los registros seleccionados se han eliminado correctamente')
+          registros_seleccionados.each do |registro|
+            # Eliminar registros de la base de datos
+            case registros_seleccionados[0][1]
+            when 'Bautismo'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            when 'Comunión'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            when 'Confirmación'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            when 'Matrimonio'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            when 'Partida Supletoria del Bautismo'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            when 'Curso Prebautismal'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            when 'Permiso de Bautismo'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            when 'Permiso de Matrimonio'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            when 'Misa'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            when 'Licencia de Matrimonio'
+              # Eliminar registros de la tabla sacramentos
+              sql = "DELETE FROM sacramentos WHERE id = #{registro[0]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla libros
+              sql = "DELETE FROM libros WHERE id = #{registro[14]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla creyentes
+              sql = "DELETE FROM creyentes WHERE id = #{registro[18]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla parroquias
+              sql = "DELETE FROM parroquias WHERE id = #{registro[24]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla registros_civiles
+              sql = "DELETE FROM registros_civiles WHERE id = #{registro[28]}"
+              $conn.exec(sql)
+              # Eliminar registros de la tabla misas
+              sql = "DELETE FROM misas WHERE id = #{registro[37]}"
+              $conn.exec(sql)
+            end
+            # Mensaje de confirmación
+            FXMessageBox.information(self, MBOX_OK, 'Información',
+                                     'Los registros seleccionados se han eliminado correctamente')
+          end
         end
       end
     end

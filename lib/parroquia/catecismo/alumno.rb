@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pg'
 require 'fox16'
 include Fox
