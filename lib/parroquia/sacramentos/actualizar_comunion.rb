@@ -141,6 +141,7 @@ class ActualizarComunion < FXMainWindow
       certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
 
       # tables
+      # tabla misas (id, fecha, hora, intencion, celebrante, fk_parroquias)
       # tabla libros (id, tomo, pagina, numero)
       # tabla creyentes (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula)
       # tabla parroquias (id, nombre, sector, parroco)
@@ -150,29 +151,29 @@ class ActualizarComunion < FXMainWindow
       $conn.transaction do
         # Actualizar la tabla libros
         $conn.exec('UPDATE libros SET tomo = $1, pagina = $2, numero = $3 WHERE id = $4',
-                   [tomo, page, number, registro[14]])
+                   [tomo, page, number, registro[18]])
 
         # Actualizar la tabla creyentes
         $conn.exec(
           'UPDATE creyentes SET nombres = $1, apellidos = $2, lugar_nacimiento = $3, fecha_nacimiento = $4, cedula = $5 WHERE id = $6', [
-            name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula, registro[18]
+            name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula, registro[22]
           ]
         )
 
         # Actualizar la tabla parroquias
         $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4',
-                   [parroquia, sector, parroco, registro[24]])
+                   [parroquia, sector, parroco, registro[28]])
 
         # Actualizar la tabla registros civiles, si no existen datos se crea un registro nuevo con id que corresponda y se llena los demaás datos con nil
         $conn.exec(
           'UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [
-            nil, nil, nil, nil, nil, nil, nil, nil, registro[28]
+            nil, nil, nil, nil, nil, nil, nil, nil, registro[32]
           ]
         )
 
         # Actualizar la tabla sacramentos
         $conn.exec(
-          'UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4 WHERE id = $6', [
+          'UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4 WHERE id = $5', [
             sacramento, fecha, celebrante, certifica, registro[0]
           ]
         )

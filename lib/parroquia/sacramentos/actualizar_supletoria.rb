@@ -254,7 +254,7 @@ class ActualizarSupletoria < FXMainWindow
       # Iniciar una transacción
       $conn.transaction do
         $conn.exec('UPDATE libros SET tomo = $1, pagina = $2, numero = $3 WHERE id = $4',
-                   [tomo, page, number, registro[14]])
+                   [tomo, page, number, registro[18]])
         $conn.exec(
           'UPDATE sacramentos SET fecha = $1, sacramento = $2, celebrante = $3, testigo_novio = $4, testigo_novia = $5, certifica = $6, padrino = $7, madrina = $8, padre = $9, madre = $10 WHERE id = $11', [
             fecha, sacramento, ministro, testigo_uno, testigo_dos, certifica, padrino, madrina, padre, madre, registro[0]
@@ -266,10 +266,10 @@ class ActualizarSupletoria < FXMainWindow
           ]
         )
         $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4',
-                   [parroquia, sector, parroco, registro[24]])
+                   [parroquia, sector, parroco, registro[28]])
         $conn.exec(
           'UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [
-            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc, registro[28]
+            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc, registro[32]
           ]
         )
 

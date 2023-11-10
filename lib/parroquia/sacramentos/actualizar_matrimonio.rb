@@ -229,19 +229,19 @@ class ActualizarMatrimonio < FXMainWindow
       # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
       $conn.transaction do
         $conn.exec('UPDATE libros SET tomo = $1, pagina = $2, numero = $3 WHERE id = $4',
-                   [tomo, page, number, registro[14]])
+                   [tomo, page, number, registro[18]])
         $conn.exec(
           'UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4, testigo_novio = $5, testigo_novia = $6, nombres_novia = $7, apellidos_novia = $8, cedula_novia = $9 WHERE id = $10', [
             sacramento, fecha, celebrante, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia, registro[0]
           ]
         )
         $conn.exec('UPDATE creyentes SET nombres = $1, apellidos = $2, cedula = $3 WHERE id = $4',
-                   [name_novio, apellido_novio, cedula_novio, registro[18]])
+                   [name_novio, apellido_novio, cedula_novio, registro[22]])
         $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4',
-                   [parroquia, sector, parroco, registro[24]])
+                   [parroquia, sector, parroco, registro[28]])
         $conn.exec(
           'UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [
-            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc, registro[28]
+            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc, registro[32]
           ]
         )
 

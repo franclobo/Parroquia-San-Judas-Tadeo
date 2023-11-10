@@ -148,9 +148,9 @@ class ActualizarPreMatrimonial < FXMainWindow
           ]
         )
         $conn.exec('UPDATE creyentes SET nombres = $1, apellidos = $2, cedula = $3 WHERE id = $4',
-                   [name_novio, apellido_novio, cedula_novio, registro[18]])
+                   [name_novio, apellido_novio, cedula_novio, registro[22]])
         $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4',
-                   [parroquia, sector, parroco, registro[24]])
+                   [parroquia, sector, parroco, registro[28]])
 
         # ¿Desea guardar los cambios? SI: commit msg: datos actualizados correctamente, NO: rollback, close
         if FXMessageBox.question(self, MBOX_YES_NO, 'Pregunta', '¿Desea guardar los cambios?') == MBOX_CLICKED_YES

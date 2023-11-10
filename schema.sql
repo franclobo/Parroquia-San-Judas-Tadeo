@@ -1,17 +1,3 @@
--- Database: sacramentos
-
--- DROP DATABASE IF EXISTS sacramentos;
-
-CREATE DATABASE sacramentos
-    WITH
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'English_United States.1252'
-    LC_CTYPE = 'English_United States.1252'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
-
 -- Table: public.sacramentos
 
 -- DROP TABLE IF EXISTS public.sacramentos;
@@ -40,22 +26,22 @@ CREATE TABLE IF NOT EXISTS public.sacramentos
     CONSTRAINT fk_creyentes FOREIGN KEY (id)
         REFERENCES public.creyentes (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         NOT VALID,
     CONSTRAINT fk_libros FOREIGN KEY (id)
         REFERENCES public.libros (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         NOT VALID,
     CONSTRAINT fk_parroquias FOREIGN KEY (id)
         REFERENCES public.parroquias (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         NOT VALID,
     CONSTRAINT fk_registros_civiles FOREIGN KEY (id)
         REFERENCES public.registros_civiles (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         NOT VALID
 )
 
@@ -159,7 +145,7 @@ CREATE TABLE IF NOT EXISTS public.misas
     CONSTRAINT fk_parroquias FOREIGN KEY (id)
         REFERENCES public.parroquias (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         NOT VALID
 )
 
@@ -199,12 +185,12 @@ CREATE TABLE IF NOT EXISTS public.alumnos
     CONSTRAINT fk_catequistas FOREIGN KEY (id)
         REFERENCES public.catequistas (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         NOT VALID,
     CONSTRAINT fk_niveles FOREIGN KEY (id)
         REFERENCES public.niveles (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         NOT VALID
 )
 

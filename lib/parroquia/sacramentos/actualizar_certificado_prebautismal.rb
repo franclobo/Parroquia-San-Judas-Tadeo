@@ -153,9 +153,9 @@ class ActualizarPreBautismal < FXMainWindow
           'UPDATE sacramentos SET fecha = $1, sacramento = $2, certifica = $3, padrino = $4, madrina = $5, cedula_padrino = $6, cedula_madrina = $7 WHERE id = $8',
           [fecha, sacramento, certifica, padrino, madrina, cedula_padrino, cedula_madrina, registro[0]])
         $conn.exec('UPDATE creyentes SET nombres = $1, apellidos = $2, cedula = $3 WHERE id = $4',
-                   [name, apellidos, cedula, registro[18]])
+                   [name, apellidos, cedula, registro[22]])
         $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4',
-                   [parroquia, sector, parroco, registro[24]])
+                   [parroquia, sector, parroco, registro[28]])
 
         # ¿Desea guardar los cambios? SI: commit msg: datos actualizados correctamente, NO: rollback, close
         if FXMessageBox.question(self, MBOX_YES_NO, 'Pregunta', '¿Desea guardar los cambios?') == MBOX_CLICKED_YES

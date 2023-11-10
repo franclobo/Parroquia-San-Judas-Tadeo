@@ -96,15 +96,15 @@ class ActualizarMisa < FXMainWindow
       $conn.transaction do
         # Actualizar la tabla misas
         $conn.exec('UPDATE misas SET intencion = $1, fecha = $2, hora = $3 WHERE id = $4',
-                   [intencion, fecha_misa, hora, registro[37]])
+                   [intencion, fecha_misa, hora, registro[41]])
         # Actualizar la tabla parroquias
         $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4',
-                   [capilla, sector, celebrante, registro[24]])
+                   [capilla, sector, celebrante, registro[28]])
 
         # Actualizar la tabla registros civiles, si no existen datos se crea un registro nuevo con id que corresponda y se llena los demaás datos con nil
         $conn.exec(
           'UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [
-            nil, nil, nil, nil, nil, nil, nil, nil, registro[28]
+            nil, nil, nil, nil, nil, nil, nil, nil, registro[32]
           ]
         )
 
