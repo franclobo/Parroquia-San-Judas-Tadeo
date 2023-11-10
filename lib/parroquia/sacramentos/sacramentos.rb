@@ -54,11 +54,11 @@ class Sacramentos < FXMainWindow
                                                    x: 460, y: 310)
     @btnsupletoria = FXButton.new(self, 'Partida Supletoria', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150,
                                                               height: 30, x: 620, y: 150)
-    @btnprebautismal = FXButton.new(self, 'Certificado Prebautismal', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
+    @btnprebautismal = FXButton.new(self, 'Curso Prebautismal', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
                                                                       width: 150, height: 30, x: 620, y: 190)
     @btnpermisobautizo = FXButton.new(self, 'Permiso de Bautismo', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
                                                                    width: 150, height: 30, x: 620, y: 230)
-    @btnprematrimonial = FXButton.new(self, 'Permiso Prematrimonial', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
+    @btnprematrimonial = FXButton.new(self, 'Permiso de Matrimonio', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
                                                                       width: 150, height: 30, x: 620, y: 270)
     @btnlicenciamatrimonio = FXButton.new(self, 'Licencia de Matrimonio', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL,
                                                                           width: 150, height: 30, x: 620, y: 310)
