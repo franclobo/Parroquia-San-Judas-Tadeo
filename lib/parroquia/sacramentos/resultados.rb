@@ -209,8 +209,16 @@ class ResultadosConsulta < FXMainWindow
       if registros_seleccionados.nil? || registros_seleccionados.empty?
         FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'No hay registros seleccionados')
       else
-        @archivo_pdf = "#{directorio}/#{registros_seleccionados[0][23]} #{registros_seleccionados[0][24]} - #{registros_seleccionados[0][1]}.pdf"
+        name_part_1 = registros_seleccionados[0][23] || "" # Check if nil and provide a default value
+        name_part_2 = registros_seleccionados[0][24] || ""
+        name_part_3 = registros_seleccionados[0][1] || ""
+
+        @archivo_pdf = "#{directorio}/#{sanitize_file_name(name_part_1)} #{sanitize_file_name(name_part_2)} - #{sanitize_file_name(name_part_3)}.pdf"
       end
+    end
+
+    def sanitize_file_name(name)
+      name.gsub(/[^0-9a-zA-Z_\s]/, '_')
     end
 
     def imprimir_pdf

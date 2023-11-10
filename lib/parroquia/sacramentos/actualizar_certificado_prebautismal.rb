@@ -136,7 +136,7 @@ class ActualizarPreBautismal < FXMainWindow
       cedula = @input_cedula.text.empty? ? nil : @input_cedula.text
       padrino = @input_padrino.text.empty? ? nil : @input_padrino.text
       cedula_padrino = @input_cedula_padrino.text.empty? ? nil : @input_cedula_padrino.text
-      madrina = @input_madrina.text.empty? ? nil : @input_madrina.
+      madrina = @input_madrina.text.empty? ? nil : @input_madrina.text
       cedula_madrina = @input_cedula_madrina.text.empty? ? nil : @input_cedula_madrina.text
       certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
 

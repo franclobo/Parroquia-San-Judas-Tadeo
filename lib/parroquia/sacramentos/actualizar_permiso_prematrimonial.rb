@@ -143,7 +143,7 @@ class ActualizarPreMatrimonial < FXMainWindow
       # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
       $conn.transaction do
         $conn.exec(
-          'UPDATE sacramentos SET sacramento = $1, fecha = $2, certifica = $3, testigo_novio = $4, testigo_novia = $5, nombres_novia = $6, apellidos_novia = $7, cedula_novia = $8 WHERE id = $10', [
+          'UPDATE sacramentos SET sacramento = $1, fecha = $2, certifica = $3, testigo_novio = $4, testigo_novia = $5, nombres_novia = $6, apellidos_novia = $7, cedula_novia = $8 WHERE id = $9', [
             sacramento, fecha, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia, registro[0]
           ]
         )

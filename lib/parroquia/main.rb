@@ -2,6 +2,7 @@
 
 require 'pg'
 require 'fox16'
+require 'prawn'
 include Fox
 
 class Home < FXMainWindow
@@ -46,6 +47,8 @@ class Home < FXMainWindow
                                                         height: 30, x: 460, y: 150)
     @btncatecismo = FXButton.new(self, 'Catecismo', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150,
                                                     height: 30, x: 460, y: 190)
+    @btnencabezado = FXButton.new(self, 'Encabezado', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 150,
+                                                      height: 30, x: 460, y: 230)
 
     # Footer
     @lblfooter = FXLabel.new(self, 'WebMinds Studio - 2023', opts: LAYOUT_EXPLICIT | JUSTIFY_CENTER_X, width: 700,
@@ -77,8 +80,43 @@ class Home < FXMainWindow
       vtncatecismo.create
       vtncatecismo.show(PLACEMENT_SCREEN)
     end
+    @btnencabezado.connect(SEL_COMMAND) do
+      seleccionar_directorio
+      imprimir_pdf
+    end
   end
 
+  def seleccionar_directorio
+    dialog = FXDirDialog.new(self, 'Seleccionar directorio para guardar PDF')
+    return unless dialog.execute != 0
+    directorio = dialog.getDirectory
+    @archivo_pdf = "#{directorio}/Encabezado.pdf"
+  end
+
+  def imprimir_pdf
+    # Genera el archivo PDF
+    Prawn::Document.generate(@archivo_pdf, margin: [100, 100, 100, 100]) do |pdf|
+      pdf.font 'Helvetica'
+      pdf.font_size 12
+      # Definir tres casos en los que se puede imprimir el certificado y los distintos formatos para bautismo, confirmación y matrimonio
+      # Bautismo
+      # Encabezado
+      pdf.image File.join(File.dirname(__FILE__), './assets/images/arquidiocesisquito.png'), height: 80,
+                                                                                              position: :absolute, at: [-60, 680]
+      pdf.text_box 'Arquidiócesis de Quito', align: :center, size: 16, style: :bold, at: [10, 670],
+                                              width: pdf.bounds.width
+      pdf.text_box 'Parroquia Eclesiástica "San Judas Tadeo"', align: :center, size: 14, style: :bold,
+                                                                at: [10, 650], width: pdf.bounds.width
+      pdf.text_box "Jaime Roldós Aguilera, calle Oe13A y N82\nEl Condado, Quito - Ecuador\nTeléfono: 02496446",
+                    align: :center, size: 10, at: [10, 630], width: pdf.bounds.width
+      pdf.image File.join(File.dirname(__FILE__), './assets/images/sanjudastadeo.png'), height: 80,
+                                                                                          position: :absolute, at: [430, 680]
+      # Abre el archivo PDF con el visor de PDF predeterminado del sistema
+      system("xdg-open '#{@archivo_pdf}'")
+      # Mensaje de confirmación
+      FXMessageBox.information(self, MBOX_OK, 'Información', 'El archivo PDF se ha generado correctamente')
+    end
+  end
   # Nombre del mes
   def nombre_mes(mes)
     meses = {
