@@ -272,7 +272,7 @@ class ResultadosConsulta < FXMainWindow
           sql = 'DELETE FROM alumnos WHERE id = $1'
           $conn.exec_params(sql, [registro[0]])
           sql = 'DELETE FROM catequistas WHERE id = $1'
-          $conn.exec_params(sql, [registro[10]])
+          $conn.exec_params(sql, [registro[11]])
           sql = 'DELETE FROM niveles WHERE id = $1'
           $conn.exec_params(sql, [registro[6]])
           # Mensaje de confirmación

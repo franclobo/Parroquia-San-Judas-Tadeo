@@ -143,6 +143,7 @@ class Alumno < FXMainWindow
       @input_cedula.text = ''
       @input_nombre_catequista.text = ''
       @input_apellidos_catequista.text = ''
+      @input_parroco.text = ''
     end
   end
 
