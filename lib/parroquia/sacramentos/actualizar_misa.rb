@@ -38,37 +38,37 @@ class ActualizarMisa < FXMainWindow
     @lbl_parroquia.backColor = FXRGB(3, 187, 133)
     @input_parroquia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 180)
-    @input_parroquia.text = @registro[25]
+    @input_parroquia.text = @registro[29]
     @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 330,
                                                 y: 180)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
     @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 490,
                                               y: 180)
-    @input_sector.text = @registro[26]
-    @lbl_parroco = FXLabel.new(self, 'Celebranteo: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
+    @input_sector.text = @registro[30]
+    @lbl_parroco = FXLabel.new(self, 'Celebrante: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                       x: 10, y: 210)
     @lbl_parroco.backColor = FXRGB(3, 187, 133)
     @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
                                                y: 210)
-    @input_parroco.text = @registro[27]
+    @input_parroco.text = @registro[31]
     @lbl_intencion = FXLabel.new(self, 'Intención: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
                                                       y: 240)
     @lbl_intencion.backColor = FXRGB(3, 187, 133)
     @input_intencion = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 240)
-    @input_intencion.text = @registro[38]
+    @input_intencion.text = @registro[42]
     @lbl_fecha = FXLabel.new(self, 'Fecha de la misa (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT, width: 250,
                                                                       height: 20, x: 10, y: 270)
     @lbl_fecha.backColor = FXRGB(3, 187, 133)
     @input_fecha = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 280,
                                              y: 270)
-    @input_fecha.text = @registro[39]
+    @input_fecha.text = @registro[43]
     @lbl_hora = FXLabel.new(self, 'Hora (HH:MM): ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
                                                     y: 300)
     @lbl_hora.backColor = FXRGB(3, 187, 133)
     @input_hora = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                             y: 300)
-    @input_hora.text = @registro[40]
+    @input_hora.text = @registro[44]
 
     # create buttons
     @btnupdate = FXButton.new(self, 'Actualizar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,

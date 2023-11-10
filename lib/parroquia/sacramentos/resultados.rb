@@ -18,7 +18,7 @@ class ResultadosConsulta < FXMainWindow
     @tabla.visibleRows = 10
     @tabla.visibleColumns = 10
     # El tamaño de la tabla depende del número de columnas nombrada en poner nombre a las columnas y las filas al numero de registros encontrados
-    @tabla.setTableSize(@result_data.length, 41)
+    @tabla.setTableSize(@result_data.length, 45)
 
 
     # Llena la tabla con los datos de resultados
@@ -43,33 +43,37 @@ class ResultadosConsulta < FXMainWindow
     @tabla.setColumnText(11, 'Nombres de la novia')
     @tabla.setColumnText(12, 'Apellidos de la novia')
     @tabla.setColumnText(13, 'Cédula de la novia')
-    @tabla.setColumnText(14, 'ID Libros')
-    @tabla.setColumnText(15, 'Tomo')
-    @tabla.setColumnText(16, 'Página')
-    @tabla.setColumnText(17, 'Número')
-    @tabla.setColumnText(18, 'ID Creyentes')
-    @tabla.setColumnText(19, 'Nombres')
-    @tabla.setColumnText(20, 'Apellidos')
-    @tabla.setColumnText(21, 'Lugar de nacimiento')
-    @tabla.setColumnText(22, 'Fecha de nacimiento')
-    @tabla.setColumnText(23, 'Cédula')
-    @tabla.setColumnText(24, 'ID Parroquias')
-    @tabla.setColumnText(25, 'Parroquia')
-    @tabla.setColumnText(26, 'Sector')
-    @tabla.setColumnText(27, 'Parroco')
-    @tabla.setColumnText(28, 'ID Registros Civiles')
-    @tabla.setColumnText(29, 'Provincia')
-    @tabla.setColumnText(30, 'Cantón')
-    @tabla.setColumnText(31, 'Parroquia')
-    @tabla.setColumnText(32, 'Año')
-    @tabla.setColumnText(33, 'Tomo')
-    @tabla.setColumnText(34, 'Página')
-    @tabla.setColumnText(35, 'Acta')
-    @tabla.setColumnText(36, 'Fecha')
-    @tabla.setColumnText(37, 'ID Misas')
-    @tabla.setColumnText(38, 'Intención')
-    @tabla.setColumnText(39, 'Fecha')
-    @tabla.setColumnText(40, 'Hora')
+    @tabla.setColumnText(14, 'Cédula Padrino')
+    @tabla.setColumnText(15, 'Cédula Madrina')
+    @tabla.setColumnText(16, 'Cédula Padre')
+    @tabla.setColumnText(17, 'Cédula Madre')
+    @tabla.setColumnText(18, 'ID Libros')
+    @tabla.setColumnText(19, 'Tomo')
+    @tabla.setColumnText(20, 'Página')
+    @tabla.setColumnText(21, 'Número')
+    @tabla.setColumnText(22, 'ID Creyentes')
+    @tabla.setColumnText(23, 'Nombres')
+    @tabla.setColumnText(24, 'Apellidos')
+    @tabla.setColumnText(25, 'Lugar de nacimiento')
+    @tabla.setColumnText(26, 'Fecha de nacimiento')
+    @tabla.setColumnText(27, 'Cédula')
+    @tabla.setColumnText(28, 'ID Parroquias')
+    @tabla.setColumnText(29, 'Parroquia')
+    @tabla.setColumnText(30, 'Sector')
+    @tabla.setColumnText(31, 'Parroco')
+    @tabla.setColumnText(32, 'ID Registros Civiles')
+    @tabla.setColumnText(33, 'Provincia')
+    @tabla.setColumnText(34, 'Cantón')
+    @tabla.setColumnText(35, 'Parroquia')
+    @tabla.setColumnText(36, 'Año')
+    @tabla.setColumnText(37, 'Tomo')
+    @tabla.setColumnText(38, 'Página')
+    @tabla.setColumnText(39, 'Acta')
+    @tabla.setColumnText(40, 'Fecha')
+    @tabla.setColumnText(41, 'ID Misas')
+    @tabla.setColumnText(42, 'Intención')
+    @tabla.setColumnText(43, 'Fecha')
+    @tabla.setColumnText(44, 'Hora')
 
 
     # Al hacer clic en una fila, se selecciona la fila completa para imprimir los datos
@@ -182,10 +186,10 @@ class ResultadosConsulta < FXMainWindow
           pdf.move_down 20
 
           # Recorre todos los registros seleccionados y agrega sus horarios de misas
-          pdf.text 'Hora | Capilla | Sector | Intención'
+          pdf.text 'Fecha | Hora | Capilla | Sector | Intención'
           pdf.move_down 10
           registros_seleccionados.each do |registro|
-            pdf.text "#{registro[selected_columns[40]]} | #{registro[selected_columns[25]]} | #{registro[selected_columns[26]]} | #{registro[selected_columns[38]]}"
+            pdf.text "#{registro[selected_columns[43]]} | #{registro[selected_columns[44]]} | #{registro[selected_columns[29]]} | #{registro[selected_columns[30]]} | #{registro[selected_columns[42]]}"
             pdf.move_down 10
           end
         end
@@ -243,29 +247,29 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime('%d/%m/%Y'))}", align: :right
               pdf.move_down 20
               # Tomo, página y número justificado
-              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de bautismos de esta parroquia: Tomo #{registro[15]} - Página #{registro[16]} - Número #{registro[17]}, se halla inscrita la siguiente partida:",
+              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de bautismos de esta parroquia: Tomo #{registro[19]} - Página #{registro[20]} - Número #{registro[21]}, se halla inscrita la siguiente partida:",
                        align: :justify
               pdf.move_down 10
               # Fecha de bautismo
               pdf.text "FECHA DE BAUTISMO: #{cambiar_formato_fecha(registro[2])}.", align: :justify
               pdf.move_down 10
               # Lugar de bautismo
-              pdf.text "PARROQUIA: #{registro[25]}", align: :justify
+              pdf.text "PARROQUIA: #{registro[29]}", align: :justify
               pdf.move_down 10
               # Sector
-              pdf.text "SECTOR: #{registro[26]}.", align: :justify
+              pdf.text "SECTOR: #{registro[30]}.", align: :justify
               pdf.move_down 10
               # Celebrante
               pdf.text "MINISTRO: #{registro[3]}.", align: :justify
               pdf.move_down 10
               # Nombres
-              pdf.text "NOMBRES: #{registro[19]}.", align: :justify
+              pdf.text "NOMBRES: #{registro[23]}.", align: :justify
               pdf.move_down 10
               # Apellidos
-              pdf.text "APELLIDOS: #{registro[20]}.", align: :justify
+              pdf.text "APELLIDOS: #{registro[24]}.", align: :justify
               pdf.move_down 10
               # Fecha de nacimiento
-              pdf.text "LUGAR DE NACIMIENTO #{registro[21]}. FECHA DE NACIMIENTO: #{cambiar_formato_fecha(registro[22])}.",
+              pdf.text "LUGAR DE NACIMIENTO #{registro[25]}. FECHA DE NACIMIENTO: #{cambiar_formato_fecha(registro[26])}.",
                        align: :justify
               pdf.move_down 10
               # Padres
@@ -281,11 +285,11 @@ class ResultadosConsulta < FXMainWindow
               # Registro civil
               pdf.text 'REGISTRO CIVIL', align: :center, size: 14, style: :bold
               pdf.move_down 10
-              pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}",
+              pdf.text "Provincia: #{registro[33]}, Cantón: #{registro[34]}, Parroquia: #{registro[35]}",
                        align: :justify
-              pdf.text "Año: #{registro[32]}, Tomo: #{registro[33]}, Página: #{registro[34]}, Acta: #{registro[35]}",
+              pdf.text "Año: #{registro[36]}, Tomo: #{registro[37]}, Página: #{registro[38]}, Acta: #{registro[39]}",
                        align: :justify
-              pdf.text "Fecha: #{cambiar_formato_fecha(registro[36])}", align: :justify
+              pdf.text "Fecha: #{cambiar_formato_fecha(registro[40])}", align: :justify
               pdf.move_down 10
               # Datos tomados fielmente de original
               pdf.text 'Datos tomados fielmente del original', align: :center
@@ -293,7 +297,7 @@ class ResultadosConsulta < FXMainWindow
               # Firma del párroco
               pdf.text '_______________________________', align: :center
               # Nombre del párroco
-              pdf.text (registro[27]).to_s, align: :center
+              pdf.text (registro[31]).to_s, align: :center
               # Parroco
               pdf.text 'Párroco', align: :center
             end
@@ -307,26 +311,26 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime('%d/%m/%Y'))}", align: :right
               pdf.move_down 20
               # Tomo, página y número justificado
-              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de comuniones de esta parroquia: Tomo #{registro[15]} - Página #{registro[16]} - Número #{registro[17]}, se halla inscrita la siguiente partida:",
+              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de comuniones de esta parroquia: Tomo #{registro[19]} - Página #{registro[20]} - Número #{registro[21]}, se halla inscrita la siguiente partida:",
                        align: :justify
               pdf.move_down 10
               # Fecha de comunión
               pdf.text "FECHA DE COMUNIÓN: #{cambiar_formato_fecha(registro[2])}.", align: :justify
               pdf.move_down 10
               # Lugar de comunión
-              pdf.text "PARROQUIA: #{registro[25]}", align: :justify
+              pdf.text "PARROQUIA: #{registro[29]}", align: :justify
               pdf.move_down 10
               # Sector
-              pdf.text "SECTOR: #{registro[26]}.", align: :justify
+              pdf.text "SECTOR: #{registro[30]}.", align: :justify
               pdf.move_down 10
               # Celebrante
               pdf.text "CELEBRANTE: #{registro[3]}.", align: :justify
               pdf.move_down 10
               # Nombres
-              pdf.text "NOMBRES: #{registro[19]}.", align: :justify
+              pdf.text "NOMBRES: #{registro[23]}.", align: :justify
               pdf.move_down 10
               # Apellidos
-              pdf.text "APELLIDOS: #{registro[20]}.", align: :justify
+              pdf.text "APELLIDOS: #{registro[24]}.", align: :justify
               pdf.move_down 10
               # Cerifica
               pdf.text "CERTIFICA: #{registro[4]}.", align: :justify
@@ -338,7 +342,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
-              pdf.text (registro[27]).to_s, align: :center
+              pdf.text (registro[31]).to_s, align: :center
               # Parroco
               pdf.text 'Párroco', align: :center
             end
@@ -351,7 +355,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime('%d/%m/%Y'))}", align: :right
               pdf.move_down 20
               # Tomo, página y número justificado
-              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de confirmaciones de esta parroquia: Tomo #{registro[15]} - Página #{registro[16]} - Número #{registro[17]}, se halla inscrita la siguiente partida:",
+              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de confirmaciones de esta parroquia: Tomo #{registro[19]} - Página #{registro[20]} - Número #{registro[21]}, se halla inscrita la siguiente partida:",
                        align: :justify
               pdf.move_down 10
               # Fecha de confirmación
@@ -374,7 +378,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
-              pdf.text (registro[27]).to_s, align: :center
+              pdf.text (registro[31]).to_s, align: :center
               # Parroco
               pdf.text 'Párroco', align: :center
             end
@@ -387,16 +391,16 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime('%d/%m/%Y'))}", align: :right
               pdf.move_down 20
               # Tomo, página y número justificado
-              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de matrimonios de esta parroquia: Tomo #{registro[15]} - Página #{registro[16]} - Número #{registro[17]}, se halla inscrita la siguiente partida:",
+              pdf.text "Yo, el infrascrito, certifico en legal forma a petición de la parte interesada que en el libro de matrimonios de esta parroquia: Tomo #{registro[19]} - Página #{registro[20]} - Número #{registro[21]}, se halla inscrita la siguiente partida:",
                        align: :justify
               pdf.move_down 10
               # Fecha de matrimonio
               pdf.text "FECHA DE MATRIMONIO: #{cambiar_formato_fecha(registro[2])}.", align: :justify
               pdf.move_down 10
               # Datos del novio
-              pdf.text "NOMBRES DEL NOVIO: #{registro[19]}.", align: :justify
+              pdf.text "NOMBRES DEL NOVIO: #{registro[23]}.", align: :justify
               pdf.move_down 10
-              pdf.text "APELLIDOS DEL NOVIO: #{registro[20]}.", align: :justify
+              pdf.text "APELLIDOS DEL NOVIO: #{registro[24]}.", align: :justify
               pdf.move_down 10
               # Datos de la novia
               pdf.text "NOMBRES DE LA NOVIA: #{registro[11]}.", align: :justify
@@ -404,16 +408,16 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "APELLIDOS DE LA NOVIA: #{registro[12]}.", align: :justify
               pdf.move_down 10
               # Parroquia
-              pdf.text "PARROQUIA: #{registro[25]}", align: :justify
+              pdf.text "PARROQUIA: #{registro[29]}", align: :justify
               pdf.move_down 10
               # Sector
-              pdf.text "SECTOR: #{registro[26]}.", align: :justify
+              pdf.text "SECTOR: #{registro[30]}.", align: :justify
               pdf.move_down 10
               # Celebrante
               pdf.text "CELEBRANTE: #{registro[3]}.", align: :justify
               pdf.move_down 10
               # Feligreses de la parroquia
-              pdf.text "FELIGRESES DE LA PARROQUIA: #{registro[25]}.", align: :justify
+              pdf.text "FELIGRESES DE LA PARROQUIA: #{registro[29]}.", align: :justify
               pdf.move_down 10
               # Testigos
               pdf.text "TESTIGOS: #{registro[7]} y #{registro[8]}.", align: :justify
@@ -424,11 +428,11 @@ class ResultadosConsulta < FXMainWindow
               # Registro civil
               pdf.text 'REGISTRO CIVIL', align: :center, size: 14, style: :bold
               pdf.move_down 10
-              pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}",
+              pdf.text "Provincia: #{registro[33]}, Cantón: #{registro[34]}, Parroquia: #{registro[35]}",
                        align: :justify
-              pdf.text "Año: #{registro[32]}, Tomo: #{registro[33]}, Página: #{registro[34]}, Acta: #{registro[35]}",
+              pdf.text "Año: #{registro[36]}, Tomo: #{registro[37]}, Página: #{registro[38]}, Acta: #{registro[39]}",
                        align: :justify
-              pdf.text "Fecha: #{cambiar_formato_fecha(registro[36])}", align: :justify
+              pdf.text "Fecha: #{cambiar_formato_fecha(registro[40])}", align: :justify
               pdf.move_down 10
               # Datos tomados fielmente de original
               pdf.text 'Datos tomados fielmente del original', align: :center
@@ -437,7 +441,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
-              pdf.text (registro[27]).to_s, align: :center
+              pdf.text (registro[31]).to_s, align: :center
               # Parroco
               pdf.text 'Párroco', align: :center
             end
@@ -454,13 +458,13 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "FECHA DE BAUTISMO: #{cambiar_formato_fecha(registro[2])}.", align: :justify
               pdf.move_down 10
               # Nombres
-              pdf.text "NOMBRES: #{registro[19]}.", align: :justify
+              pdf.text "NOMBRES: #{registro[23]}.", align: :justify
               pdf.move_down 10
               # Apellidos
-              pdf.text "APELLIDOS: #{registro[20]}.", align: :justify
+              pdf.text "APELLIDOS: #{registro[24]}.", align: :justify
               pdf.move_down 10
               # Fecha de nacimiento
-              pdf.text "LUGAR DE NACIMIENTO #{registro[21]}. FECHA DE NACIMIENTO: #{cambiar_formato_fecha(registro[22])}.",
+              pdf.text "LUGAR DE NACIMIENTO #{registro[25]}. FECHA DE NACIMIENTO: #{cambiar_formato_fecha(registro[26])}.",
                        align: :justify
               pdf.move_down 10
               # Padres
@@ -472,11 +476,11 @@ class ResultadosConsulta < FXMainWindow
               # Registro civil
               pdf.text 'REGISTRO CIVIL', align: :center, size: 14, style: :bold
               pdf.move_down 10
-              pdf.text "Provincia: #{registro[29]}, Cantón: #{registro[30]}, Parroquia: #{registro[31]}",
+              pdf.text "Provincia: #{registro[33]}, Cantón: #{registro[34]}, Parroquia: #{registro[35]}",
                        align: :justify
-              pdf.text "Año: #{registro[32]}, Tomo: #{registro[33]}, Página: #{registro[34]}, Acta: #{registro[35]}",
+              pdf.text "Año: #{registro[36]}, Tomo: #{registro[37]}, Página: #{registro[38]}, Acta: #{registro[39]}",
                        align: :justify
-              pdf.text "Fecha: #{cambiar_formato_fecha(registro[36])}", align: :justify
+              pdf.text "Fecha: #{cambiar_formato_fecha(registro[40])}", align: :justify
               pdf.move_down 10
               # Datos tomados fielmente de original
               pdf.text 'Datos tomados fielmente del original', align: :center
@@ -494,7 +498,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text '_______________________________', align: :center
               pdf.move_down 10
               # Nombre del párroco
-              pdf.text (registro[27]).to_s, align: :center
+              pdf.text (registro[31]).to_s, align: :center
               # Parroco
               pdf.text 'Párroco', align: :center
             end
@@ -511,16 +515,16 @@ class ResultadosConsulta < FXMainWindow
               pdf.text 'Rvdo. Padre', align: :justify
               pdf.move_down 10
               # Nombre del párroco
-              pdf.text (registro[27]).to_s, align: :justify
+              pdf.text (registro[31]).to_s, align: :justify
               pdf.move_down 10
               # Parroquia
-              pdf.text "Párroco de la Parroquia Eclesiástica \"#{registro[25]}\"", align: :justify
+              pdf.text "Párroco de la Parroquia Eclesiástica \"#{registro[29]}\"", align: :justify
               pdf.move_down 10
               # Saludo
               pdf.text 'De mis consideraciones:', align: :justify
               pdf.move_down 10
               # Cuerpo
-              pdf.text "Quien suscribe Padre #{registro[4]}, Párroco de la Parroquia Eclesiástica \"San Judas Tadeo\", CERTIFICA que #{registro[19]} #{registro[20]}, CI #{registro[23]} realizó la charla Pre - Bautismal en esta parroquia, para acompañar como padrino/madrina ............................. de ......................................................., bautizo que se realizará el #{cambiar_formato_fecha(registro[2])} en la parroquia antes mencionada.",
+              pdf.text "Quien suscribe Padre #{registro[4]}, Párroco de \"San Judas Tadeo\", CERTIFICA que #{registro[5]} C.I. #{registro[14]} y #{registro[6]}, CI #{registro[15]} realizaron la charla Pre - Bautismal en esta parroquia, para acompañar como padrino/madrina de #{registro[23]} #{registro[24]} hijo/a legítimo/a del Sr. #{registro[9]} y la Sra. #{registro[10]}. Bautizo que se realizará el #{cambiar_formato_fecha(registro[2])} en la parroquia antes mencionada.",
                        align: :justify
               pdf.move_down 10
               # Despedida
@@ -549,10 +553,10 @@ class ResultadosConsulta < FXMainWindow
               pdf.text 'Rvdo. Padre', align: :justify
               pdf.move_down 10
               # Nombre del párroco
-              pdf.text (registro[27]).to_s, align: :justify
+              pdf.text (registro[31]).to_s, align: :justify
               pdf.move_down 10
               # Parroquia
-              pdf.text "Párroco de la Parroquia Eclesiástica \"#{registro[25]}\"", align: :justify
+              pdf.text "Párroco de la Parroquia Eclesiástica \"#{registro[29]}\"", align: :justify
               pdf.move_down 10
               pdf.text 'Presente.', align: :justify
               pdf.move_down 10
@@ -560,7 +564,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text 'Reciba un afectuoso saludo.', align: :justify
               pdf.move_down 10
               # Cuerpo
-              pdf.text "Por medio de la presente. Quien suscribe Padre #{registro[4]}, Párroco de la Parroquia Eclesiástica \"San Judas Tadeo\", AUTORIZO a #{registro[9]} CI .................. y a #{registro[10]} CI ...................., para que bauticen a su hijo/a #{registro[19]} #{registro[20]} CI #{registro[23]} y también a los padrinos #{registro[5]} y #{registro[6]}, bautizo que se realizará el #{cambiar_formato_fecha(registro[2])} en la parroquia antes mencionada.",
+              pdf.text "Por medio de la presente. Quien suscribe Padre #{registro[4]}, párroco de la parroquia \"San Judas Tadeo\", AUTORIZO a #{registro[9]} C.I, #{registro[16]} y a #{registro[10]} C.I. #{registro[17]}, para que bauticen a su hijo/a #{registro[23]} #{registro[24]} CI #{registro[27]} y también a los padrinos #{registro[5]} C.I. #{registro[14]} y #{registro[6]} C.I. #{registro[15]}, bautizo que se realizará el #{cambiar_formato_fecha(registro[2])} en la parroquia antes mencionada.",
                        align: :justify
               pdf.move_down 10
               # Despedida
@@ -586,10 +590,10 @@ class ResultadosConsulta < FXMainWindow
               pdf.text 'Rvdo. Padre', align: :justify
               pdf.move_down 10
               # Nombre del párroco
-              pdf.text (registro[27]).to_s, align: :justify
+              pdf.text (registro[31]).to_s, align: :justify
               pdf.move_down 10
               # Parroquia
-              pdf.text "Párroco de la Parroquia Eclesiástica \"#{registro[25]}\"", align: :justify
+              pdf.text "Párroco de la Parroquia Eclesiástica \"#{registro[29]}\"", align: :justify
               pdf.move_down 10
               pdf.text 'Presente.', align: :justify
               pdf.move_down 10
@@ -597,7 +601,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text 'Reciba un afectuoso saludo.', align: :justify
               pdf.move_down 10
               # Cuerpo
-              pdf.text "Por medio de la presente. Quien suscribe Padre #{registro[4]}, Párroco de la Parroquia Eclesiástica \"San Judas Tadeo\", AUTORIZO y habiéndose realizado los trámites canónicos para celebrar ante la Iglesia Católica el matrimonio de #{registro[19]} #{registro[20]} CI #{registro[23]} y de #{registro[11]} #{registro[12]} CI #{registro[14]} y también los testigos #{registro[7]} y #{registro[8]} para que contraigan matrimonio el #{cambiar_formato_fecha(registro[2])} en la parroquia antes mencionada.",
+              pdf.text "Por medio de la presente. Quien suscribe Padre #{registro[4]}, Párroco de la parroquia \"San Judas Tadeo\", AUTORIZO y habiéndose realizado los trámites canónicos para celebrar ante la Iglesia Católica el matrimonio de #{registro[23]} #{registro[24]} CI #{registro[27]} y de #{registro[11]} #{registro[12]} CI #{registro[13]} y también los testigos #{registro[7]} C.I. ____________________ y #{registro[8]} C.I. ____________________ para que contraigan matrimonio el #{cambiar_formato_fecha(registro[2])} en la parroquia antes mencionada.",
                        align: :justify
               pdf.move_down 10
               # Despedida
@@ -622,21 +626,19 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime('%d/%m/%Y'))}", align: :right
               pdf.move_down 20
               # Título
-              pdf.text 'Zona Pastoral Norte', align: :justify
-              pdf.move_down 10
               pdf.text 'Ministerio Parroquial "San Judas Tadeo"', align: :justify
               pdf.move_down 10
               pdf.text 'Rvdo. Padre', align: :justify
               # Nombre del párroco
-              pdf.text (registro[27]).to_s, align: :justify
+              pdf.text (registro[31]).to_s, align: :justify
               pdf.move_down 10
               # Parroquia
-              pdf.text "Párroco de \"#{registro[25]}\" #{registro[26]}", align: :justify
+              pdf.text "Párroco de \"#{registro[29]}\" #{registro[30]}", align: :justify
               pdf.move_down 10
               pdf.text 'Presente.', align: :justify
               pdf.move_down 40
               # Cuerpo
-              pdf.text "Habiendose realizado en este despacho parroquial las informaciones previas al matrimonio del Sr. #{registro[19]} #{registro[20]} C.I. #{registro[23]} con la Sra. #{registro[11]} #{registro[12]} C.I. #{registro[13]}. Feligreses de esta parroquia, San Judas Tadeo, sin que de lo actudo haya aparecido impedimento alguno, habiéndose así mismo realizado la dispensa de las tres moniciones canónicas, concedo a V. Reverencia la licencia prescrita por el canon 1115, para que dentro de esta jurisdicción parroquial precencia lícitamente y bendiga el sobredicho matrimonio, de lo que servirá notificar a esta parroquia con la incicación de la fecha y de los testigos.",
+              pdf.text "Habiendose realizado en este despacho parroquial las informaciones previas al matrimonio del Sr. #{registro[23]} #{registro[24]} C.I. #{registro[27]} con la Sra. #{registro[11]} #{registro[12]} C.I. #{registro[13]}. Feligreses de esta parroquia, San Judas Tadeo, sin que de lo actudo haya aparecido impedimento alguno, habiéndose así mismo realizado la dispensa de las tres moniciones canónicas, concedo a V. Reverencia la licencia prescrita por el canon 1115, para que dentro de esta jurisdicción parroquial precencia lícitamente y bendiga el sobredicho matrimonio, de lo que servirá notificar a esta parroquia con la incicación de la fecha y de los testigos.",
                        align: :justify
               pdf.move_down 40
               # Despedida

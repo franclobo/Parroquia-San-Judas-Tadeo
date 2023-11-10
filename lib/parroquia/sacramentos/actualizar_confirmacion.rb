@@ -61,19 +61,19 @@ class ActualizarConfirmacion < FXMainWindow
     @lbl_parroquia.backColor = FXRGB(3, 187, 133)
     @input_parroquia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 180)
-    @input_parroquia.text = @registro[25]
+    @input_parroquia.text = @registro[29]
     @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
                                                 y: 180)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
     @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                               y: 180)
-    @input_sector.text = @registro[26]
+    @input_sector.text = @registro[30]
     @lbl_parroco = FXLabel.new(self, 'Parroco: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
                                                   y: 180)
     @lbl_parroco.backColor = FXRGB(3, 187, 133)
     @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                y: 180)
-    @input_parroco.text = @registro[27]
+    @input_parroco.text = @registro[31]
     @lbl_celebrante = FXLabel.new(self, 'Celebrante: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                         x: 10, y: 210)
     @lbl_celebrante.backColor = FXRGB(3, 187, 133)
@@ -85,31 +85,31 @@ class ActualizarConfirmacion < FXMainWindow
     @lbl_name.backColor = FXRGB(3, 187, 133)
     @input_name = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                             y: 240)
-    @input_name.text = @registro[19]
+    @input_name.text = @registro[23]
     @lbl_apellidos = FXLabel.new(self, 'Apellidos: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
                                                       y: 270)
     @lbl_apellidos.backColor = FXRGB(3, 187, 133)
     @input_apellidos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 270)
-    @input_apellidos.text = @registro[20]
+    @input_apellidos.text = @registro[24]
     @lbl_lugar_nacimiento = FXLabel.new(self, 'Lugar de nacimiento: ', opts: LAYOUT_EXPLICIT, width: 150,
                                                                        height: 20, x: 10, y: 300)
     @lbl_lugar_nacimiento.backColor = FXRGB(3, 187, 133)
     @input_lugar_nacimiento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                         x: 170, y: 300)
-    @input_lugar_nacimiento.text = @registro[21]
+    @input_lugar_nacimiento.text = @registro[25]
     @lbl_fecha_nacimiento = FXLabel.new(self, 'Fecha de nacimiento (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT,
                                                                                     width: 250, height: 20, x: 340, y: 300)
     @lbl_fecha_nacimiento.backColor = FXRGB(3, 187, 133)
     @input_fecha_nacimiento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                         x: 590, y: 300)
-    @input_fecha_nacimiento.text = @registro[22]
+    @input_fecha_nacimiento.text = @registro[26]
     @lbl_cedula = FXLabel.new(self, 'Cédula: ', opts: LAYOUT_EXPLICIT, width: 80, height: 20, x: 750,
                                                 y: 300)
     @lbl_cedula.backColor = FXRGB(3, 187, 133)
     @input_cedula = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                               y: 300)
-    @input_cedula.text = @registro[23]
+    @input_cedula.text = @registro[27]
     @lbl_padrino = FXLabel.new(self, 'Padrino: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
                                                   y: 330)
     @lbl_padrino.backColor = FXRGB(3, 187, 133)

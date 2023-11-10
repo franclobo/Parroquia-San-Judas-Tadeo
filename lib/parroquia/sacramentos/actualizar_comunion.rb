@@ -7,7 +7,7 @@ include Fox
 class ActualizarComunion < FXMainWindow
   def initialize(app, registro)
     @registro = registro
-    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 450)
+    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 430)
     self.backColor = FXRGB(3, 187, 133)
     # Title
     @lbltitle = FXLabel.new(self, 'Bienvenido a la Parroquia San Judas Tadeo',
@@ -30,18 +30,18 @@ class ActualizarComunion < FXMainWindow
     @lbl_tomo.backColor = FXRGB(3, 187, 133)
     # EL input tomoo debe tener el valor del campo "tomo" del registro
     @input_tomo = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 110, y: 100)
-    @input_tomo.text = registro[15]
+    @input_tomo.text = registro[19]
 
     @lbl_page = FXLabel.new(self, 'Pagina', opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 170, y: 100)
     @lbl_page.backColor = FXRGB(3, 187, 133)
     @input_page = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 230, y: 100)
-    @input_page.text = registro[16]
+    @input_page.text = registro[20]
     @lbl_number = FXLabel.new(self, 'Numero', opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 290,
                                               y: 100)
     @lbl_number.backColor = FXRGB(3, 187, 133)
     @input_number = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 350,
                                               y: 100)
-    @input_number.text = registro[17]
+    @input_number.text = registro[21]
     # section datos
     @lbl_fecha = FXLabel.new(self, 'Fecha de la 1ra comunión (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT, width: 250,
                                                                               height: 20, x: 10, y: 150)
@@ -61,19 +61,19 @@ class ActualizarComunion < FXMainWindow
     @lbl_parroquia.backColor = FXRGB(3, 187, 133)
     @input_parroquia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 180)
-    @input_parroquia.text = @registro[25]
+    @input_parroquia.text = @registro[29]
     @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
                                                 y: 180)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
     @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                               y: 180)
-    @input_sector.text = @registro[26]
+    @input_sector.text = @registro[30]
     @lbl_parroco = FXLabel.new(self, 'Parroco: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
                                                   y: 180)
     @lbl_parroco.backColor = FXRGB(3, 187, 133)
     @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                y: 180)
-    @input_parroco.text = @registro[27]
+    @input_parroco.text = @registro[31]
     @lbl_celebrante = FXLabel.new(self, 'Celebrante: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                         x: 10, y: 210)
     @lbl_celebrante.backColor = FXRGB(3, 187, 133)
@@ -85,48 +85,42 @@ class ActualizarComunion < FXMainWindow
     @lbl_name.backColor = FXRGB(3, 187, 133)
     @input_name = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                             y: 240)
-    @input_name.text = @registro[19]
+    @input_name.text = @registro[23]
     @lbl_apellidos = FXLabel.new(self, 'Apellidos: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
                                                       y: 270)
     @lbl_apellidos.backColor = FXRGB(3, 187, 133)
     @input_apellidos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 270)
-    @input_apellidos.text = @registro[20]
+    @input_apellidos.text = @registro[24]
     @lbl_lugar_nacimiento = FXLabel.new(self, 'Lugar de nacimiento: ', opts: LAYOUT_EXPLICIT, width: 150,
                                                                        height: 20, x: 10, y: 300)
     @lbl_lugar_nacimiento.backColor = FXRGB(3, 187, 133)
     @input_lugar_nacimiento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                         x: 170, y: 300)
-    @input_lugar_nacimiento.text = @registro[21]
+    @input_lugar_nacimiento.text = @registro[25]
     @lbl_fecha_nacimiento = FXLabel.new(self, 'Fecha de nacimiento (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT,
                                                                                     width: 250, height: 20, x: 340, y: 300)
     @lbl_fecha_nacimiento.backColor = FXRGB(3, 187, 133)
     @input_fecha_nacimiento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                         x: 590, y: 300)
-    @input_fecha_nacimiento.text = @registro[22]
+    @input_fecha_nacimiento.text = @registro[26]
     @lbl_cedula = FXLabel.new(self, 'Cédula: ', opts: LAYOUT_EXPLICIT, width: 80, height: 20, x: 750,
                                                 y: 300)
     @lbl_cedula.backColor = FXRGB(3, 187, 133)
     @input_cedula = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                               y: 300)
-    @input_cedula.text = @registro[23]
-    @lbl_padrino = FXLabel.new(self, 'Padrino: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                  y: 330)
-    @lbl_padrino.backColor = FXRGB(3, 187, 133)
-    @input_padrino = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                               y: 330)
-    @input_padrino.text = @registro[5]
+    @input_cedula.text = @registro[27]
     @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                      y: 360)
+                                                      y: 330)
     @lbl_certifica.backColor = FXRGB(3, 187, 133)
     @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                 y: 360)
+                                                 y: 330)
     @input_certifica.text = @registro[4]
     # create buttons
     @btnupdate = FXButton.new(self, 'Actualizar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                  x: 790, y: 400)
+                                                  x: 790, y: 360)
     @btncancel = FXButton.new(self, 'Cancelar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                x: 900, y: 400)
+                                                x: 900, y: 360)
 
     # connect buttons
     @btnupdate.connect(SEL_COMMAND) do

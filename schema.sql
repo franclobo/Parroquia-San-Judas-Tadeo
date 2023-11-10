@@ -32,6 +32,10 @@ CREATE TABLE IF NOT EXISTS public.sacramentos
     nombres_novia text COLLATE pg_catalog."default",
     apellidos_novia text COLLATE pg_catalog."default",
     cedula_novia text COLLATE pg_catalog."default",
+    cedula_padrino text COLLATE pg_catalog."default",
+    cedula_madrina text COLLATE pg_catalog."default",
+    cedula_padre text COLLATE pg_catalog."default",
+    cedula_madre text COLLATE pg_catalog."default",
     CONSTRAINT sacramentos_pkey PRIMARY KEY (id),
     CONSTRAINT fk_creyentes FOREIGN KEY (id)
         REFERENCES public.creyentes (id) MATCH SIMPLE

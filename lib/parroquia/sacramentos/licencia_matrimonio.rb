@@ -99,20 +99,10 @@ class LicenciaMatrimonio < FXMainWindow
     @lbl_cedula_novia.backColor = FXRGB(3, 187, 133)
     @input_cedula_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                     y: 270)
-    @lbl_testigo_novio = FXLabel.new(self, 'Testigo del novio: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                  height: 20, x: 10, y: 300)
-    @lbl_testigo_novio.backColor = FXRGB(3, 187, 133)
-    @input_nombres_testigo_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                             x: 170, y: 300)
-    @lbl_testigo_novia = FXLabel.new(self, 'Testigo novia: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                              x: 340, y: 300)
-    @lbl_testigo_novia.backColor = FXRGB(3, 187, 133)
-    @input_nombres_testigo_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                             x: 510, y: 300)
     @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                      x: 680, y: 300)
+                                                      x: 10, y: 300)
     @lbl_certifica.backColor = FXRGB(3, 187, 133)
-    @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
+    @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 300)
 
     # section registro civil
@@ -169,32 +159,30 @@ class LicenciaMatrimonio < FXMainWindow
 
     # connect buttons
     @btnsave.connect(SEL_COMMAND) do
-      tomo = @input_tomo.text
-      page = @input_page.text
-      number = @input_number.text
-      fecha = @input_fecha.text
-      sacramento = @input_sacramento.text
-      parroquia = @input_parroquia.text
-      sector = @input_sector.text
-      parroco = @input_parroco.text
-      celebrante = @input_celebrante.text
-      name_novio = @input_name_novio.text
-      apellido_novio = @input_apellido_novio.text
+      tomo = @input_tomo.text.empty? ? nil : @input_tomo.text
+      page = @input_page.text.empty? ? nil : @input_page.text
+      number = @input_number.text.empty? ? nil : @input_number.text
+      fecha = @input_fecha.text.empty? ? nil : @input_fecha.text
+      sacramento = @input_sacramento.text.empty? ? nil : @input_sacramento.text
+      parroquia = @input_parroquia.text.empty? ? nil : @input_parroquia.text
+      sector = @input_sector.text.empty? ? nil : @input_sector.text
+      parroco = @input_parroco.text.empty? ? nil : @input_parroco.text
+      celebrante = @input_celebrante.text.empty? ? nil : @input_celebrante.text
+      name_novio = @input_name_novio.text.empty? ? nil : @input_name_novio.text
+      apellido_novio = @input_apellido_novio.text.empty? ? nil : @input_apellido_novio.text
       cedula_novio = @input_cedula_novio.text.empty? ? nil : @input_cedula_novio.text
       nombres_novia = @input_name_novia.text.empty? ? nil : @input_name_novia.text
       apellidos_novia = @input_apellido_novia.text.empty? ? nil : @input_apellido_novia.text
       cedula_novia = @input_cedula_novia.text.empty? ? nil : @input_cedula_novia.text
-      testigo_novio = @input_nombres_testigo_novio.text.empty? ? nil : @input_nombres_testigo_novio.text
-      testigo_novia = @input_nombres_testigo_novia.text.empty? ? nil : @input_nombres_testigo_novia.text
-      certifica = @input_certifica.text
-      provincia_rc = @input_provincia_rc.text
-      canton_rc = @input_canton_rc.text
-      parroquia_rc = @input_parroquia_rc.text
-      anio_rc = @input_anio_rc.text
-      tomo_rc = @input_tomo_rc.text
-      pagina_rc = @input_pag_rc.text
-      acta_rc = @input_acta_rc.text
-      fecha_rc = @input_date_rc.text
+      certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
+      provincia_rc = @input_provincia_rc.text.empty? ? nil : @input_provincia_rc.text
+      canton_rc = @input_canton_rc.text.empty? ? nil : @input_canton_rc.text
+      parroquia_rc = @input_parroquia_rc.text.empty? ? nil : @input_parroquia_rc.text
+      anio_rc = @input_anio_rc.text.empty? ? nil : @input_anio_rc.text
+      tomo_rc = @input_tomo_rc.text.empty? ? nil : @input_tomo_rc.text
+      pagina_rc = @input_pag_rc.text.empty? ? nil : @input_pag_rc.text
+      acta_rc = @input_acta_rc.text.empty? ? nil : @input_acta_rc.text
+      fecha_rc = @input_date_rc.text.empty? ? nil : @input_date_rc.text
 
       # tables
       # tabla libros (id, tomo, pagina, numero)
@@ -216,8 +204,8 @@ class LicenciaMatrimonio < FXMainWindow
         # Insertar en la tabla misas
         @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
         $conn.exec(
-          'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)', [
-            sacramento, fecha, celebrante, certifica, testigo_novio, testigo_novia, nombres_novia, apellidos_novia, cedula_novia
+          'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, nombres_novia, apellidos_novia, cedula_novia) VALUES ($1, $2, $3, $4, $5, $6, $7)', [
+            sacramento, fecha, celebrante, certifica, nombres_novia, apellidos_novia, cedula_novia
           ]
         )
         $conn.exec('COMMIT')
@@ -235,6 +223,8 @@ class LicenciaMatrimonio < FXMainWindow
       @input_page.text = ''
       @input_number.text = ''
       @input_fecha.text = ''
+      @input_parroquia.text = ''
+      @input_sector.text = ''
       @input_parroco.text = ''
       @input_celebrante.text = ''
       @input_name_novio.text = ''
@@ -243,8 +233,6 @@ class LicenciaMatrimonio < FXMainWindow
       @input_name_novia.text = ''
       @input_apellido_novia.text = ''
       @input_cedula_novia.text = ''
-      @input_nombres_testigo_novio.text = ''
-      @input_nombres_testigo_novia.text = ''
       @input_certifica.text = ''
       @input_provincia_rc.text = ''
       @input_canton_rc.text = ''

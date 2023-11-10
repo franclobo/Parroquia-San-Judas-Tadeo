@@ -5,7 +5,7 @@ include Fox
 
 class PermisoMatrimonio < FXMainWindow
   def initialize(app)
-    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 530)
+    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 360)
     self.backColor = FXRGB(3, 187, 133)
     # Title
     @lbltitle = FXLabel.new(self, 'Bienvenido a la Parroquia San Judas Tadeo',
@@ -53,57 +53,57 @@ class PermisoMatrimonio < FXMainWindow
     @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                y: 180)
     @lbl_name_novio = FXLabel.new(self, 'Nombres del novio: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                               x: 10, y: 240)
+                                                               x: 10, y: 210)
     @lbl_name_novio.backColor = FXRGB(3, 187, 133)
     @input_name_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                  y: 240)
+                                                  y: 210)
     @lbl_apellido_novio = FXLabel.new(self, 'Apellidos del novio: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                     height: 20, x: 340, y: 240)
+                                                                     height: 20, x: 340, y: 210)
     @lbl_apellido_novio.backColor = FXRGB(3, 187, 133)
     @input_apellido_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                      y: 240)
+                                                      y: 210)
     @lbl_cedula_novio = FXLabel.new(self, 'Cédula del novio: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                                x: 680, y: 240)
+                                                                x: 680, y: 210)
     @lbl_cedula_novio.backColor = FXRGB(3, 187, 133)
     @input_cedula_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                                    y: 240)
+                                                    y: 210)
     @lbl_name_novia = FXLabel.new(self, 'Nombres de la novia: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                 height: 20, x: 10, y: 270)
+                                                                 height: 20, x: 10, y: 240)
     @lbl_name_novia.backColor = FXRGB(3, 187, 133)
     @input_name_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                  y: 270)
+                                                  y: 240)
     @lbl_apellido_novia = FXLabel.new(self, 'Apellidos de la novia: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                       height: 20, x: 340, y: 270)
+                                                                       height: 20, x: 340, y: 240)
     @lbl_apellido_novia.backColor = FXRGB(3, 187, 133)
     @input_apellido_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                      y: 270)
+                                                      y: 240)
     @lbl_cedula_novia = FXLabel.new(self, 'Cédula de la novia: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                  height: 20, x: 680, y: 270)
+                                                                  height: 20, x: 680, y: 240)
     @lbl_cedula_novia.backColor = FXRGB(3, 187, 133)
     @input_cedula_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                                    y: 270)
+                                                    y: 240)
     @lbl_testigo_novio = FXLabel.new(self, 'Testigo del novio: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                  height: 20, x: 10, y: 300)
+                                                                  height: 20, x: 10, y: 270)
     @lbl_testigo_novio.backColor = FXRGB(3, 187, 133)
     @input_nombres_testigo_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                             x: 170, y: 300)
+                                                             x: 170, y: 270)
     @lbl_testigo_novia = FXLabel.new(self, 'Testigo novia: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                              x: 340, y: 300)
+                                                              x: 340, y: 270)
     @lbl_testigo_novia.backColor = FXRGB(3, 187, 133)
     @input_nombres_testigo_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                             x: 510, y: 300)
+                                                             x: 510, y: 270)
     @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                      x: 680, y: 300)
+                                                      x: 680, y: 270)
     @lbl_certifica.backColor = FXRGB(3, 187, 133)
     @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                                 y: 300)
+                                                 y: 270)
 
 
     # create buttons
     @btnsave = FXButton.new(self, 'Guardar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                             x: 790, y: 480)
+                                             x: 790, y: 300)
     @btncancel = FXButton.new(self, 'Cancelar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                x: 900, y: 480)
+                                                x: 900, y: 300)
 
     # connect buttons
     @btnsave.connect(SEL_COMMAND) do

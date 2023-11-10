@@ -29,18 +29,18 @@ class ActualizarMatrimonio < FXMainWindow
     @lbl_tomo.backColor = FXRGB(3, 187, 133)
     # EL input tomoo debe tener el valor del campo "tomo" del registro
     @input_tomo = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 110, y: 100)
-    @input_tomo.text = registro[15]
+    @input_tomo.text = registro[19]
 
     @lbl_page = FXLabel.new(self, 'Pagina', opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 170, y: 100)
     @lbl_page.backColor = FXRGB(3, 187, 133)
     @input_page = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 230, y: 100)
-    @input_page.text = registro[16]
+    @input_page.text = registro[20]
     @lbl_number = FXLabel.new(self, 'Numero', opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 290,
                                               y: 100)
     @lbl_number.backColor = FXRGB(3, 187, 133)
     @input_number = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 350,
                                               y: 100)
-    @input_number.text = registro[17]
+    @input_number.text = registro[21]
     # section datos
     @lbl_fecha = FXLabel.new(self, 'Fecha de matrimonio (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT, width: 250,
                                                                          height: 20, x: 10, y: 150)
@@ -60,19 +60,19 @@ class ActualizarMatrimonio < FXMainWindow
     @lbl_parroquia.backColor = FXRGB(3, 187, 133)
     @input_parroquia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 180)
-    @input_parroquia.text = @registro[25]
+    @input_parroquia.text = @registro[29]
     @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
                                                 y: 180)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
     @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                               y: 180)
-    @input_sector.text = @registro[26]
+    @input_sector.text = @registro[30]
     @lbl_parroco = FXLabel.new(self, 'Parroco: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
                                                   y: 180)
     @lbl_parroco.backColor = FXRGB(3, 187, 133)
     @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                y: 180)
-    @input_parroco.text = @registro[27]
+    @input_parroco.text = @registro[31]
     @lbl_celebrante = FXLabel.new(self, 'Celebrante: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                         x: 10, y: 210)
     @lbl_celebrante.backColor = FXRGB(3, 187, 133)
@@ -84,19 +84,19 @@ class ActualizarMatrimonio < FXMainWindow
     @lbl_name_novio.backColor = FXRGB(3, 187, 133)
     @input_name_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                   y: 240)
-    @input_name_novio.text = @registro[19]
+    @input_name_novio.text = @registro[23]
     @lbl_apellido_novio = FXLabel.new(self, 'Apellidos del novio: ', opts: LAYOUT_EXPLICIT, width: 150,
                                                                      height: 20, x: 340, y: 240)
     @lbl_apellido_novio.backColor = FXRGB(3, 187, 133)
     @input_apellido_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                                       y: 240)
-    @input_apellido_novio.text = @registro[20]
+    @input_apellido_novio.text = @registro[24]
     @lbl_cedula_novio = FXLabel.new(self, 'Cédula del novio: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                                 x: 680, y: 240)
     @lbl_cedula_novio.backColor = FXRGB(3, 187, 133)
     @input_cedula_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                     y: 240)
-    @input_cedula_novio.text = @registro[23]
+    @input_cedula_novio.text = @registro[27]
     @lbl_name_novia = FXLabel.new(self, 'Nombres de la novia: ', opts: LAYOUT_EXPLICIT, width: 150,
                                                                  height: 20, x: 10, y: 270)
     @lbl_name_novia.backColor = FXRGB(3, 187, 133)
@@ -142,49 +142,49 @@ class ActualizarMatrimonio < FXMainWindow
     @lbl_provincia_rc.backColor = FXRGB(3, 187, 133)
     @input_provincia_rc = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                     y: 360)
-    @input_provincia_rc.text = @registro[29]
+    @input_provincia_rc.text = @registro[33]
     @lbl_canton_rc = FXLabel.new(self, 'Cantón: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
                                                    y: 360)
     @lbl_canton_rc.backColor = FXRGB(3, 187, 133)
     @input_canton_rc = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                                  y: 360)
-    @input_canton_rc.text = @registro[30]
+    @input_canton_rc.text = @registro[34]
     @lbl_parroquia_rc = FXLabel.new(self, 'Parroquia: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                          x: 680, y: 360)
     @lbl_parroquia_rc.backColor = FXRGB(3, 187, 133)
     @input_parroquia_rc = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                     y: 360)
-    @input_parroquia_rc.text = @registro[31]
+    @input_parroquia_rc.text = @registro[35]
     @lbl_anio_rc = FXLabel.new(self, 'Año: ', opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 50,
                                               y: 390)
     @lbl_anio_rc.backColor = FXRGB(3, 187, 133)
     @input_anio_rc = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 110,
                                                y: 390)
-    @input_anio_rc.text = @registro[32]
+    @input_anio_rc.text = @registro[36]
     @lbl_tomo_rc = FXLabel.new(self, 'Tomo: ', opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 170,
                                                y: 390)
     @lbl_tomo_rc.backColor = FXRGB(3, 187, 133)
     @input_tomo_rc = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 230,
                                                y: 390)
-    @input_tomo_rc.text = @registro[33]
+    @input_tomo_rc.text = @registro[37]
     @lbl_pag_rc = FXLabel.new(self, 'Página: ', opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 290,
                                                 y: 390)
     @lbl_pag_rc.backColor = FXRGB(3, 187, 133)
     @input_pag_rc = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 350,
                                               y: 390)
-    @input_pag_rc.text = @registro[34]
+    @input_pag_rc.text = @registro[38]
     @lbl_acta_rc = FXLabel.new(self, 'Acta: ', opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 410,
                                                y: 390)
     @lbl_acta_rc.backColor = FXRGB(3, 187, 133)
     @input_acta_rc = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 50, height: 20, x: 470,
                                                y: 390)
-    @input_acta_rc.text = @registro[35]
+    @input_acta_rc.text = @registro[39]
     @lbl_date_rc = FXLabel.new(self, 'Fecha (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                              x: 10, y: 420)
     @lbl_date_rc.backColor = FXRGB(3, 187, 133)
     @input_date_rc = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                y: 420)
-    @input_date_rc.text = @registro[36]
+    @input_date_rc.text = @registro[40]
 
     # create buttons
     @btnupdate = FXButton.new(self, 'Actualizar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,

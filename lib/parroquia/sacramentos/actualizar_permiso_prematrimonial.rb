@@ -6,7 +6,7 @@ include Fox
 class ActualizarPreMatrimonial < FXMainWindow
   def initialize(app, registro)
     @registro = registro
-    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 530)
+    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 360)
     self.backColor = FXRGB(3, 187, 133)
     # Title
     @lbltitle = FXLabel.new(self, 'Bienvenido a la Parroquia San Judas Tadeo',
@@ -44,79 +44,79 @@ class ActualizarPreMatrimonial < FXMainWindow
     @lbl_parroquia.backColor = FXRGB(3, 187, 133)
     @input_parroquia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
                                                  y: 180)
-    @input_parroquia.text = @registro[25]
+    @input_parroquia.text = @registro[29]
     @lbl_sector = FXLabel.new(self, 'Sector: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
                                                 y: 180)
     @lbl_sector.backColor = FXRGB(3, 187, 133)
     @input_sector = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
                                               y: 180)
-    @input_sector.text = @registro[26]
+    @input_sector.text = @registro[30]
     @lbl_parroco = FXLabel.new(self, 'Parroco: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
                                                   y: 180)
     @lbl_parroco.backColor = FXRGB(3, 187, 133)
     @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                y: 180)
-    @input_parroco.text = @registro[27]
+    @input_parroco.text = @registro[31]
     @lbl_name_novio = FXLabel.new(self, 'Nombres del novio: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                               x: 10, y: 240)
+                                                               x: 10, y: 210)
     @lbl_name_novio.backColor = FXRGB(3, 187, 133)
     @input_name_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                  y: 240)
-    @input_name_novio.text = @registro[19]
+                                                  y: 210)
+    @input_name_novio.text = @registro[23]
     @lbl_apellido_novio = FXLabel.new(self, 'Apellidos del novio: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                     height: 20, x: 340, y: 240)
+                                                                     height: 20, x: 340, y: 210)
     @lbl_apellido_novio.backColor = FXRGB(3, 187, 133)
     @input_apellido_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                      y: 240)
-    @input_apellido_novio.text = @registro[20]
+                                                      y: 210)
+    @input_apellido_novio.text = @registro[24]
     @lbl_cedula_novio = FXLabel.new(self, 'Cédula del novio: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                                x: 680, y: 240)
+                                                                x: 680, y: 210)
     @lbl_cedula_novio.backColor = FXRGB(3, 187, 133)
     @input_cedula_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                                    y: 240)
-    @input_cedula_novio.text = @registro[23]
+                                                    y: 210)
+    @input_cedula_novio.text = @registro[27]
     @lbl_name_novia = FXLabel.new(self, 'Nombres de la novia: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                 height: 20, x: 10, y: 270)
+                                                                 height: 20, x: 10, y: 240)
     @lbl_name_novia.backColor = FXRGB(3, 187, 133)
     @input_name_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                  y: 270)
+                                                  y: 240)
     @input_name_novia.text = @registro[11]
     @lbl_apellido_novia = FXLabel.new(self, 'Apellidos de la novia: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                       height: 20, x: 340, y: 270)
+                                                                       height: 20, x: 340, y: 240)
     @lbl_apellido_novia.backColor = FXRGB(3, 187, 133)
     @input_apellido_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                      y: 270)
+                                                      y: 240)
     @input_apellido_novia.text = @registro[12]
     @lbl_cedula_novia = FXLabel.new(self, 'Cédula de la novia: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                  height: 20, x: 680, y: 270)
+                                                                  height: 20, x: 680, y: 240)
     @lbl_cedula_novia.backColor = FXRGB(3, 187, 133)
     @input_cedula_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                                    y: 270)
+                                                    y: 240)
     @input_cedula_novia.text = @registro[13]
     @lbl_testigo_novio = FXLabel.new(self, 'Testigo del novio: ', opts: LAYOUT_EXPLICIT, width: 150,
-                                                                  height: 20, x: 10, y: 300)
+                                                                  height: 20, x: 10, y: 270)
     @lbl_testigo_novio.backColor = FXRGB(3, 187, 133)
     @input_nombres_testigo_novio = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                             x: 170, y: 300)
+                                                             x: 170, y: 270)
     @input_nombres_testigo_novio.text = @registro[7]
     @lbl_testigo_novia = FXLabel.new(self, 'Testigo novia: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                              x: 340, y: 300)
+                                                              x: 340, y: 270)
     @lbl_testigo_novia.backColor = FXRGB(3, 187, 133)
     @input_nombres_testigo_novia = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                             x: 510, y: 300)
+                                                             x: 510, y: 270)
     @input_nombres_testigo_novia.text = @registro[8]
     @lbl_certifica = FXLabel.new(self, 'Certifica: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                      x: 680, y: 300)
+                                                      x: 680, y: 270)
     @lbl_certifica.backColor = FXRGB(3, 187, 133)
     @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
-                                                 y: 300)
+                                                 y: 270)
     @input_certifica.text = @registro[4]
 
     # create buttons
     @btnupdate = FXButton.new(self, 'Actualizar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                  x: 790, y: 480)
+                                                  x: 790, y: 300)
     @btncancel = FXButton.new(self, 'Cancelar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                x: 900, y: 480)
+                                                x: 900, y: 300)
 
     # connect buttons
     @btnupdate.connect(SEL_COMMAND) do

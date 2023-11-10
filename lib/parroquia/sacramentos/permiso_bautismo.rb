@@ -5,7 +5,7 @@ include Fox
 
 class PermisoBautizo < FXMainWindow
   def initialize(app)
-    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 600)
+    super(app, 'Parroquia San Judas Tadeo', width: 1050, height: 430)
     self.backColor = FXRGB(3, 187, 133)
     # create label
     # Title
@@ -55,50 +55,70 @@ class PermisoBautizo < FXMainWindow
     @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
                                                y: 180)
     @lbl_name = FXLabel.new(self, 'Nombres: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                               y: 240)
+                                               y: 210)
     @lbl_name.backColor = FXRGB(3, 187, 133)
-    @input_name = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170, y: 240)
+    @input_name = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170, y: 210)
     @lbl_apellidos = FXLabel.new(self, 'Apellidos: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20,
-                                                      x: 340, y: 240)
+                                                      x: 340, y: 210)
     @lbl_apellidos.backColor = FXRGB(3, 187, 133)
     @input_apellidos = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                 y: 240)
-    @lbl_cedula = FXLabel.new(self, 'Cédula: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                y: 270)
+                                                 y: 210)
+    @lbl_cedula = FXLabel.new(self, 'Cédula: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
+                                                y: 210)
     @lbl_cedula.backColor = FXRGB(3, 187, 133)
-    @input_cedula = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                              y: 270)
+    @input_cedula = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 850,
+                                              y: 210)
     @lbl_padre = FXLabel.new(self, 'Padre: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                              y: 330)
+                                              y: 240)
     @lbl_padre.backColor = FXRGB(3, 187, 133)
     @input_padre = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                             y: 330)
-    @lbl_madre = FXLabel.new(self, 'Madre: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
-                                              y: 330)
+                                             y: 240)
+    @lbl_cedula_padre = FXLabel.new(self, 'Cédula del Padre: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
+                                                      y: 240)
+    @lbl_cedula_padre.backColor = FXRGB(3, 187, 133)
+    @input_cedula_padre = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
+                                                  y: 240)
+    @lbl_madre = FXLabel.new(self, 'Madre: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
+                                              y: 270)
     @lbl_madre.backColor = FXRGB(3, 187, 133)
-    @input_madre = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                             y: 330)
+    @input_madre = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
+                                             y: 270)
+    @lbl_cedula_madre = FXLabel.new(self, 'Cédula de la Madre: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
+                                                      y: 270)
+    @lbl_cedula_madre.backColor = FXRGB(3, 187, 133)
+    @input_cedula_madre = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
+                                                  y: 270)
     @lbl_padrino = FXLabel.new(self, 'Padrino: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                  y: 360)
+                                                  y: 300)
     @lbl_padrino.backColor = FXRGB(3, 187, 133)
     @input_padrino = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                               y: 360)
-    @lbl_madrina = FXLabel.new(self, 'Madrina: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
-                                                  y: 360)
+                                               y: 300)
+    @lbl_cedula_padrino = FXLabel.new(self, 'Cédula del Padrino: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
+                                                        y: 300)
+    @lbl_cedula_padrino.backColor = FXRGB(3, 187, 133)
+    @input_cedula_padrino = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
+                                                    y: 300)
+    @lbl_madrina = FXLabel.new(self, 'Madrina: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
+                                                  y: 330)
     @lbl_madrina.backColor = FXRGB(3, 187, 133)
-    @input_madrina = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                               y: 360)
+    @input_madrina = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
+                                               y: 330)
+    @lbl_cedula_madrina = FXLabel.new(self, 'Cédula de la Madrina: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
+                                                        y: 330)
+    @lbl_cedula_madrina.backColor = FXRGB(3, 187, 133)
+    @input_cedula_madrina = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
+                                                    y: 330)
     @lbl_certifica = FXLabel.new(self, 'Autoriza: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                     y: 390)
+                                                     y: 360)
     @lbl_certifica.backColor = FXRGB(3, 187, 133)
     @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                 y: 390)
+                                                 y: 360)
 
     # create buttons
     @btnsave = FXButton.new(self, 'Guardar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                             x: 790, y: 540)
+                                             x: 790, y: 390)
     @btncancel = FXButton.new(self, 'Cancelar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                x: 900, y: 540)
+                                                x: 900, y: 390)
 
     # connect buttons
     @btnsave.connect(SEL_COMMAND) do
@@ -114,6 +134,10 @@ class PermisoBautizo < FXMainWindow
       madrina = @input_madrina.text.empty? ? nil : @input_madrina.text
       padre = @input_padre.text.empty? ? nil : @input_padre.text
       madre = @input_madre.text.empty? ? nil : @input_madre.text
+      cedula_padre = @input_cedula_padre.text.empty? ? nil : @input_cedula_padre.text
+      cedula_madre = @input_cedula_madre.text.empty? ? nil : @input_cedula_madre.text
+      cedula_padrino = @input_cedula_padrino.text.empty? ? nil : @input_cedula_padrino.text
+      cedula_madrina = @input_cedula_madrina.text.empty? ? nil : @input_cedula_madrina.text
       certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
 
       # tables
@@ -140,8 +164,8 @@ class PermisoBautizo < FXMainWindow
         # Insertar en la tabla misas
         @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
         $conn.exec(
-          'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
-            sacramento, fecha, nil, certifica, padrino, madrina, padre, madre
+          'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica, padrino, madrina, padre, madre, cedula_padre, cedula_madre, cedula_padrino, cedula_madrina) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)', [
+            sacramento, fecha, nil, certifica, padrino, madrina, padre, madre, cedula_padre, cedula_madre, cedula_padrino, cedula_madrina
           ]
         )
         # Confirmar la transacción
@@ -168,6 +192,10 @@ class PermisoBautizo < FXMainWindow
       @input_madrina.text = ''
       @input_padre.text = ''
       @input_madre.text = ''
+      @input_cedula_padre.text = ''
+      @input_cedula_madre.text = ''
+      @input_cedula_padrino.text = ''
+      @input_cedula_madrina.text = ''
       @input_certifica.text = ''
     end
   end
