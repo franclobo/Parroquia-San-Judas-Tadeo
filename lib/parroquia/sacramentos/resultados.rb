@@ -464,8 +464,9 @@ class ResultadosConsulta < FXMainWindow
               pdf.text "APELLIDOS: #{registro[24]}.", align: :justify
               pdf.move_down 10
               # Fecha de nacimiento
-              pdf.text "LUGAR DE NACIMIENTO #{registro[25]}. FECHA DE NACIMIENTO: #{cambiar_formato_fecha(registro[26])}.",
-                       align: :justify
+              pdf.text "LUGAR DE NACIMIENTO #{registro[25]}.", align: :justify
+              pdf.move_down 10
+              pdf.text "FECHA DE NACIMIENTO: #{cambiar_formato_fecha(registro[26])}.", align: :justify
               pdf.move_down 10
               # Padres
               pdf.text "Hijo/ja de #{registro[9]} y de #{registro[10]}.", align: :justify

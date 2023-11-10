@@ -5,7 +5,7 @@ include Fox
 
 class ActualizarPermisoBautismo < FXMainWindow
   def initialize(app, registro)
-    super(app, 'Editando Registro', width: 1050, height: 600)
+    super(app, 'Editando Registro', width: 1050, height: 430)
     self.backColor = FXRGB(3, 187, 133)
     @registro = registro
     # Title
@@ -111,29 +111,29 @@ class ActualizarPermisoBautismo < FXMainWindow
                                                   y: 300)
     @input_cedula_padrino.text = registro[14]
     @lbl_madrina = FXLabel.new(self, 'Madrina: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                  y: 360)
+                                                  y: 330)
     @lbl_madrina.backColor = FXRGB(3, 187, 133)
     @input_madrina = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                               y: 360)
+                                               y: 330)
     @input_madrina.text = registro[6]
     @lbl_cedula_madrina = FXLabel.new(self, 'Cédula de la madrina: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 340,
-                                                      y: 360)
+                                                      y: 330)
     @lbl_cedula_madrina.backColor = FXRGB(3, 187, 133)
     @input_cedula_madrina = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 510,
-                                                  y: 360)
+                                                  y: 330)
     @input_cedula_madrina.text = registro[15]
     @lbl_certifica = FXLabel.new(self, 'Autoriza: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 10,
-                                                      y: 390)
+                                                      y: 360)
     @lbl_certifica.backColor = FXRGB(3, 187, 133)
     @input_certifica = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 170,
-                                                 y: 390)
+                                                 y: 360)
     @input_certifica.text = registro[4]
 
     # create buttons
     @btnupdate = FXButton.new(self, 'Actualizar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                  x: 790, y: 540)
+                                                  x: 790, y: 390)
     @btncancel = FXButton.new(self, 'Cancelar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
-                                                x: 900, y: 540)
+                                                x: 900, y: 390)
 
     # connect buttons
     @btnupdate.connect(SEL_COMMAND) do

@@ -181,7 +181,6 @@ class PermisoBautizo < FXMainWindow
 
     def clear_input_fields
       @input_fecha.text = ''
-      @input_sacramento.text = ''
       @input_parroquia.text = ''
       @input_sector.text = ''
       @input_parroco.text = ''
