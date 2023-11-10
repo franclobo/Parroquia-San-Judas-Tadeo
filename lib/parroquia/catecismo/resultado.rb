@@ -163,7 +163,7 @@ class ResultadosConsulta < FXMainWindow
           # Recorre todos los registros seleccionados y agrega sus horarios de misas
           pdf.text "Año Lectivo #{registros_seleccionados[0][9]}"
           pdf.move_down 10
-          pdf.text "Catequista #{registros_seleccionados[0][11]} #{registros_seleccionados[0][12]}"
+          pdf.text "Catequista #{registros_seleccionados[0][12]} #{registros_seleccionados[0][13]}"
           pdf.move_down 10
           pdf.text 'Número | Apellidos | Nombres | Nivel | Sector'
           pdf.move_down 10
@@ -191,7 +191,7 @@ class ResultadosConsulta < FXMainWindow
       if registros_seleccionados.nil? || registros_seleccionados.empty?
         FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'No hay registros seleccionados')
       else
-        @archivo_pdf = "#{directorio}/#{registros_seleccionados[0][19]} #{registros_seleccionados[0][20]} - #{registros_seleccionados[0][1]}.pdf"
+        @archivo_pdf = "#{directorio}/#{registros_seleccionados[0][1]} #{registros_seleccionados[0][2]} - #{registros_seleccionados[0][7]}.pdf"
       end
     end
 

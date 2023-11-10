@@ -225,6 +225,7 @@ CREATE TABLE IF NOT EXISTS public.niveles
     nivel text COLLATE pg_catalog."default",
     sector text COLLATE pg_catalog."default",
     anio_lectivo text COLLATE pg_catalog."default",
+    parroco text COLLATE pg_catalog."default",
     CONSTRAINT niveles_pkey PRIMARY KEY (id)
 )
 
