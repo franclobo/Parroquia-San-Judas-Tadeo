@@ -532,7 +532,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text (registro[31]).to_s, align: :justify
               pdf.move_down 10
               # Parroquia
-              pdf.text "Párroco de la Parroquia Eclesiástica \"#{registro[29]}\"", align: :justify
+              pdf.text "Párroco de la Parroquia \"#{registro[29]}\" - #{registro[30]}", align: :justify
               pdf.move_down 10
               # Saludo
               pdf.text 'De mis consideraciones:', align: :justify
@@ -570,7 +570,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text (registro[31]).to_s, align: :justify
               pdf.move_down 10
               # Parroquia
-              pdf.text "Párroco de la Parroquia Eclesiástica \"#{registro[29]}\"", align: :justify
+              pdf.text "Párroco de la Parroquia \"#{registro[29]}\" - #{registro[30]}", align: :justify
               pdf.move_down 10
               pdf.text 'Presente.', align: :justify
               pdf.move_down 10
@@ -607,7 +607,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text (registro[31]).to_s, align: :justify
               pdf.move_down 10
               # Parroquia
-              pdf.text "Párroco de la Parroquia Eclesiástica \"#{registro[29]}\"", align: :justify
+              pdf.text "Párroco de la Parroquia \"#{registro[29]}\" - #{registro[30]}", align: :justify
               pdf.move_down 10
               pdf.text 'Presente.', align: :justify
               pdf.move_down 10
@@ -615,7 +615,7 @@ class ResultadosConsulta < FXMainWindow
               pdf.text 'Reciba un afectuoso saludo.', align: :justify
               pdf.move_down 10
               # Cuerpo
-              pdf.text "Por medio de la presente. Quien suscribe Padre #{registro[4]}, Párroco de la parroquia \"San Judas Tadeo\", AUTORIZO y habiéndose realizado los trámites canónicos para celebrar ante la Iglesia Católica el matrimonio de #{registro[23]} #{registro[24]} CI #{registro[27]} y de #{registro[11]} #{registro[12]} CI #{registro[13]} y también los testigos #{registro[7]} C.I. ____________________ y #{registro[8]} C.I. ____________________ para que contraigan matrimonio el #{cambiar_formato_fecha(registro[2])} en la parroquia antes mencionada.",
+              pdf.text "Por medio de la presente. Quien suscribe Padre #{registro[4]}, Párroco de la parroquia \"San Judas Tadeo\", AUTORIZO y habiéndose realizado los trámites canónicos para celebrar ante la Iglesia Católica el matrimonio de #{registro[23]} #{registro[24]} CI #{registro[27]} y de #{registro[11]} #{registro[12]} CI #{registro[13]} y también los testigos #{registro[7]} y #{registro[8]} para que contraigan matrimonio el #{cambiar_formato_fecha(registro[2])} en la parroquia antes mencionada.",
                        align: :justify
               pdf.move_down 10
               # Despedida
