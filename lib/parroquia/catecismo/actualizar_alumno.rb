@@ -62,13 +62,13 @@ class ActualizarAlumno < FXMainWindow
     @lbl_lugar_nacimiento.backColor = FXRGB(3, 187, 133)
     @input_lugar_nacimiento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                         x: 170, y: 210)
-    @input_lugar_nacimiento.text = @registro[3]
+    @input_lugar_nacimiento.text = @registro[4]
     @lbl_fecha_nacimiento = FXLabel.new(self, 'Fecha de nacimiento (AAAA/MM/DD): ', opts: LAYOUT_EXPLICIT,
                                                                                     width: 250, height: 20, x: 340, y: 210)
     @lbl_fecha_nacimiento.backColor = FXRGB(3, 187, 133)
     @input_fecha_nacimiento = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                         x: 590, y: 210)
-    @input_fecha_nacimiento.text = @registro[4]
+    @input_fecha_nacimiento.text = @registro[3]
     @lbl_cedula = FXLabel.new(self, 'Cédula: ', opts: LAYOUT_EXPLICIT, width: 80, height: 20, x: 750,
                                                 y: 210)
     @lbl_cedula.backColor = FXRGB(3, 187, 133)
