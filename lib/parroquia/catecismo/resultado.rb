@@ -18,7 +18,7 @@ class ResultadosConsulta < FXMainWindow
     @tabla.visibleRows = 10
     @tabla.visibleColumns = 10
     # El tamaño de la tabla depende del número de columnas nombrada en poner nombre a las columnas y las filas al numero de registros encontrados
-    @tabla.setTableSize(@result_data.length, 13)
+    @tabla.setTableSize(@result_data.length, 14)
 
 
     # Llena la tabla con los datos de resultados
@@ -39,9 +39,10 @@ class ResultadosConsulta < FXMainWindow
     @tabla.setColumnText(7, 'Nivel')
     @tabla.setColumnText(8, 'Sector')
     @tabla.setColumnText(9, 'Año lectivo')
-    @tabla.setColumnText(10, 'ID Catequistas')
-    @tabla.setColumnText(11, 'Nombres')
-    @tabla.setColumnText(12, 'Apellidos')
+    @tabla.setColumnText(10, 'Párroco')
+    @tabla.setColumnText(11, 'ID Catequistas')
+    @tabla.setColumnText(12, 'Nombres')
+    @tabla.setColumnText(13, 'Apellidos')
 
 
     # Al hacer clic en una fila, se selecciona la fila completa para imprimir los datos
@@ -126,6 +127,14 @@ class ResultadosConsulta < FXMainWindow
       listar_pdf
     end
 
+    def registros_seleccionados
+      registros = []
+      (0...@tabla.numRows).each do |i|
+        registros << @result_data[i] if @tabla.isRowSelected(i)
+      end
+      registros
+    end
+
     def listar_pdf
       selected_columns = seleccionar_columna
       registros_seleccionados = registros_seleccionados() # Obtén los registros seleccionados
@@ -186,6 +195,56 @@ class ResultadosConsulta < FXMainWindow
       end
     end
 
+    def imprimir_pdf
+      if registros_seleccionados.empty?
+        FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Debe seleccionar al menos un registro')
+      else
+        # Genera el archivo PDF
+        Prawn::Document.generate(@archivo_pdf, margin: [100, 100, 100, 100]) do |pdf|
+          pdf.font 'Helvetica'
+          pdf.font_size 12
+          # Definir tres casos en los que se puede imprimir el certificado y los distintos formatos para bautismo, confirmación y matrimonio
+          # Bautismo
+          # Encabezado
+          pdf.image File.join(File.dirname(__FILE__), '../assets/images/arquidiocesisquito.png'), height: 80,
+                                                                                                  position: :absolute, at: [-60, 680]
+          pdf.text_box 'Arquidiócesis de Quito', align: :center, size: 16, style: :bold, at: [10, 670],
+                                                 width: pdf.bounds.width
+          pdf.text_box 'Parroquia Eclesiástica "San Judas Tadeo"', align: :center, size: 14, style: :bold,
+                                                                   at: [10, 650], width: pdf.bounds.width
+          pdf.text_box "Jaime Roldós Aguilera, calle Oe13A y N82\nEl Condado, Quito - Ecuador\nTeléfono: 02496446",
+                       align: :center, size: 10, at: [10, 630], width: pdf.bounds.width
+          pdf.image File.join(File.dirname(__FILE__), '../assets/images/sanjudastadeo.png'), height: 80,
+                                                                                             position: :absolute, at: [430, 680]
+          # Título del certificado en color rojo
+          pdf.move_down 20
+          pdf.text 'CERTIFICADO', align: :center, size: 20, style: :bold, color: 'FF0000'
+          pdf.move_down 20
+          registros_seleccionados.each do |registro|
+              # Añadir márgenes izquierdo y derecho
+              # Fecha actual alineada a la derecha
+              pdf.text "Quito, #{cambiar_formato_fecha(Time.now.strftime('%d/%m/%Y'))}", align: :right
+              pdf.move_down 20
+              # Cuerpo
+              pdf.text "A quien interese por la presente CERTIFICO, que #{registro[1]} #{registro[2]}, participó en esta parroquia en el nivel de #{registro[7]} durante el periodo lectivo #{registro[9]}.", align: :justify
+              pdf.move_down 20
+              # Despedida
+              pdf.text 'Es todo cuanto puedo certificar en honor a la verdad', align: :justify
+              pdf.move_down 40
+              # Firma del párroco
+              pdf.text '_______________________________', align: :center
+              # Nombre del párroco
+              pdf.text (registro[10]).to_s, align: :center
+              # Parroco
+              pdf.text 'Párroco', align: :center
+          end
+        end
+        # Abre el archivo PDF con el visor de PDF predeterminado del sistema
+        system("xdg-open '#{@archivo_pdf}'")
+        # Mensaje de confirmación
+        FXMessageBox.information(self, MBOX_OK, 'Información', 'El archivo PDF se ha generado correctamente')
+      end
+    end
 
     @btnedit.connect(SEL_COMMAND) do
       # Editar registros seleccionados y actualizar la basee de datos

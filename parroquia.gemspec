@@ -3,7 +3,7 @@
 # Create gem spec file
 Gem::Specification.new do |s|
   s.name = 'parroquia'
-  s.version = '1.1.33'
+  s.version = '1.1.34'
   s.summary = 'Parroquia San Judas Tadeo'
   s.description = 'Servicio Parroquial San Judas Tadeo'
   s.authors = ['Francisco Javier Borja Lobato']

@@ -57,11 +57,10 @@ ALTER TABLE IF EXISTS public.sacramentos
 CREATE TABLE IF NOT EXISTS public.libros
 (
     id integer NOT NULL DEFAULT nextval('libros_id_seq'::regclass),
-    tomo integer NOT NULL,
-    pagina integer NOT NULL,
-    numero integer NOT NULL,
-    CONSTRAINT libros_pkey PRIMARY KEY (id),
-    CONSTRAINT tomo_pagina_numero_unico UNIQUE (tomo, pagina, numero)
+    tomo text COLLATE pg_catalog."default",
+    pagina text COLLATE pg_catalog."default",
+    numero text COLLATE pg_catalog."default",
+    CONSTRAINT libros_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
@@ -118,10 +117,10 @@ CREATE TABLE IF NOT EXISTS public.registros_civiles
     canton_rc text COLLATE pg_catalog."default",
     parroquia_rc text COLLATE pg_catalog."default",
     anio_rc integer,
-    tomo_rc integer,
-    pagina_rc integer,
-    acta_rc integer,
-    fecha_rc date,
+    tomo_rc text COLLATE pg_catalog."default",
+    pagina_rc text COLLATE pg_catalog."default",
+    acta_rc text COLLATE pg_catalog."default",
+    fecha_rc text COLLATE pg_catalog."default",
     CONSTRAINT registros_civiles_pkey PRIMARY KEY (id)
 )
 

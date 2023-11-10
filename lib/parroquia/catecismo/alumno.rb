@@ -77,6 +77,12 @@ class Alumno < FXMainWindow
     @lbl_apellidos_catequista.backColor = FXRGB(3, 187, 133)
     @input_apellidos_catequista = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20,
                                                             x: 510, y: 240)
+    @lbl_parroco = FXLabel.new(self, 'Párroco: ', opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 680,
+                                              y: 240)
+    @lbl_parroco.backColor = FXRGB(3, 187, 133)
+    @input_parroco = FXTextField.new(self, 10, opts: LAYOUT_EXPLICIT, width: 150, height: 20, x: 840,
+                                            y: 240)
+
     # create buttons
     @btnsave = FXButton.new(self, 'Guardar', opts: LAYOUT_EXPLICIT | BUTTON_NORMAL, width: 100, height: 30,
                                              x: 790, y: 270)
@@ -95,7 +101,7 @@ class Alumno < FXMainWindow
       cedula = @input_cedula.text.empty? ? nil : @input_cedula.text
       nombres_catequista = @input_nombre_catequista.text.empty? ? nil : @input_nombre_catequista.text
       apellidos_catequista = @input_apellidos_catequista.text.empty? ? nil : @input_apellidos_catequista.text
-
+      parroco = @input_parroco.text.empty? ? nil : @input_parroco.text
 
       # tables
       # tabla catequistas (id, nombres, apellidos, fecha de nacimiento, lugar de nacimiento, cedula)
@@ -106,17 +112,14 @@ class Alumno < FXMainWindow
         @registro_catequistas = $conn.exec('INSERT INTO catequistas (nombres, apellidos) VALUES ($1, $2)',
                                            [nombres_catequista, apellidos_catequista])
         # Insertar en la tabla niveles
-        @registro_parroquias = $conn.exec('INSERT INTO niveles (anio_lectivo, nivel, sector) VALUES ($1, $2, $3)',
-                                          [anio_lectivo, nivel, sector])
+        @registro_parroquias = $conn.exec('INSERT INTO niveles (anio_lectivo, nivel, sector, parroco) VALUES ($1, $2, $3, $4)',
+                                          [anio_lectivo, nivel, sector, parroco])
         # Insertar en la tabla alumnos
         @registro_creyentes = $conn.exec(
           'INSERT INTO alumnos (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [
             name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula
           ]
         )
-        puts @registro_creyentes
-        puts @registro_parroquias
-        puts @registro_catequistas
 
         # Confirmar la transacción
         $conn.exec('COMMIT')
