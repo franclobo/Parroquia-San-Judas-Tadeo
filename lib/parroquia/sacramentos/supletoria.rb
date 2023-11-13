@@ -203,7 +203,7 @@ class Supletoria < FXMainWindow
       madrina = @input_madrina.text.empty? ? nil : @input_madrina.text
       padre = @input_padre.text.empty? ? nil : @input_padre.text
       madre = @input_madre.text.empty? ? nil : @input_madre.text
-      @input_testigo_uno.text.empty? ? nil : @input_testigo_uno.text
+      testigo_uno = @input_testigo_uno.text.empty? ? nil : @input_testigo_uno.text
       testigo_dos = @input_testigo_dos.text.empty? ? nil : @input_testigo_dos.text
       certifica = @input_certifica.text.empty? ? nil : @input_certifica.text
       provincia_rc = @input_provincia_rc.text.empty? ? nil : @input_provincia_rc.text
@@ -240,7 +240,7 @@ class Supletoria < FXMainWindow
         @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
         $conn.exec(
           'INSERT INTO sacramentos (sacramento, fecha, celebrante, testigo_novio, testigo_novia, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [
-            sacramento, fecha, ministro, teatigo_uno, testigo_dos, certifica, padrino, madrina, padre, madre
+            sacramento, fecha, ministro, testigo_uno, testigo_dos, certifica, padrino, madrina, padre, madre
           ]
         )
         # Confirmar la transacción
@@ -259,6 +259,8 @@ class Supletoria < FXMainWindow
       @input_page.text = ''
       @input_number.text = ''
       @input_fecha.text = ''
+      @input_parroquia.text = ''
+      @input_sector.text = ''
       @input_parroco.text = ''
       @input_ministro.text = ''
       @input_name.text = ''

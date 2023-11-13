@@ -175,8 +175,12 @@ class PreBautismal < FXMainWindow
       @input_name.text = ''
       @input_apellidos.text = ''
       @input_cedula.text = ''
+      @input_padre.text = ''
+      @input_madre.text = ''
       @input_padrino.text = ''
       @input_madrina.text = ''
+      @input_cedula_padrino.text = ''
+      @input_cedula_madrina.text = ''
       @input_certifica.text = ''
     end
   end
