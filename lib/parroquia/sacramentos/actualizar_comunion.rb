@@ -2,6 +2,7 @@
 
 require 'pg'
 require 'fox16'
+require 'date'
 include Fox
 
 class ActualizarComunion < FXMainWindow
@@ -148,6 +149,17 @@ class ActualizarComunion < FXMainWindow
       # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
       # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
       # Iniciar una transacción
+
+      def validar_formato_fecha(fecha)
+        begin
+          Date.strptime(fecha, '%Y/%m/%d' || '%Y-%m-%d')
+          return true
+        rescue ArgumentError
+          return false
+        end
+      end
+
+      if validar_formato_fecha(fecha) && validar_formato_fecha(fecha_nacimiento)
       $conn.transaction do
         # Actualizar la tabla libros
         $conn.exec('UPDATE libros SET tomo = $1, pagina = $2, numero = $3 WHERE id = $4',
@@ -187,7 +199,10 @@ class ActualizarComunion < FXMainWindow
         else
           $conn.exec('ROLLBACK')
         end
-        close
+          close
+        end
+      else
+        FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Formato de fecha incorrecto. Ingrese una fecha válida en formato YYYY/MM/DD.')
       end
     end
 

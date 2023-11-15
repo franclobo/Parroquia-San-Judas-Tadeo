@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'fox16'
+require 'date'
 include Fox
 
 class Supletoria < FXMainWindow
@@ -222,31 +223,45 @@ class Supletoria < FXMainWindow
       # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
       # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
       # Iniciar una transacción
-      $conn.transaction do
-        $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)', [tomo, page, number])
-        $conn.exec(
-          'INSERT INTO creyentes (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [
-            name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula
-          ]
-        )
-        $conn.exec('INSERT INTO parroquias (parroquia, sector, parroco) VALUES ($1, $2, $3)',
-                   [parroquia, sector, parroco])
-        $conn.exec(
-          'INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
-            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc
-          ]
-        )
-        # Insertar en la tabla misas
-        @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
-        $conn.exec(
-          'INSERT INTO sacramentos (sacramento, fecha, celebrante, testigo_novio, testigo_novia, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [
-            sacramento, fecha, ministro, testigo_uno, testigo_dos, certifica, padrino, madrina, padre, madre
-          ]
-        )
-        # Confirmar la transacción
-        $conn.exec('COMMIT')
-        FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos guardados correctamente')
-        clear_input_fields
+
+      def validar_formato_fecha(fecha)
+        begin
+          Date.strptime(fecha, '%Y/%m/%d' || '%Y-%m-%d')
+          return true
+        rescue ArgumentError
+          return false
+        end
+      end
+
+      if validar_formato_fecha(fecha) && validar_formato_fecha(fecha_nacimiento) && validar_formato_fecha(date_rc)
+        $conn.transaction do
+          $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)', [tomo, page, number])
+          $conn.exec(
+            'INSERT INTO creyentes (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [
+              name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula
+            ]
+          )
+          $conn.exec('INSERT INTO parroquias (parroquia, sector, parroco) VALUES ($1, $2, $3)',
+                    [parroquia, sector, parroco])
+          $conn.exec(
+            'INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
+              provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pag_rc, acta_rc, date_rc
+            ]
+          )
+          # Insertar en la tabla misas
+          @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
+          $conn.exec(
+            'INSERT INTO sacramentos (sacramento, fecha, celebrante, testigo_novio, testigo_novia, certifica, padrino, madrina, padre, madre) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)', [
+              sacramento, fecha, ministro, testigo_uno, testigo_dos, certifica, padrino, madrina, padre, madre
+            ]
+          )
+          # Confirmar la transacción
+          $conn.exec('COMMIT')
+          FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos guardados correctamente')
+          clear_input_fields
+        end
+      else
+        FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Formato de fecha incorrecto. Ingrese una fecha válida en formato YYYY/MM/DD.')
       end
     end
 

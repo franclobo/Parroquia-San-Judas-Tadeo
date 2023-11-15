@@ -3,7 +3,7 @@
 # Create gem spec file
 Gem::Specification.new do |s|
   s.name = 'parroquia'
-  s.version = '1.1.38'
+  s.version = '1.1.39'
   s.summary = 'Parroquia San Judas Tadeo'
   s.description = 'Servicio Parroquial San Judas Tadeo'
   s.authors = ['Francisco Javier Borja Lobato']
@@ -18,5 +18,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'fxruby', '~> 1.6', '>= 1.6.46'
   s.add_dependency 'pg', '~> 1.5', '>= 1.5.4'
   s.add_dependency 'prawn', '~> 2.4', '>= 2.4.0'
+  s.add_dependency 'date', '~> 3.1', '>= 3.1.1'
   s.metadata['rubygems_mfa_required'] = 'true'
 end

@@ -2,6 +2,7 @@
 
 require 'pg'
 require 'fox16'
+require 'date'
 include Fox
 
 class Alumno < FXMainWindow
@@ -107,24 +108,37 @@ class Alumno < FXMainWindow
       # tabla catequistas (id, nombres, apellidos, fecha de nacimiento, lugar de nacimiento, cedula)
       # tabla alumnos (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula, fk_catequistas, fk_niveles)
       # tabla niveles (id, nivel, sector, anio_lectivo)
-      $conn.transaction do
-        # Insertar en la tabla catequistas
-        @registro_catequistas = $conn.exec('INSERT INTO catequistas (nombres, apellidos) VALUES ($1, $2)',
-                                           [nombres_catequista, apellidos_catequista])
-        # Insertar en la tabla niveles
-        @registro_parroquias = $conn.exec('INSERT INTO niveles (anio_lectivo, nivel, sector, parroco) VALUES ($1, $2, $3, $4)',
-                                          [anio_lectivo, nivel, sector, parroco])
-        # Insertar en la tabla alumnos
-        @registro_creyentes = $conn.exec(
-          'INSERT INTO alumnos (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [
-            name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula
-          ]
-        )
+      def validar_formato_fecha(fecha)
+        begin
+          Date.strptime(fecha, '%Y/%m/%d' || '%Y-%m-%d')
+          return true
+        rescue ArgumentError
+          return false
+        end
+      end
 
-        # Confirmar la transacción
-        $conn.exec('COMMIT')
-        FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos guardados correctamente')
-        clear_input_fields
+      if validar_formato_fecha(fecha_nacimiento)
+        $conn.transaction do
+          # Insertar en la tabla catequistas
+          @registro_catequistas = $conn.exec('INSERT INTO catequistas (nombres, apellidos) VALUES ($1, $2)',
+                                            [nombres_catequista, apellidos_catequista])
+          # Insertar en la tabla niveles
+          @registro_parroquias = $conn.exec('INSERT INTO niveles (anio_lectivo, nivel, sector, parroco) VALUES ($1, $2, $3, $4)',
+                                            [anio_lectivo, nivel, sector, parroco])
+          # Insertar en la tabla alumnos
+          @registro_creyentes = $conn.exec(
+            'INSERT INTO alumnos (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [
+              name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula
+            ]
+          )
+
+          # Confirmar la transacción
+          $conn.exec('COMMIT')
+          FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos guardados correctamente')
+          clear_input_fields
+        end
+      else
+        FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Formato de fecha incorrecto. Ingrese una fecha válida en formato YYYY/MM/DD.')
       end
     end
 

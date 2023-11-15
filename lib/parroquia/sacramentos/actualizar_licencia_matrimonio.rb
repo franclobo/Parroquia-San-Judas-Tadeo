@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'fox16'
+require 'date'
 include Fox
 
 class ActualizarLicenciaMatrimonio < FXMainWindow
@@ -213,32 +214,46 @@ class ActualizarLicenciaMatrimonio < FXMainWindow
       # tabla parroquias (id, nombre, sector, parroco)
       # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
       # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
-      $conn.transaction do
-        $conn.exec('UPDATE libros SET tomo = $1, pagina = $2, numero = $3 WHERE id = $4',
-                   [tomo, page, number, registro[18]])
-        $conn.exec(
-          'UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4, nombres_novia = $5, apellidos_novia = $6, cedula_novia = $7 WHERE id = $8', [
-            sacramento, fecha, celebrante, certifica, nombres_novia, apellidos_novia, cedula_novia, registro[0]
-          ]
-        )
-        $conn.exec('UPDATE creyentes SET nombres = $1, apellidos = $2, cedula = $3 WHERE id = $4',
-                   [name_novio, apellido_novio, cedula_novio, registro[22]])
-        $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4',
-                   [parroquia, sector, parroco, registro[28]])
-        $conn.exec(
-          'UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [
-            provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc, registro[32]
-          ]
-        )
 
-        # ¿Desea guardar los cambios? SI: commit msg: datos actualizados correctamente, NO: rollback, close
-        if FXMessageBox.question(self, MBOX_YES_NO, 'Pregunta', '¿Desea guardar los cambios?') == MBOX_CLICKED_YES
-          $conn.exec('COMMIT')
-          FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos actualizados correctamente')
-        else
-          $conn.exec('ROLLBACK')
+      def validar_formato_fecha(fecha)
+        begin
+          Date.strptime(fecha, '%Y/%m/%d' || '%Y-%m-%d')
+          return true
+        rescue ArgumentError
+          return false
         end
-        close
+      end
+
+      if validar_formato_fecha(fecha) && validar_formato_fecha(date_rc)
+        $conn.transaction do
+          $conn.exec('UPDATE libros SET tomo = $1, pagina = $2, numero = $3 WHERE id = $4',
+                    [tomo, page, number, registro[18]])
+          $conn.exec(
+            'UPDATE sacramentos SET sacramento = $1, fecha = $2, celebrante = $3, certifica = $4, nombres_novia = $5, apellidos_novia = $6, cedula_novia = $7 WHERE id = $8', [
+              sacramento, fecha, celebrante, certifica, nombres_novia, apellidos_novia, cedula_novia, registro[0]
+            ]
+          )
+          $conn.exec('UPDATE creyentes SET nombres = $1, apellidos = $2, cedula = $3 WHERE id = $4',
+                    [name_novio, apellido_novio, cedula_novio, registro[22]])
+          $conn.exec('UPDATE parroquias SET parroquia = $1, sector = $2, parroco = $3 WHERE id = $4',
+                    [parroquia, sector, parroco, registro[28]])
+          $conn.exec(
+            'UPDATE registros_civiles SET provincia_rc = $1, canton_rc = $2, parroquia_rc = $3, anio_rc = $4, tomo_rc = $5, pagina_rc = $6, acta_rc = $7, fecha_rc = $8 WHERE id = $9', [
+              provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc, registro[32]
+            ]
+          )
+
+          # ¿Desea guardar los cambios? SI: commit msg: datos actualizados correctamente, NO: rollback, close
+          if FXMessageBox.question(self, MBOX_YES_NO, 'Pregunta', '¿Desea guardar los cambios?') == MBOX_CLICKED_YES
+            $conn.exec('COMMIT')
+            FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos actualizados correctamente')
+          else
+            $conn.exec('ROLLBACK')
+          end
+          close
+        end
+      else
+        FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Formato de fecha incorrecto. Ingrese una fecha válida en formato YYYY/MM/DD.')
       end
     end
 

@@ -13,3 +13,5 @@ gem 'pg'
 # Imprimir en PDF
 gem 'prawn'
 
+gem 'date' 
+

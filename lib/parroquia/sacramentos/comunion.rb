@@ -2,6 +2,7 @@
 
 require 'pg'
 require 'fox16'
+require 'date'
 include Fox
 
 class Comunion < FXMainWindow
@@ -137,42 +138,56 @@ class Comunion < FXMainWindow
       # tabla sacramentos (id, nombre, fecha, celebrante, certifica, padrino, madrina, testigo_novio, testigo_novia, padre, madre, nombres_novia, apellidos_novia, cedula_novia, fk_creyentes, fk_parroquias, fk_registros_civiles, fk_libros)
       # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
       # Iniciar una transacción
-      $conn.transaction do
-        # Insertar en la tabla libros
-        @registro_libros = $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)',
-                                      [tomo, page, number])
 
-        # Insertar en la tabla creyentes
-        @registro_creyentes = $conn.exec(
-          'INSERT INTO creyentes (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [
-            name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula
-          ]
-        )
+      def validar_formato_fecha(fecha)
+        begin
+          Date.strptime(fecha, '%Y/%m/%d' || '%Y-%m-%d')
+          return true
+        rescue ArgumentError
+          return false
+        end
+      end
 
-        # Insertar en la tabla parroquias
-        @registro_parroquias = $conn.exec('INSERT INTO parroquias (parroquia, sector, parroco) VALUES ($1, $2, $3)',
-                                          [parroquia, sector, parroco])
+      if validar_formato_fecha(fecha) && validar_formato_fecha(fecha_nacimiento)
+        $conn.transaction do
+          # Insertar en la tabla libros
+          @registro_libros = $conn.exec('INSERT INTO libros (tomo, pagina, numero) VALUES ($1, $2, $3)',
+                                        [tomo, page, number])
 
-        # Insertar en la tabla registros civiles, si no existen datos se crea un registro nuevo con id que corresponda y se llena los demaás datos con nil
-        @registro_registros_civiles = $conn.exec(
-          'INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
-            nil, nil, nil, nil, nil, nil, nil, nil
-          ]
-        )
+          # Insertar en la tabla creyentes
+          @registro_creyentes = $conn.exec(
+            'INSERT INTO creyentes (nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula) VALUES ($1, $2, $3, $4, $5)', [
+              name, apellidos, lugar_nacimiento, fecha_nacimiento, cedula
+            ]
+          )
 
-        # Insertar en la tabla misas
-        @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
+          # Insertar en la tabla parroquias
+          @registro_parroquias = $conn.exec('INSERT INTO parroquias (parroquia, sector, parroco) VALUES ($1, $2, $3)',
+                                            [parroquia, sector, parroco])
 
-        # Insertar en la tabla sacramentos
-        @registro_sacramentos = $conn.exec(
-          'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica) VALUES ($1, $2, $3, $4)', [sacramento,
-                                                                                                         fecha, celebrante, certifica]
-        )
+          # Insertar en la tabla registros civiles, si no existen datos se crea un registro nuevo con id que corresponda y se llena los demaás datos con nil
+          @registro_registros_civiles = $conn.exec(
+            'INSERT INTO registros_civiles (provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)', [
+              nil, nil, nil, nil, nil, nil, nil, nil
+            ]
+          )
 
-        # Confirmar la transacción
-        $conn.exec('COMMIT')
-        FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos guardados correctamente')
-        clear_input_fields
+          # Insertar en la tabla misas
+          @registro_misas = $conn.exec('INSERT INTO misas (intencion, fecha, hora) VALUES ($1, $2, $3)', [nil, nil, nil])
+
+          # Insertar en la tabla sacramentos
+          @registro_sacramentos = $conn.exec(
+            'INSERT INTO sacramentos (sacramento, fecha, celebrante, certifica) VALUES ($1, $2, $3, $4)', [sacramento,
+                                                                                                          fecha, celebrante, certifica]
+          )
+
+          # Confirmar la transacción
+          $conn.exec('COMMIT')
+          FXMessageBox.information(self, MBOX_OK, 'Información', 'Datos guardados correctamente')
+          clear_input_fields
+        end
+      else
+        FXMessageBox.warning(self, MBOX_OK, 'Advertencia', 'Formato de fecha incorrecto. Ingrese una fecha válida en formato YYYY/MM/DD.')
       end
     end
 
