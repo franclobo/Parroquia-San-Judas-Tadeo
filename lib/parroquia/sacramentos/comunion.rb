@@ -141,7 +141,7 @@ class Comunion < FXMainWindow
 
       def validar_formato_fecha(fecha)
         begin
-          Date.strptime(fecha, '%Y/%m/%d' || '%Y-%m-%d')
+          Date.strptime(fecha, '%Y/%m/%d') || Date.strptime(fecha, '%Y-%m-%d')
           return true
         rescue ArgumentError
           return false
