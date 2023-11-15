@@ -230,12 +230,9 @@ class ActualizarMatrimonio < FXMainWindow
       # tabla registros_civiles (id, provincia_rc, canton_rc, parroquia_rc, anio_rc, tomo_rc, pagina_rc, acta_rc, fecha_rc)
 
       def validar_formato_fecha(fecha)
-        begin
-          Date.strptime(fecha, '%Y/%m/%d') || Date.strptime(fecha, '%Y-%m-%d')
-          return true
-        rescue ArgumentError
-          return false
-        end
+        formatos_validos = ['%Y/%m/%d', '%Y-%m-%d']
+
+        formatos_validos.any? { |formato| Date.strptime(fecha, formato) rescue false }
       end
 
       if validar_formato_fecha(fecha) && validar_formato_fecha(date_rc)

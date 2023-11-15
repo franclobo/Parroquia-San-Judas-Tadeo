@@ -109,12 +109,9 @@ class Alumno < FXMainWindow
       # tabla alumnos (id, nombres, apellidos, lugar_nacimiento, fecha_nacimiento, cedula, fk_catequistas, fk_niveles)
       # tabla niveles (id, nivel, sector, anio_lectivo)
       def validar_formato_fecha(fecha)
-        begin
-          Date.strptime(fecha, '%Y/%m/%d') || Date.strptime(fecha, '%Y-%m-%d')
-          return true
-        rescue ArgumentError
-          return false
-        end
+        formatos_validos = ['%Y/%m/%d', '%Y-%m-%d']
+
+        formatos_validos.any? { |formato| Date.strptime(fecha, formato) rescue false }
       end
 
       if validar_formato_fecha(fecha_nacimiento)

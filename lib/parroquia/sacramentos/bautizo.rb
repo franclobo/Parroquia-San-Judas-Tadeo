@@ -217,12 +217,9 @@ class Bautizo < FXMainWindow
       # Iniciar una transacción
 
       def validar_formato_fecha(fecha)
-        begin
-          Date.strptime(fecha, '%Y/%m/%d') || Date.strptime(fecha, '%Y-%m-%d')
-          return true
-        rescue ArgumentError
-          return false
-        end
+        formatos_validos = ['%Y/%m/%d', '%Y-%m-%d']
+
+        formatos_validos.any? { |formato| Date.strptime(fecha, formato) rescue false }
       end
 
       if validar_formato_fecha(fecha) && validar_formato_fecha(fecha_nacimiento) && validar_formato_fecha(date_rc)
